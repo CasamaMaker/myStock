@@ -32,6 +32,8 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_2.clicked.connect(self.reset_llista_encapsulat)
         self.ui.pushButton_3.setFlat(True)
         self.ui.pushButton_3.clicked.connect(self.reset_llista_taula)
+        self.ui.pushButton_4.clicked.connect(self.obre_arxiu_stock)
+        self.ui.pushButton_5.clicked.connect(self.actualitza_google_sheet)
         self.ui.stock_text.setEnabled(False)
 
         # self.setStyleSheet("background-color: #4A708B;")  # blau marí clar
@@ -85,6 +87,7 @@ class MainWindow(QMainWindow):
         self.ui.lineEdit.textChanged.connect(self.filtrar_tipos_components)
         self.ui.lineEdit_3.textChanged.connect(self.filtrar_encapsulat_components)
         self.ui.lineEdit_4.textChanged.connect(self.filtrar_text_taula)
+        self.text_filtre_taula = []
         
         # Filtratge de búsqueda
         self.ui.listWidget.itemClicked.connect(self.categoria_component_seleccionada)
@@ -92,7 +95,7 @@ class MainWindow(QMainWindow):
 
         # Selecció de component
         self.ui.tableWidget.itemSelectionChanged.connect(self.info_stock)
-        self.ui.tableWidget.selectedItems
+        # self.ui.tableWidget.selectedItems
 
         self.ui.datasheetButton.pressed.connect(self.goDatasheet)
 
@@ -105,10 +108,12 @@ class MainWindow(QMainWindow):
         try:
             # URL del Google Sheet (convertida a formato CSV)
             google_sheet_id = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA" #"1aBQq8viig-m8QpupEm3EGmwK_aMGMgW3kNIPjLNPpkY"
-            csv_url = f"https://docs.google.com/spreadsheets/d/{google_sheet_id}/export?format=csv"
+            self.csv_url = f"https://docs.google.com/spreadsheets/d/{google_sheet_id}/export?format=csv"
+
+            # self.ui.pushButton_4.clicked.connect(self.obre_arxiu_stock)
             
             # Realizar la petición HTTP
-            response = requests.get(csv_url)
+            response = requests.get(self.csv_url)
             response.raise_for_status()  # Lanza excepción si hay error HTTP
             
             # Decodificar el contenido CSV
@@ -126,6 +131,13 @@ class MainWindow(QMainWindow):
         except requests.exceptions.RequestException as e:
             print(f"Error al accedir a Google Sheet: {e}")
             self.ui.statusbar.showMessage(f"Error al accedir a Google Sheet: {e}", 2000)  # 2000 ms = 2 segons
+
+    def actualitza_google_sheet(self):
+        self.data_google_sheet = self.carrega_google_sheet()
+        self.carregar_google_sheets_a_tablewidget()
+
+    def obre_arxiu_stock(self):
+        webbrowser.open_new_tab(f"https://docs.google.com/spreadsheets/d/1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA")
 
     def obtenir_tipos_component(self):
         self.tipos_components = []
@@ -213,7 +225,7 @@ class MainWindow(QMainWindow):
         columnas_deseadas = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.storage_col, self.description_col]
 
         dades_filtrades = self.data_google_sheet
-        headers_filtrats = [dades_filtrades[0][titol] for titol in columnas_deseadas]
+        headers_filtrats = [dades_filtrades[0][titol] for titol in columnas_deseadas]   
 
         if hasattr(self, "type_selected"):
             if self.type_selected:
@@ -226,6 +238,8 @@ class MainWindow(QMainWindow):
         if hasattr(self, "text_filtre_taula"):
             if self.text_filtre_taula:
                 dades_filtrades = [fila for fila in dades_filtrades if any(self.text_filtre_taula.lower() in str(cel).lower() for cel in fila)]
+
+        self.llista_filtres()
 
         if dades_filtrades:
             if dades_filtrades[0][self.lcscPN_col] in headers_filtrats:
@@ -268,20 +282,30 @@ class MainWindow(QMainWindow):
             self.ui.tableWidget.setColumnCount(0)
             self.ui.label_5.setText("0")
             self.ui.statusbar.showMessage("No hi ha valors corresponent al filtre", 2000)
-                   
+
+    def llista_filtres(self):
+
+        self.llista = self.type_selected + self.package_selected + [self.text_filtre_taula]
+
+        print(self.type_selected, self.package_selected, self.llista)
+
+        self.ui.listWidget_4.clear()
+        self.ui.listWidget_4.addItems(self.llista)
+
+
     def obtenir_info_seleccio(self, columna):
         fila_index = self.ui.tableWidget.currentRow()
         valor_buscat = self.ui.tableWidget.item(fila_index, 0).text()
         # print(fila_index, valor_buscat)
 
-        if not fila_index:
-            return
+        # if not fila_index:
+        #     return
 
         for fila in self.data_google_sheet:
             if valor_buscat in fila[self.lcscPN_col]:
-                # print(fila[0])
+                # print(fila[7].strip())
                 # self.ui.stock_text.setPlainText(fila[0])
-                print(">", valor_buscat[self.lcscPN_col], fila[columna])
+                print(">", valor_buscat, fila[columna])#.strip())
                 return fila[columna]
 
     def info_stock(self):
@@ -305,6 +329,7 @@ class MainWindow(QMainWindow):
         self.carregar_google_sheets_a_tablewidget()
 
         self.filtrar_encapsulat_components()
+
 
     def reset_llista_categoria(self):
         # print("hola")
