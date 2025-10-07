@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.1
+## Created by: Qt User Interface Compiler version 6.9.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QLineEdit,
-    QListWidget, QListWidgetItem, QMainWindow, QMenuBar,
-    QPushButton, QSizePolicy, QStatusBar, QTableWidget,
-    QTableWidgetItem, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QLabel,
+    QLayout, QLineEdit, QListWidget, QListWidgetItem,
+    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
+    QStatusBar, QTableWidget, QTableWidgetItem, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -35,13 +35,13 @@ class Ui_MainWindow(object):
         self.listWidget.setGeometry(QRect(20, 50, 121, 161))
         self.tableWidget = QTableWidget(self.centralwidget)
         self.tableWidget.setObjectName(u"tableWidget")
-        self.tableWidget.setGeometry(QRect(20, 300, 761, 271))
+        self.tableWidget.setGeometry(QRect(20, 320, 761, 251))
         self.datasheetButton = QPushButton(self.centralwidget)
         self.datasheetButton.setObjectName(u"datasheetButton")
-        self.datasheetButton.setGeometry(QRect(650, 240, 131, 31))
+        self.datasheetButton.setGeometry(QRect(650, 280, 131, 31))
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(540, 240, 41, 31))
+        self.label_2.setGeometry(QRect(540, 280, 41, 31))
         self.lineEdit = QLineEdit(self.centralwidget)
         self.lineEdit.setObjectName(u"lineEdit")
         self.lineEdit.setGeometry(QRect(20, 30, 121, 21))
@@ -56,10 +56,10 @@ class Ui_MainWindow(object):
         self.label_4.setGeometry(QRect(160, 10, 121, 16))
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(350, 270, 49, 21))
+        self.label_5.setGeometry(QRect(350, 290, 49, 21))
         self.lineEdit_4 = QLineEdit(self.centralwidget)
         self.lineEdit_4.setObjectName(u"lineEdit_4")
-        self.lineEdit_4.setGeometry(QRect(20, 270, 121, 21))
+        self.lineEdit_4.setGeometry(QRect(20, 290, 121, 21))
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(20, 210, 121, 24))
@@ -68,10 +68,10 @@ class Ui_MainWindow(object):
         self.pushButton_2.setGeometry(QRect(160, 210, 121, 24))
         self.stock_text = QLineEdit(self.centralwidget)
         self.stock_text.setObjectName(u"stock_text")
-        self.stock_text.setGeometry(QRect(580, 240, 61, 31))
+        self.stock_text.setGeometry(QRect(580, 280, 61, 31))
         self.pushButton_3 = QPushButton(self.centralwidget)
         self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(150, 270, 51, 24))
+        self.pushButton_3.setGeometry(QRect(150, 290, 51, 24))
         self.pushButton_4 = QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setGeometry(QRect(664, 20, 111, 24))
@@ -80,20 +80,35 @@ class Ui_MainWindow(object):
         self.pushButton_5.setGeometry(QRect(664, 60, 111, 24))
         self.lineEdit_5 = QLineEdit(self.centralwidget)
         self.lineEdit_5.setObjectName(u"lineEdit_5")
-        self.lineEdit_5.setGeometry(QRect(210, 270, 121, 21))
+        self.lineEdit_5.setGeometry(QRect(210, 290, 121, 21))
         self.label_3 = QLabel(self.centralwidget)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(210, 240, 121, 31))
+        self.label_3.setGeometry(QRect(210, 260, 121, 31))
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(20, 240, 121, 31))
+        self.label_6.setGeometry(QRect(20, 260, 121, 31))
         self.listWidget_4 = QListWidget(self.centralwidget)
         self.listWidget_4.setObjectName(u"listWidget_4")
         self.listWidget_4.setGeometry(QRect(660, 90, 121, 131))
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(20, 240, 761, 31))
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
+        self.widget.setSizePolicy(sizePolicy)
+        self.horizontalLayoutWidget = QWidget(self.widget)
+        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
+        self.horizontalLayoutWidget.setGeometry(QRect(0, 5, 751, 21))
+        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setSizeConstraint(QLayout.SetMinimumSize)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 800, 22))
+        self.menubar.setGeometry(QRect(0, 0, 800, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")

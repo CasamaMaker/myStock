@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QHBoxLayout, QSizePolicy
+from PySide6.QtCore import Signal, Qt
 from ui_main import Ui_MainWindow
 import sys
 
@@ -8,7 +9,56 @@ from PySide6.QtWidgets import QTableWidgetItem, QListWidget, QAbstractItemView
 import webbrowser
 
 
+class TagWidget(QWidget):
+    closed = Signal(str, str)  # per emetre el valor quan s'elimina
 
+    def __init__(self, key, value):
+        super().__init__()
+        # print(key)
+        self.key = key
+        self.value = value
+
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(5, 0, 5, 0)  # afina una mica l'espai
+        layout.setSpacing(5)  # separació entre label i botó
+        # self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+        # self.adjustSize()
+
+        self.label = QLabel(f"{key} = <b>{value}</b>")
+        self.label.setStyleSheet("padding: 2px;")  # Opcional: per fer el tag més compacte
+        self.button = QPushButton("✖")
+        self.button.setFixedSize(16, 16)  # Més petit per no fer créixer el tag
+        self.button.clicked.connect(self.on_close)
+
+        layout.addWidget(self.label)
+        layout.addWidget(self.button)
+
+        # Mida automàtica segons contingut
+        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        self.adjustSize()
+
+        # self.setLayout(layout)
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #444;
+                color: white;
+                border-radius: 10px;
+            }
+            QPushButton {
+                background-color: transparent;
+                border: none;
+                color: white;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                color: red;
+            }
+        """)
+
+    def on_close(self):
+        print(f"Emetent el valor: {self.value}")  # Afegeix aquest print
+        self.closed.emit(self.key, self.value)  # Avís al pare que s'ha eliminat
+        self.setParent(None)
 
 
 class MainWindow(QMainWindow):
@@ -37,42 +87,42 @@ class MainWindow(QMainWindow):
         self.ui.stock_text.setEnabled(False)
 
         # self.setStyleSheet("background-color: #4A708B;")  # blau marí clar
-        self.setStyleSheet("""
-                            QMainWindow {
-                                background-color: #4A708B;
-                            }
-                            QWidget {
-                                background-color: #4A708B;
-                                color: white;  /* text en blanc */
-                            }
-                            QLineEdit {
-                                background-color: #5A809B;
-                                color: white;
-                                border: 1px solid white;
-                            }
-                            QTableWidget {
-                                background-color: #5A809B;
-                                color: white;
-                                gridline-color: white;
-                            }
-                            QTableCornerButton::section {
-                                background-color: #3B5C73;  /* mateix color que la capçalera */
-                                /*border: 1px solid white;*/
-                            }
-                            QHeaderView::section {
-                                background-color: #3B5C73;
-                                color: white;
-                            }
-                            QPushButton {
-                                background-color: transparent;
-                                border: none;
-                                color: white;
+        # self.setStyleSheet("""
+        #                     QMainWindow {
+        #                         background-color: #4A708B;
+        #                     }
+        #                     QWidget {
+        #                         background-color: #4A708B;
+        #                         color: white;  /* text en blanc */
+        #                     }
+        #                     QLineEdit {
+        #                         background-color: #5A809B;
+        #                         color: white;
+        #                         border: 1px solid white;
+        #                     }
+        #                     QTableWidget {
+        #                         background-color: #5A809B;
+        #                         color: white;
+        #                         gridline-color: white;
+        #                     }
+        #                     QTableCornerButton::section {
+        #                         background-color: #3B5C73;  /* mateix color que la capçalera */
+        #                         /*border: 1px solid white;*/
+        #                     }
+        #                     QHeaderView::section {
+        #                         background-color: #3B5C73;
+        #                         color: white;
+        #                     }
+        #                     QPushButton {
+        #                         background-color: transparent;
+        #                         border: none;
+        #                         color: white;
                                 
-                            }
-                            QPushButton:hover {
-                                color: blue;
-                            }
-                        """)
+        #                     }
+        #                     QPushButton:hover {
+        #                         color: blue;
+        #                     }
+        #                 """)
 
 
         self.data_google_sheet = self.carrega_google_sheet()
@@ -88,6 +138,9 @@ class MainWindow(QMainWindow):
         self.ui.lineEdit_3.textChanged.connect(self.filtrar_encapsulat_components)
         self.ui.lineEdit_4.textChanged.connect(self.filtrar_text_taula)
         self.text_filtre_taula = []
+        # self.llista = []
+        self.ui.lineEdit_5.textChanged.connect(self.filtre_partNumber)
+        self.text_filtre_partNumber = []
         
         # Filtratge de búsqueda
         self.ui.listWidget.itemClicked.connect(self.categoria_component_seleccionada)
@@ -99,9 +152,27 @@ class MainWindow(QMainWindow):
 
         self.ui.datasheetButton.pressed.connect(self.goDatasheet)
 
+
+
+        # Eliminar l'espai de distribució automàtica en el layout
+        self.ui.horizontalLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        
+        # Crear els tags i afegir-los al layout
+        # tag1 = TagWidget("Memory Type", "Flash")
+        # tag1.closed.connect(self.on_tag_closed)  # Connecta el senya
+        # self.ui.horizontalLayout.addWidget(tag1)
+
+        # tag2 = TagWidget("Component Type", "Resistence")
+        # self.ui.horizontalLayout.addWidget(tag2)
+
+
+
+
+
         self.carregar_google_sheets_a_tablewidget()
 
         self.ui.statusbar.showMessage("Iniciat", 2000)  # 2000 ms = 2 segons
+
 
 
     def carrega_google_sheet(self):
@@ -172,7 +243,7 @@ class MainWindow(QMainWindow):
         self.ui.label_4.setText(text + " ["+str(len(self.encapsulat_components))+"]")
 
     def filtrar_tipos_components(self):
-        'que es canvia el text - defineix la llista de tipos de components --- filtrant pel text o per una selecció en una altre llista'
+        'Aplica filtre per mostrar la llista de components --- filtrant pel text o per una selecció en una altre llista'
 
         # actualitza els valors que es mostren a la llista, segons el text, PERO no es selecciona cap item
         text_filtre_llista = self.ui.lineEdit.text()
@@ -239,6 +310,11 @@ class MainWindow(QMainWindow):
             if self.text_filtre_taula:
                 dades_filtrades = [fila for fila in dades_filtrades if any(self.text_filtre_taula.lower() in str(cel).lower() for cel in fila)]
 
+        if hasattr(self, "text_filtre_partNumber"):
+            if self.text_filtre_partNumber:
+                dades_filtrades = [fila for fila in dades_filtrades if  self.text_filtre_partNumber.lower() in str(fila[self.manufacturePN_col]).lower()]
+                                   
+
         self.llista_filtres()
 
         if dades_filtrades:
@@ -284,14 +360,50 @@ class MainWindow(QMainWindow):
             self.ui.statusbar.showMessage("No hi ha valors corresponent al filtre", 2000)
 
     def llista_filtres(self):
+        self.llista = []
 
-        self.llista = self.type_selected + self.package_selected + [self.text_filtre_taula]
+        # Crear els tags i afegir-los al layout
+        if self.type_selected:
+            for item in self.type_selected:
+                tag1 = TagWidget("type_selected", item)
+                tag1.closed.connect(self.on_tag_closed)  # Connecta el senya
+                self.ui.horizontalLayout.addWidget(tag1)
+            self.llista += self.type_selected
 
-        print(self.type_selected, self.package_selected, self.llista)
+        # Crear els tags i afegir-los al layout
+        if self.package_selected:
+            for item in self.package_selected:
+                tag1 = TagWidget("package_selected", item)
+                tag1.closed.connect(self.on_tag_closed)  # Connecta el senya
+                self.ui.horizontalLayout.addWidget(tag1)
+            self.llista += self.package_selected
+
+
+        if self.text_filtre_taula:
+            self.llista += [f"text: {self.text_filtre_taula}"]
+
+        if self.text_filtre_partNumber:
+            self.llista += [f"text PN: {self.text_filtre_partNumber}"]
+
+        print(self.llista)
 
         self.ui.listWidget_4.clear()
         self.ui.listWidget_4.addItems(self.llista)
 
+    def on_tag_closed(self, key, value):
+        print(f"El tag amb la clau '{key}' ha estat tancat...'{value}'")
+        print(">>", self.llista, value)
+        if value in self.llista:
+            self.llista.remove(value)
+        print(self.llista)
+
+
+        # # Si vols eliminar el tag de la vista:
+        # for i in range(self.layout.count()):
+        #     widget = self.layout.itemAt(i).widget()
+        #     if isinstance(widget, TagWidget) and widget.key == key:
+        #         widget.deleteLater()  # Elimina el widget de la vista
+        #         break
 
     def obtenir_info_seleccio(self, columna):
         fila_index = self.ui.tableWidget.currentRow()
@@ -312,7 +424,7 @@ class MainWindow(QMainWindow):
         self.ui.stock_text.setText(self.obtenir_info_seleccio(self.stock_col))
  
     def categoria_component_seleccionada(self):
-        
+        '''S'arriba aquí quan es presion un item a la lista de tipos de components'''
         # actualitza llista de tipos de components seleccionats
         pressionat= self.ui.listWidget.currentItem().text()
         if pressionat in self.type_selected:
@@ -322,14 +434,16 @@ class MainWindow(QMainWindow):
 
         # print("type_selected", self.type_selected)
 
+        # un cop seleccionat l'item, esborrem el textEdit
         self.ui.lineEdit.setText("")
+
+        # Actualitzem llista de components segons filtre
         self.filtrar_tipos_components()
-        # self.type_selected = item.text()
-        # self.package_selecte = self.ui.listWidget_3.currentItem()
+        
+        # Actualizem taula valors segons nou filtre
         self.carregar_google_sheets_a_tablewidget()
 
         self.filtrar_encapsulat_components()
-
 
     def reset_llista_categoria(self):
         # print("hola")
@@ -369,6 +483,11 @@ class MainWindow(QMainWindow):
     def reset_llista_taula(self):
         self.ui.lineEdit_4.clear()  # neteja el camp de text
         self.text_filtre_taula = "" # assegura que la variable també està buida
+        self.carregar_google_sheets_a_tablewidget()
+
+    def filtre_partNumber(self):
+        self.text_filtre_partNumber = self.ui.lineEdit_5.text()
+        print(self.text_filtre_partNumber)
         self.carregar_google_sheets_a_tablewidget()
 
     def goDatasheet(self):
