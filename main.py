@@ -13,6 +13,7 @@ class TagWidget(QWidget):
     closed = Signal(str, str)  # per emetre el valor quan s'elimina
 
     def __init__(self, key, value):
+    # def __init__(self, value):
         super().__init__()
         # print(key)
         self.key = key
@@ -25,6 +26,7 @@ class TagWidget(QWidget):
         # self.adjustSize()
 
         self.label = QLabel(f"{key} = <b>{value}</b>")
+        # self.label = QLabel(f"<b>{value}</b>")
         self.label.setStyleSheet("padding: 2px;")  # Opcional: per fer el tag més compacte
         self.button = QPushButton("✖")
         self.button.setFixedSize(16, 16)  # Més petit per no fer créixer el tag
@@ -58,6 +60,7 @@ class TagWidget(QWidget):
     def on_close(self):
         print(f"Emetent el valor: {self.value}")  # Afegeix aquest print
         self.closed.emit(self.key, self.value)  # Avís al pare que s'ha eliminat
+        # self.closed.emit(self.value)
         self.setParent(None)
 
 
@@ -138,7 +141,7 @@ class MainWindow(QMainWindow):
         self.ui.lineEdit_3.textChanged.connect(self.filtrar_encapsulat_components)
         self.ui.lineEdit_4.textChanged.connect(self.filtrar_text_taula)
         self.text_filtre_taula = []
-        # self.llista = []
+        # self.llistaFiltres = []
         self.ui.lineEdit_5.textChanged.connect(self.filtre_partNumber)
         self.text_filtre_partNumber = []
         
@@ -164,7 +167,7 @@ class MainWindow(QMainWindow):
 
         # tag2 = TagWidget("Component Type", "Resistence")
         # self.ui.horizontalLayout.addWidget(tag2)
-
+        self.tag_widgets = []  # Llista per emmagatzemar els TagWidget
 
 
 
@@ -176,6 +179,7 @@ class MainWindow(QMainWindow):
 
 
     def carrega_google_sheet(self):
+        "carrega les dades des de l'arxiu de google sheets"
         try:
             # URL del Google Sheet (convertida a formato CSV)
             google_sheet_id = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA" #"1aBQq8viig-m8QpupEm3EGmwK_aMGMgW3kNIPjLNPpkY"
@@ -204,17 +208,20 @@ class MainWindow(QMainWindow):
             self.ui.statusbar.showMessage(f"Error al accedir a Google Sheet: {e}", 2000)  # 2000 ms = 2 segons
 
     def actualitza_google_sheet(self):
+        "torna a carregar les dades des de l'arxiu de google sheets"
         self.data_google_sheet = self.carrega_google_sheet()
         self.carregar_google_sheets_a_tablewidget()
 
     def obre_arxiu_stock(self):
+        "obra l'arxiu de google sheets"
         webbrowser.open_new_tab(f"https://docs.google.com/spreadsheets/d/1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA")
 
     def obtenir_tipos_component(self):
+        "inici - defineix la llista dels diferents tipus de components que existeixen"
         self.tipos_components = []
         data_colums = self.type_col
 
-        self.tipos_components = {fila[data_colums] for fila in self.data_google_sheet}
+        self.tipos_components = {fila[data_colums] for fila in self.data_google_sheet [1:]}
         self.tipos_components = sorted(list(self.tipos_components))
 
         self.ui.listWidget.clear()
@@ -228,10 +235,11 @@ class MainWindow(QMainWindow):
         self.ui.label.setText(text + " ["+str(len(self.tipos_components))+"]")
 
     def obtenir_encapsulat_component(self):
+        "inici - defineix la llista dels diferents tipus d'encapsulats que existeixen"
         self.encapsulat_components = []
         data_colums = self.package_col
 
-        self.encapsulat_components = {fila[data_colums] for fila in self.data_google_sheet}
+        self.encapsulat_components = {fila[data_colums] for fila in self.data_google_sheet[1:]}
         self.encapsulat_components = sorted(list(self.encapsulat_components))
 
         self.ui.listWidget_3.clear()
@@ -243,13 +251,14 @@ class MainWindow(QMainWindow):
         self.ui.label_4.setText(text + " ["+str(len(self.encapsulat_components))+"]")
 
     def filtrar_tipos_components(self):
-        'Aplica filtre per mostrar la llista de components --- filtrant pel text o per una selecció en una altre llista'
+        'Aplica filtre per mostrar la llista de tipos de components --- filtrant pel text o per una selecció en una altre llista'
 
         # actualitza els valors que es mostren a la llista, segons el text, PERO no es selecciona cap item
         text_filtre_llista = self.ui.lineEdit.text()
         filtre_tipos_components= [component for component in self.tipos_components if text_filtre_llista.lower() in component.lower()]
         self.ui.listWidget.clear()
         self.ui.listWidget.addItems(filtre_tipos_components)
+
 
         # mante senyalitzar els items seleccionats
         for idx in range(self.ui.listWidget.count()):
@@ -292,12 +301,14 @@ class MainWindow(QMainWindow):
         # #     filtre_encapsulat_components = self.encapsulat_components   
 
     def carregar_google_sheets_a_tablewidget(self):
+        "carregar les dades filtrades a la taula"
         # Definir las columnas específicas que queremos mostrar
         columnas_deseadas = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.storage_col, self.description_col]
 
         dades_filtrades = self.data_google_sheet
         headers_filtrats = [dades_filtrades[0][titol] for titol in columnas_deseadas]   
 
+        # Filtrar els components seleccionats
         if hasattr(self, "type_selected"):
             if self.type_selected:
                 dades_filtrades = [fila for fila in dades_filtrades if fila[self.type_col] in self.type_selected]
@@ -313,10 +324,10 @@ class MainWindow(QMainWindow):
         if hasattr(self, "text_filtre_partNumber"):
             if self.text_filtre_partNumber:
                 dades_filtrades = [fila for fila in dades_filtrades if  self.text_filtre_partNumber.lower() in str(fila[self.manufacturePN_col]).lower()]
-                                   
 
         self.llista_filtres()
 
+        # Filtrar les columnes que desitgem mostrar
         if dades_filtrades:
             if dades_filtrades[0][self.lcscPN_col] in headers_filtrats:
                 # print("hi ha headers")
@@ -360,50 +371,86 @@ class MainWindow(QMainWindow):
             self.ui.statusbar.showMessage("No hi ha valors corresponent al filtre", 2000)
 
     def llista_filtres(self):
-        self.llista = []
+        "es mostren els filtres aplicats"
+        self.llistaFiltres = []
 
-        # Crear els tags i afegir-los al layout
+        # Esborrem tots els tags
+        self.close_all_tags()
+
+        self.tag_widgets = []  # Llista per emmagatzemar els TagWidget
+
+        
+
         if self.type_selected:
+            self.llistaFiltres += self.type_selected
             for item in self.type_selected:
-                tag1 = TagWidget("type_selected", item)
-                tag1.closed.connect(self.on_tag_closed)  # Connecta el senya
-                self.ui.horizontalLayout.addWidget(tag1)
-            self.llista += self.type_selected
-
-        # Crear els tags i afegir-los al layout
+                self.creaTag("type_selected", item)
         if self.package_selected:
-            for item in self.package_selected:
-                tag1 = TagWidget("package_selected", item)
-                tag1.closed.connect(self.on_tag_closed)  # Connecta el senya
-                self.ui.horizontalLayout.addWidget(tag1)
-            self.llista += self.package_selected
-
-
+            self.llistaFiltres += self.package_selected
         if self.text_filtre_taula:
-            self.llista += [f"text: {self.text_filtre_taula}"]
-
+            # self.llistaFiltres += [self.text_filtre_taula]
+            self.llistaFiltres.append(self.text_filtre_taula)
         if self.text_filtre_partNumber:
-            self.llista += [f"text PN: {self.text_filtre_partNumber}"]
+            # self.llistaFiltres += [self.text_filtre_partNumber]
+            self.llistaFiltres.append(self.text_filtre_partNumber)
 
-        print(self.llista)
 
+        
+
+        # # Creem els TagWidget
+        # if self.llistaFiltres:
+        #     for item in self.llistaFiltres:
+        #         tag1 = TagWidget("keyyy", item)
+        #         tag1.closed.connect(self.on_tag_closed)  # Connecta el senyal de tancament
+        #         self.ui.horizontalLayout.addWidget(tag1)
+        #         self.tag_widgets.append(tag1)  # Afegim cada TagWidget a la llista
+        #         self.tag_widgets += [tag1]
+
+
+
+        # print(self.llistaFiltres, "----", self.tag_widgets)
+
+
+        # Mostre la llista amb el filtres aplicats
         self.ui.listWidget_4.clear()
-        self.ui.listWidget_4.addItems(self.llista)
+        self.ui.listWidget_4.addItems(self.llistaFiltres)
+
+    def creaTag(self, key, value):
+        "Creació dels tags amb les dades rebudes"
+        tag1 = TagWidget(key, value)
+        tag1.closed.connect(self.on_tag_closed)  # Connecta el senyal de tancament
+        self.ui.horizontalLayout.addWidget(tag1)
+        self.tag_widgets.append(tag1)  # Afegim cada TagWidget a la llista
+        # print(">>>", self.tag_widgets)
+
+
+
+    def close_all_tags(self):
+        "Tanca tots els tags, això es fa quan s'actualitza la llista de filtres"
+
+        # print("tanca toot", self.tag_widgets)
+        # Emetem la senyal de tancament per a tots els tags
+        for tag in self.tag_widgets:
+            tag.close()  # Això tanca el tag
 
     def on_tag_closed(self, key, value):
-        print(f"El tag amb la clau '{key}' ha estat tancat...'{value}'")
-        print(">>", self.llista, value)
-        if value in self.llista:
-            self.llista.remove(value)
-        print(self.llista)
+        "S'ha tancat un objecte tag i ens revota aqui, i esborrem el item de la llista"
+
+        print(f"El tag amb la clau '{key}'ha estat tancat...'{value}'")
+        # print(">>", self.llistaFiltres, value)
+        if value in self.llistaFiltres:
+            self.llistaFiltres.remove(value)
 
 
-        # # Si vols eliminar el tag de la vista:
-        # for i in range(self.layout.count()):
-        #     widget = self.layout.itemAt(i).widget()
-        #     if isinstance(widget, TagWidget) and widget.key == key:
-        #         widget.deleteLater()  # Elimina el widget de la vista
-        #         break
+
+        for i in range(self.ui.listWidget.count()):
+            item = self.ui.listWidget.item(i)
+            # print(".............", item, value)
+            if item.text() == value:
+                # print(i, "zzzzz ", item.text())
+                item.setSelected(False)
+                break
+
 
     def obtenir_info_seleccio(self, columna):
         fila_index = self.ui.tableWidget.currentRow()
