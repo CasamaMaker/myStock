@@ -19,21 +19,70 @@ class TagWidget(QWidget):
         self.key = key
         self.value = value
 
+        # layout = QHBoxLayout(self)
+        # layout.setContentsMargins(1, 0, 1, 0)  # afina una mica l'espai
+        # layout.setSpacing(1)  # separació entre label i botó
+        # # self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
+        # # self.adjustSize()
+
+        # self.label = QLabel(f"{key} = <b>{value}</b>")
+        # self.label.setStyleSheet("padding: 2px;")  # Opcional: per fer el tag més compacte
+        
+        # self.button = QPushButton("✖")
+        # self.button.setFixedSize(16, 16)  # Més petit per no fer créixer el tag
+        # self.button.clicked.connect(self.on_close)
+
+        # layout.addWidget(self.label)
+        # layout.addWidget(self.button)
+
+
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(5, 0, 5, 0)  # afina una mica l'espai
-        layout.setSpacing(5)  # separació entre label i botó
-        # self.setSizePolicy(QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed))
-        # self.adjustSize()
+        layout.setContentsMargins(1, 0, 1, 0)  # afina una mica l'espai
+        layout.setSpacing(0)  # elimina l'espai entre l'etiqueta i el botó
 
+        # Només el valor serà en negreta, el "key" es mostrarà normal
         self.label = QLabel(f"{key} = <b>{value}</b>")
-        # self.label = QLabel(f"<b>{value}</b>")
-        self.label.setStyleSheet("padding: 2px;")  # Opcional: per fer el tag més compacte
-        self.button = QPushButton("✖")
-        self.button.setFixedSize(16, 16)  # Més petit per no fer créixer el tag
-        self.button.clicked.connect(self.on_close)
+        # self.label = QLabel(f"{key} = {value}")
+        self.label.setStyleSheet("padding: 2px;")  # opcional: fer el tag més compacte
 
-        layout.addWidget(self.label)
-        layout.addWidget(self.button)
+        # Crear un widget per agafar l'etiqueta i el botó junts
+        tag_widget = QWidget(self)
+        tag_layout = QHBoxLayout(tag_widget)
+        tag_layout.setContentsMargins(0, 0, 0, 0)  # elimina els marges
+        tag_layout.setSpacing(0)  # elimina l'espai entre els elements
+
+        # Afegir l'etiqueta al layout del tag
+        tag_layout.addWidget(self.label)
+
+        # Crear el botó de tancar i afegir-lo al layout
+        self.button = QPushButton("✖", tag_widget)  # La "X" no està en negreta
+        # self.button = QPushButton("✕", tag_widget)  # La "X" no està en negreta
+        self.button.setFixedSize(16, 16)  # fa el botó més petit
+
+        # # Aplicar estils per fer la X més subtil
+        # self.button.setStyleSheet("""
+        #     QPushButton {
+        #         font-size: 10px;  # Reduir la mida de la font
+        #         font-weight: 100;  # Fer la font més lleugera
+        #         color: rgba(0, 0, 0, 0.5);  # Color gris suau
+        #         background: transparent;  # Eliminar el fons
+        #         border: none;  # No mostrar cap contorn
+        #     }
+        #     QPushButton:hover {
+        #         color: rgba(0, 0, 0, 0.7);  # Canviar el color quan es passa el ratolí per fer-ho més destacat
+        #     }
+        # """)
+
+
+        self.button.clicked.connect(self.on_close)
+        
+
+        # Afegir el botó al layout del tag
+        tag_layout.addWidget(self.button)
+
+        # Afegir el widget del tag al layout principal
+        layout.addWidget(tag_widget)
+
 
         # Mida automàtica segons contingut
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
@@ -50,17 +99,26 @@ class TagWidget(QWidget):
                 background-color: transparent;
                 border: none;
                 color: white;
-                font-weight: bold;
+                font-weight: light;
             }
             QPushButton:hover {
-                color: red;
+                color: black;
             }
+            /*QPushButton {
+                font-size: 10px;  # Reduir la mida de la font
+                font-weight: 100;  # Fer la font més lleugera
+                color: rgba(0, 0, 0, 0.5);  # Color gris suau
+                background: transparent;  # Eliminar el fons
+                border: none;  # No mostrar cap contorn
+            }
+            QPushButton:hover {
+                color: rgba(0, 0, 0, 0.7);  # Canviar el color quan es passa el ratolí per fer-ho més destacat
+            }*/
         """)
 
     def on_close(self):
         print(f"Emetent el valor: {self.value}")  # Afegeix aquest print
         self.closed.emit(self.key, self.value)  # Avís al pare que s'ha eliminat
-        # self.closed.emit(self.value)
         self.setParent(None)
 
 
@@ -175,8 +233,6 @@ class MainWindow(QMainWindow):
         self.carregar_google_sheets_a_tablewidget()
 
         self.ui.statusbar.showMessage("Iniciat", 2000)  # 2000 ms = 2 segons
-
-
 
     def carrega_google_sheet(self):
         "carrega les dades des de l'arxiu de google sheets"
@@ -378,38 +434,23 @@ class MainWindow(QMainWindow):
         self.close_all_tags()
 
         self.tag_widgets = []  # Llista per emmagatzemar els TagWidget
-
-        
-
+        print("hola")
         if self.type_selected:
+            print("llista_filtres type_selected", self.type_selected)
             self.llistaFiltres += self.type_selected
             for item in self.type_selected:
-                self.creaTag("type_selected", item)
+                self.creaTag("type", item)
         if self.package_selected:
             self.llistaFiltres += self.package_selected
+            for item in self.package_selected:
+                self.creaTag("package", item)
         if self.text_filtre_taula:
-            # self.llistaFiltres += [self.text_filtre_taula]
+            print("llista_filtres text_filtre_taula", self.text_filtre_taula)
             self.llistaFiltres.append(self.text_filtre_taula)
+            self.creaTag("text", self.text_filtre_taula)
         if self.text_filtre_partNumber:
-            # self.llistaFiltres += [self.text_filtre_partNumber]
             self.llistaFiltres.append(self.text_filtre_partNumber)
-
-
-        
-
-        # # Creem els TagWidget
-        # if self.llistaFiltres:
-        #     for item in self.llistaFiltres:
-        #         tag1 = TagWidget("keyyy", item)
-        #         tag1.closed.connect(self.on_tag_closed)  # Connecta el senyal de tancament
-        #         self.ui.horizontalLayout.addWidget(tag1)
-        #         self.tag_widgets.append(tag1)  # Afegim cada TagWidget a la llista
-        #         self.tag_widgets += [tag1]
-
-
-
-        # print(self.llistaFiltres, "----", self.tag_widgets)
-
+            self.creaTag("partNumber", self.text_filtre_partNumber)
 
         # Mostre la llista amb el filtres aplicats
         self.ui.listWidget_4.clear()
@@ -423,12 +464,10 @@ class MainWindow(QMainWindow):
         self.tag_widgets.append(tag1)  # Afegim cada TagWidget a la llista
         # print(">>>", self.tag_widgets)
 
-
-
     def close_all_tags(self):
         "Tanca tots els tags, això es fa quan s'actualitza la llista de filtres"
 
-        # print("tanca toot", self.tag_widgets)
+        print("tanca toot", self.tag_widgets)
         # Emetem la senyal de tancament per a tots els tags
         for tag in self.tag_widgets:
             tag.close()  # Això tanca el tag
@@ -437,9 +476,21 @@ class MainWindow(QMainWindow):
         "S'ha tancat un objecte tag i ens revota aqui, i esborrem el item de la llista"
 
         print(f"El tag amb la clau '{key}'ha estat tancat...'{value}'")
-        # print(">>", self.llistaFiltres, value)
-        if value in self.llistaFiltres:
-            self.llistaFiltres.remove(value)
+        # print(">>", key)
+        if key == "type":
+            self.type_selected.remove(value)
+
+        if key == "package":
+            self.package_selected.remove(value)
+
+        if key == "text":
+            self.text_filtre_taula.clear()
+
+        if key == "partNumber":
+            self.text_filtre_partNumber.clear()
+
+
+        self.llista_filtres()
 
 
 
@@ -450,7 +501,6 @@ class MainWindow(QMainWindow):
                 # print(i, "zzzzz ", item.text())
                 item.setSelected(False)
                 break
-
 
     def obtenir_info_seleccio(self, columna):
         fila_index = self.ui.tableWidget.currentRow()
@@ -528,6 +578,8 @@ class MainWindow(QMainWindow):
         self.carregar_google_sheets_a_tablewidget()
 
     def reset_llista_taula(self):
+        "resetaja  el filtre de text total"
+        print("reset_llista_taula")
         self.ui.lineEdit_4.clear()  # neteja el camp de text
         self.text_filtre_taula = "" # assegura que la variable també està buida
         self.carregar_google_sheets_a_tablewidget()
