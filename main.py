@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QHBoxLayout, QSizePolicy
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QSizePolicy, QSpacerItem
 from PySide6.QtCore import Signal, Qt
 from ui_main import Ui_MainWindow
 import sys
@@ -41,7 +41,8 @@ class TagWidget(QWidget):
         layout.setSpacing(0)  # elimina l'espai entre l'etiqueta i el botó
 
         # Només el valor serà en negreta, el "key" es mostrarà normal
-        self.label = QLabel(f"{key} = <b>{value}</b>")
+        # self.label = QLabel(f"{key} = <b>{value}</b>")
+        self.label = QLabel(f"{value}")
         # self.label = QLabel(f"{key} = {value}")
         self.label.setStyleSheet("padding: 2px;")  # opcional: fer el tag més compacte
 
@@ -87,6 +88,47 @@ class TagWidget(QWidget):
         # Mida automàtica segons contingut
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         self.adjustSize()
+
+        # # Layout principal que fa de contenidor
+        # self.main_layout = QVBoxLayout(self)
+        # self.main_layout.setContentsMargins(0, 0, 0, 0)
+        # self.main_layout.setSpacing(0)
+
+        # # Layout per als tags (horitzontal)
+        # self.horizontal_layout = QHBoxLayout()
+        # self.horizontal_layout.setContentsMargins(0, 0, 0, 0)
+        # self.horizontal_layout.setSpacing(5)  # Ajusta l'espai entre tags
+
+        # # Afegir el layout horitzontal a la disposició principal
+        # self.main_layout.addLayout(self.horizontal_layout)
+
+        # # Crear el widget per al tag (etiqueta + botó)
+        # tag_widget = QWidget(self)
+        # tag_layout = QHBoxLayout(tag_widget)
+        # tag_layout.setContentsMargins(0, 0, 0, 0)  # Eliminar marges
+        # tag_layout.setSpacing(0)
+
+        # # Afegir l'etiqueta
+        # # self.label = QLabel(f"{key} = <b>{value}</b>")
+        # self.label = QLabel(f"{value}")
+        # self.label.setStyleSheet("padding: 2px;")  # Fer el tag més compacte
+        # tag_layout.addWidget(self.label)
+
+        # # Afegir el botó de tancar
+        # self.button = QPushButton("✖", tag_widget)
+        # self.button.setFixedSize(16, 16)  # Mida petita per al botó
+        # self.button.clicked.connect(self.on_close)
+        # tag_layout.addWidget(self.button)
+
+        # # Afegir el widget del tag al layout horitzontal
+        # self.horizontal_layout.addWidget(tag_widget)
+
+        # # Afegir un espaiador que permeti que els tags passin a la línia següent
+        # self.horizontal_layout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum))
+
+        # # Configurar la mida automàtica del widget
+        # self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        # self.adjustSize()
 
         # self.setLayout(layout)
         self.setStyleSheet("""
@@ -145,6 +187,15 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_3.clicked.connect(self.reset_llista_taula)
         self.ui.pushButton_4.clicked.connect(self.obre_arxiu_stock)
         self.ui.pushButton_5.clicked.connect(self.actualitza_google_sheet)
+        # self.ui.pushButton_5.setText("↻")
+        # Assignar el missatge que es mostrarà quan el cursor passi per sobre del botó
+
+        self.ui.datasheetButton.setToolTip("Obre la web/datasheet")
+        self.ui.pushButton_4.setToolTip("Obre l'arxiu")
+        self.ui.pushButton_5.setToolTip("Actualiza les dades")
+        self.ui.label_5.setToolTip("Components filtrats")
+        self.ui.label_2.setToolTip("Stock del component")
+        self.ui.stock_text.setToolTip("Stock del component")
         self.ui.stock_text.setEnabled(False)
 
         # self.setStyleSheet("background-color: #4A708B;")  # blau marí clar
@@ -227,8 +278,15 @@ class MainWindow(QMainWindow):
         # self.ui.horizontalLayout.addWidget(tag2)
         self.tag_widgets = []  # Llista per emmagatzemar els TagWidget
 
+        filterVisualization = True # tag1_list0
+        if filterVisualization: # tag1_list0
+            self.ui.listWidget_4.setVisible(False)   # list
+            self.ui.widget.setVisible(True)          # tag
+        else:
+            self.ui.listWidget_4.setVisible(False)   # list
+            self.ui.widget.setVisible(True)          # tag
 
-
+        self.ui.pushButton_3.setVisible(False) 
 
         self.carregar_google_sheets_a_tablewidget()
 
