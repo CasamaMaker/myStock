@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QSizePolicy, QSpacerItem
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QSizePolicy, QSpacerItem, QHeaderView, QListWidgetItem
 from PySide6.QtCore import Signal, Qt
 from ui_main import Ui_MainWindow
 import sys
@@ -183,8 +183,8 @@ class MainWindow(QMainWindow):
         self.ui.pushButton.clicked.connect(self.reset_llista_categoria)
         self.ui.pushButton_2.setFlat(True)
         self.ui.pushButton_2.clicked.connect(self.reset_llista_encapsulat)
-        self.ui.pushButton_3.setFlat(True)
-        self.ui.pushButton_3.clicked.connect(self.reset_llista_taula)
+        # self.ui.pushButton_3.setFlat(True)
+        # self.ui.pushButton_3.clicked.connect(self.reset_llista_taula)
         self.ui.pushButton_4.clicked.connect(self.obre_arxiu_stock)
         self.ui.pushButton_5.clicked.connect(self.actualitza_google_sheet)
         # self.ui.pushButton_5.setText("↻")
@@ -286,7 +286,7 @@ class MainWindow(QMainWindow):
             self.ui.listWidget_4.setVisible(False)   # list
             self.ui.widget.setVisible(True)          # tag
 
-        self.ui.pushButton_3.setVisible(False) 
+        # self.ui.pushButton_3.setVisible(False) 
 
         self.carregar_google_sheets_a_tablewidget()
 
@@ -345,7 +345,8 @@ class MainWindow(QMainWindow):
         self.type_selected = []
         # self.ui.listWidget.setCurrentRow(self.tipos_components.index(self.type_selected))
 
-        text = self.ui.label.text()
+        # text = self.ui.label.text()
+        text = self.data_google_sheet[0][self.type_col]
         self.ui.label.setText(text + " ["+str(len(self.tipos_components))+"]")
 
     def obtenir_encapsulat_component(self):
@@ -361,7 +362,8 @@ class MainWindow(QMainWindow):
 
         self.package_selected = []
 
-        text = self.ui.label_4.text()
+        # text = self.ui.label_4.text()
+        text = self.data_google_sheet[0][self.package_col]
         self.ui.label_4.setText(text + " ["+str(len(self.encapsulat_components))+"]")
 
     def filtrar_tipos_components(self):
@@ -417,7 +419,10 @@ class MainWindow(QMainWindow):
     def carregar_google_sheets_a_tablewidget(self):
         "carregar les dades filtrades a la taula"
         # Definir las columnas específicas que queremos mostrar
-        columnas_deseadas = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.storage_col, self.description_col]
+        # columnas_deseadas = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.storage_col, self.description_col]
+        # amplada_columna = [110, 150, 70, 100, 300]
+        columnas_deseadas = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.description_col]
+        amplada_columna = [110, 150, 70, 300]
 
         dades_filtrades = self.data_google_sheet
         headers_filtrats = [dades_filtrades[0][titol] for titol in columnas_deseadas]   
@@ -468,14 +473,27 @@ class MainWindow(QMainWindow):
             # Establecer encabezados de columna
             self.ui.tableWidget.setHorizontalHeaderLabels(headers_filtrats)
 
+            
+
             for num_fila, data_fila in enumerate(dades_a_imprimir):
                 for num_col, data_col in enumerate(data_fila):
                     item = QTableWidgetItem(str(data_col))
                     # print(str(data_col))  # Això mostra el contingut real
                     self.ui.tableWidget.setItem(num_fila, num_col, item)
 
-            # Ajustar el ancho de las columnas al contenido
-            self.ui.tableWidget.resizeColumnsToContents()
+            # # Ajustar el ancho de las columnas al contenido
+            # self.ui.tableWidget.resizeColumnsToContents()
+
+            # Establir el mode interactiu per totes les columnes
+            header = self.ui.tableWidget.horizontalHeader()
+            header.setSectionResizeMode(QHeaderView.Interactive)
+
+            # Definir una amplada igual per a totes les columnes
+            # amplada_columna = 150  # pots ajustar aquest valor si vols
+            num_columnes = self.ui.tableWidget.columnCount()
+
+            for i in range(num_columnes):
+                self.ui.tableWidget.setColumnWidth(i, amplada_columna[i])
 
         else:
             self.ui.tableWidget.clear()
@@ -577,6 +595,7 @@ class MainWindow(QMainWindow):
 
     def info_stock(self):
         self.ui.stock_text.setText(self.obtenir_info_seleccio(self.stock_col))
+        self.ui.label_9.setText(self.obtenir_info_seleccio(self.storage_col))
  
     def categoria_component_seleccionada(self):
         '''S'arriba aquí quan es presion un item a la lista de tipos de components'''
