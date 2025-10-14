@@ -170,6 +170,9 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+
+        ################################## TO EDIT ##################################
+        
         self.stock_col = 0
         self.storage_col = 1
         self.type_col = 2
@@ -179,17 +182,25 @@ class MainWindow(QMainWindow):
         self.package_col = 6
         self.web_col = 7
 
-        self.ui.pushButton.setFlat(True)
-        self.ui.pushButton.clicked.connect(self.reset_llista_categoria)
-        self.ui.pushButton_2.setFlat(True)
-        self.ui.pushButton_2.clicked.connect(self.reset_llista_encapsulat)
-        # self.ui.pushButton_3.setFlat(True)
-        # self.ui.pushButton_3.clicked.connect(self.reset_llista_taula)
+        self.columns_to_show = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.description_col]
+        self.columns_width = [110, 150, 70, 300]
+
+        #############################################################################
+
+
+
+
+        self.ui.filter1_pushButton.setFlat(True)
+        self.ui.filter1_pushButton.clicked.connect(self.reset_llista_categoria)
+        self.ui.filter2_pushButton.setFlat(True)
+        self.ui.filter2_pushButton.clicked.connect(self.reset_llista_encapsulat)
+
         self.ui.pushButton_4.clicked.connect(self.obre_arxiu_stock)
         self.ui.pushButton_5.clicked.connect(self.actualitza_google_sheet)
-        # self.ui.pushButton_5.setText("↻")
-        # Assignar el missatge que es mostrarà quan el cursor passi per sobre del botó
 
+        # self.ui.pushButton_5.setText("↻")
+
+        # Assignar el missatge que es mostrarà quan el cursor passi per sobre del botó
         self.ui.datasheetButton.setToolTip("Obre la web/datasheet")
         self.ui.pushButton_4.setToolTip("Obre l'arxiu")
         self.ui.pushButton_5.setToolTip("Actualiza les dades")
@@ -239,24 +250,27 @@ class MainWindow(QMainWindow):
 
         self.data_google_sheet = self.carrega_google_sheet()
 
-        self.obtenir_tipos_component()
-        self.obtenir_encapsulat_component()
+        self.obtenir_items_llista_1(self.type_col)
+        self.obtenir_items_llista_2(self.package_col)
+        self.obtenir_items_llista_3(self.storage_col)
 
-        self.ui.listWidget.setSelectionMode(QAbstractItemView.MultiSelection)
-        self.ui.listWidget_3.setSelectionMode(QAbstractItemView.MultiSelection)
+        self.ui.filter1_listWidget.setSelectionMode(QAbstractItemView.MultiSelection)
+        self.ui.filter2_listWidget.setSelectionMode(QAbstractItemView.MultiSelection)
+        self.ui.filter3_listWidget.setSelectionMode(QAbstractItemView.MultiSelection)
 
 
-        self.ui.lineEdit.textChanged.connect(self.filtrar_tipos_components)
-        self.ui.lineEdit_3.textChanged.connect(self.filtrar_encapsulat_components)
-        self.ui.lineEdit_4.textChanged.connect(self.filtrar_text_taula)
+        self.ui.filter1_lineEdit.textChanged.connect(self.filtrar_llista_1)
+        self.ui.filter2_lineEdit.textChanged.connect(self.filtrar_llista_2)
+        self.ui.filter3_lineEdit.textChanged.connect(self.filtrar_llista_3)
+        self.ui.filterG_lineEdit.textChanged.connect(self.filtrar_text_taula)
         self.text_filtre_taula = []
         # self.llistaFiltres = []
-        self.ui.lineEdit_5.textChanged.connect(self.filtre_partNumber)
-        self.text_filtre_partNumber = []
+        self.ui.FilterPN_lineEdit.textChanged.connect(self.filter_partNumber)
+        self.text_filter_partNumber = []
         
         # Filtratge de búsqueda
-        self.ui.listWidget.itemClicked.connect(self.categoria_component_seleccionada)
-        self.ui.listWidget_3.itemClicked.connect(self.encapsulat_component_seleccionat)
+        self.ui.filter1_listWidget.itemClicked.connect(self.categoria_component_seleccionada)
+        self.ui.filter2_listWidget.itemClicked.connect(self.encapsulat_component_seleccionat)
 
         # Selecció de component
         self.ui.tableWidget.itemSelectionChanged.connect(self.info_stock)
@@ -270,12 +284,6 @@ class MainWindow(QMainWindow):
         self.ui.horizontalLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         
         # Crear els tags i afegir-los al layout
-        # tag1 = TagWidget("Memory Type", "Flash")
-        # tag1.closed.connect(self.on_tag_closed)  # Connecta el senya
-        # self.ui.horizontalLayout.addWidget(tag1)
-
-        # tag2 = TagWidget("Component Type", "Resistence")
-        # self.ui.horizontalLayout.addWidget(tag2)
         self.tag_widgets = []  # Llista per emmagatzemar els TagWidget
 
         filterVisualization = True # tag1_list0
@@ -286,7 +294,6 @@ class MainWindow(QMainWindow):
             self.ui.listWidget_4.setVisible(False)   # list
             self.ui.widget.setVisible(True)          # tag
 
-        # self.ui.pushButton_3.setVisible(False) 
 
         self.carregar_google_sheets_a_tablewidget()
 
@@ -330,119 +337,186 @@ class MainWindow(QMainWindow):
         "obra l'arxiu de google sheets"
         webbrowser.open_new_tab(f"https://docs.google.com/spreadsheets/d/1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA")
 
-    def obtenir_tipos_component(self):
+    def obtenir_items_llista_1(self, data_colums):
         "inici - defineix la llista dels diferents tipus de components que existeixen"
-        self.tipos_components = []
-        data_colums = self.type_col
+        self.diferents_items_llista_1 = []
+        # data_colums = self.type_col
 
-        self.tipos_components = {fila[data_colums] for fila in self.data_google_sheet [1:]}
-        self.tipos_components = sorted(list(self.tipos_components))
+        self.diferents_items_llista_1 = {fila[data_colums] for fila in self.data_google_sheet [1:]}
+        self.diferents_items_llista_1 = sorted(list(self.diferents_items_llista_1))
 
-        self.ui.listWidget.clear()
-        # self.tipos_components = ["RESISTOR", "CAPACITOR", "MOSFET"]
-        self.ui.listWidget.addItems(self.tipos_components)
+        self.ui.filter1_listWidget.clear()
+        self.ui.filter1_listWidget.addItems(self.diferents_items_llista_1)
+
         # Selecciona una opció per defecte
-        self.type_selected = []
-        # self.ui.listWidget.setCurrentRow(self.tipos_components.index(self.type_selected))
+        self.items_selected_llista_1 = []
 
         # text = self.ui.label.text()
-        text = self.data_google_sheet[0][self.type_col]
-        self.ui.label.setText(text + " ["+str(len(self.tipos_components))+"]")
+        text = self.data_google_sheet[0][data_colums]
+        self.ui.filter1_label.setText(text + " ["+str(len(self.diferents_items_llista_1))+"]")
 
-    def obtenir_encapsulat_component(self):
+    def obtenir_items_llista_2(self, data_colums):
         "inici - defineix la llista dels diferents tipus d'encapsulats que existeixen"
-        self.encapsulat_components = []
-        data_colums = self.package_col
+        self.diferents_items_llista_2 = []
+        # data_colums = self.package_col
 
-        self.encapsulat_components = {fila[data_colums] for fila in self.data_google_sheet[1:]}
-        self.encapsulat_components = sorted(list(self.encapsulat_components))
+        self.diferents_items_llista_2 = {fila[data_colums] for fila in self.data_google_sheet[1:]}
+        self.diferents_items_llista_2 = sorted(list(self.diferents_items_llista_2))
 
-        self.ui.listWidget_3.clear()
-        self.ui.listWidget_3.addItems(self.encapsulat_components)
+        self.ui.filter2_listWidget.clear()
+        self.ui.filter2_listWidget.addItems(self.diferents_items_llista_2)
 
-        self.package_selected = []
+        self.items_selected_llista_2 = []
 
-        # text = self.ui.label_4.text()
-        text = self.data_google_sheet[0][self.package_col]
-        self.ui.label_4.setText(text + " ["+str(len(self.encapsulat_components))+"]")
+        text = self.data_google_sheet[0][data_colums]
+        self.ui.filter2_label.setText(text + " ["+str(len(self.diferents_items_llista_2))+"]")
 
-    def filtrar_tipos_components(self):
+    def obtenir_items_llista_3(self, data_colums):
+        "inici - defineix la llista dels diferents tipus d'encapsulats que existeixen"
+        self.diferents_items_llista_3 = []
+        # data_colums = self.package_col
+
+        self.diferents_items_llista_3 = {fila[data_colums] for fila in self.data_google_sheet[1:]}
+        self.diferents_items_llista_3 = sorted(list(self.diferents_items_llista_3))
+
+        self.ui.filter3_listWidget.clear()
+        self.ui.filter3_listWidget.addItems(self.diferents_items_llista_3)
+
+        self.items_selected_llista_3 = []
+
+        text = self.data_google_sheet[0][data_colums]
+        self.ui.filter3_label.setText(text + " ["+str(len(self.diferents_items_llista_3))+"]")
+
+    def filtrar_llista_1(self):
         'Aplica filtre per mostrar la llista de tipos de components --- filtrant pel text o per una selecció en una altre llista'
 
+    #     # actualitza els valors que es mostren a la llista, segons el text, PERO no es selecciona cap item
+    #     text_filtre_llista = self.ui.filter1_lineEdit.text()
+    #     filtre_tipos_components= [component for component in self.diferents_items_llista_1 if text_filtre_llista.lower() in component.lower()]
+    #     self.ui.filter1_listWidget.clear()
+    #     self.ui.filter1_listWidget.addItems(filtre_tipos_components)
+
+
+    #     # mante senyalitzar els items seleccionats
+    #     for idx in range(self.ui.filter1_listWidget.count()):
+    #         item = self.ui.filter1_listWidget.item(idx)
+    #         if item.text() in self.items_selected_llista_1:
+    #             item.setSelected(True)
+    #         else:
+    #             item.setSelected(False)
+
+    # def filtrar_tipos_components(self):
+    #     'Aplica filtre per mostrar la llista de tipos de components --- filtrant pel text o per una selecció en una altre llista'
+
+        listWidget = self.ui.filter1_listWidget
+        text_a_filtrar = self.ui.filter1_lineEdit.text()
+        llista = self.diferents_items_llista_1
+        item_seleccionats = self.items_selected_llista_1
+
+
         # actualitza els valors que es mostren a la llista, segons el text, PERO no es selecciona cap item
-        text_filtre_llista = self.ui.lineEdit.text()
-        filtre_tipos_components= [component for component in self.tipos_components if text_filtre_llista.lower() in component.lower()]
-        self.ui.listWidget.clear()
-        self.ui.listWidget.addItems(filtre_tipos_components)
+        filtre_aplicat= [item for item in llista if text_a_filtrar.lower() in item.lower()]
+        listWidget.clear()
+        listWidget.addItems(filtre_aplicat)
 
 
-        # mante senyalitzar els items seleccionats
-        for idx in range(self.ui.listWidget.count()):
-            item = self.ui.listWidget.item(idx)
-            if item.text() in self.type_selected:
+        # mante els items seleccionats
+        for idx in range(listWidget.count()):
+            item = listWidget.item(idx)
+            if item.text() in item_seleccionats:
                 item.setSelected(True)
             else:
                 item.setSelected(False)
-
-    def filtrar_encapsulat_components(self):
+    
+    def filtrar_llista_2(self):
         'defineix la llista d\'encapsultats de components --- filtrant pel text o per una selecció en una altre llista'
-        # if filterType == "textChanged":
-        text_filtre_llista = self.ui.lineEdit_3.text()
-        filtre_encapsulat_components = [encapsulat for encapsulat in self.encapsulat_components if text_filtre_llista.lower() in encapsulat.lower()]
-        self.ui.listWidget_3.clear()
-        self.ui.listWidget_3.addItems(filtre_encapsulat_components)
+        # # if filterType == "textChanged":
+        # text_filtre_llista = self.ui.filter2_lineEdit.text()
+        # filtre_encapsulat_components = [encapsulat for encapsulat in self.diferents_items_llista_2 if text_filtre_llista.lower() in encapsulat.lower()]
+        # self.ui.filter2_listWidget.clear()
+        # self.ui.filter2_listWidget.addItems(filtre_encapsulat_components)
 
 
-        # mante senyalitzar els items seleccionats
-        for idx in range(self.ui.listWidget_3.count()):
-            item = self.ui.listWidget_3.item(idx)
-            if item.text() in self.package_selected:
+        # # mante senyalitzar els items seleccionats
+        # for idx in range(self.ui.filter2_listWidget.count()):
+        #     item = self.ui.filter2_listWidget.item(idx)
+        #     if item.text() in self.items_selected_llista_2:
+        #         item.setSelected(True)
+        #     else:
+        #         item.setSelected(False)
+
+
+
+        listWidget = self.ui.filter2_listWidget
+        text_a_filtrar = self.ui.filter2_lineEdit.text()
+        llista = self.diferents_items_llista_2
+        item_seleccionats = self.items_selected_llista_2
+
+
+        # actualitza els valors que es mostren a la llista, segons el text, PERO no es selecciona cap item
+        filtre_aplicat= [item for item in llista if text_a_filtrar.lower() in item.lower()]
+        listWidget.clear()
+        listWidget.addItems(filtre_aplicat)
+
+
+        # mante els items seleccionats
+        for idx in range(listWidget.count()):
+            item = listWidget.item(idx)
+            if item.text() in item_seleccionats:
                 item.setSelected(True)
             else:
                 item.setSelected(False)
 
 
+    def filtrar_llista_3(self):
+        'defineix la llista d\'encapsultats de components --- filtrant pel text o per una selecció en una altre llista'
 
-        # # elif filterType == "itemClicked":
-        # categoria_component_seleccionat = self.ui.listWidget.currentItem()
+        listWidget = self.ui.filter3_listWidget
+        text_a_filtrar = self.ui.filter3_lineEdit.text()
+        llista = self.diferents_items_llista_3
+        item_seleccionats = self.items_selected_llista_3
 
-        # if categoria_component_seleccionat:  # Comprovar que no és None
-        #     categoria_text = categoria_component_seleccionat.text()
-            
-        #     filtre_encapsulat_components = list(set([
-        #         fila[self.package_col]
-        #         for fila in self.data_google_sheet
-        #         if fila[self.type_col] == categoria_text]))
-        # # else:
-        # #     filtre_encapsulat_components = self.encapsulat_components   
+
+        # actualitza els valors que es mostren a la llista, segons el text, PERO no es selecciona cap item
+        filtre_aplicat= [item for item in llista if text_a_filtrar.lower() in item.lower()]
+        listWidget.clear()
+        listWidget.addItems(filtre_aplicat)
+
+
+        # mante els items seleccionats
+        for idx in range(listWidget.count()):
+            item = listWidget.item(idx)
+            if item.text() in item_seleccionats:
+                item.setSelected(True)
+            else:
+                item.setSelected(False)
 
     def carregar_google_sheets_a_tablewidget(self):
         "carregar les dades filtrades a la taula"
         # Definir las columnas específicas que queremos mostrar
-        # columnas_deseadas = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.storage_col, self.description_col]
-        # amplada_columna = [110, 150, 70, 100, 300]
-        columnas_deseadas = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.description_col]
-        amplada_columna = [110, 150, 70, 300]
+        # self.columns_to_show = [self.lcscPN_col, self.manufacturePN_col, self.package_col, self.storage_col, self.description_col]
+        # self.columns_width = [110, 150, 70, 100, 300]
+
 
         dades_filtrades = self.data_google_sheet
-        headers_filtrats = [dades_filtrades[0][titol] for titol in columnas_deseadas]   
+        headers_filtrats = [dades_filtrades[0][titol] for titol in self.columns_to_show]   
 
         # Filtrar els components seleccionats
         if hasattr(self, "type_selected"):
-            if self.type_selected:
-                dades_filtrades = [fila for fila in dades_filtrades if fila[self.type_col] in self.type_selected]
+            if self.items_selected_llista_1:
+                dades_filtrades = [fila for fila in dades_filtrades if fila[self.type_col] in self.items_selected_llista_1]
 
         if hasattr(self, "package_selected"):
-            if self.package_selected:
-                dades_filtrades = [fila for fila in dades_filtrades if fila[self.package_col] in self.package_selected]
+            if self.items_selected_llista_2:
+                dades_filtrades = [fila for fila in dades_filtrades if fila[self.package_col] in self.items_selected_llista_2]
 
         if hasattr(self, "text_filtre_taula"):
             if self.text_filtre_taula:
                 dades_filtrades = [fila for fila in dades_filtrades if any(self.text_filtre_taula.lower() in str(cel).lower() for cel in fila)]
 
         if hasattr(self, "text_filtre_partNumber"):
-            if self.text_filtre_partNumber:
-                dades_filtrades = [fila for fila in dades_filtrades if  self.text_filtre_partNumber.lower() in str(fila[self.manufacturePN_col]).lower()]
+            if self.text_filter_partNumber:
+                dades_filtrades = [fila for fila in dades_filtrades if  self.text_filter_partNumber.lower() in str(fila[self.manufacturePN_col]).lower()]
 
         self.llista_filtres()
 
@@ -454,13 +528,13 @@ class MainWindow(QMainWindow):
                 # dades_a_imprimir = dades_filtrades[1:]
 
                 dades_a_imprimir = [
-                [fila[i] for i in columnas_deseadas]
+                [fila[i] for i in self.columns_to_show]
                 for fila in dades_filtrades[1:]
             ]
             else:
                 # print("NO hi ha headers")
                 dades_a_imprimir = [
-                [fila[i] for i in columnas_deseadas]
+                [fila[i] for i in self.columns_to_show]
                 for fila in dades_filtrades
             ]
 
@@ -468,7 +542,7 @@ class MainWindow(QMainWindow):
             num_rows_filtradas = len(dades_a_imprimir)
             self.ui.label_5.setText(str(num_rows_filtradas))
             self.ui.tableWidget.setRowCount(num_rows_filtradas)
-            self.ui.tableWidget.setColumnCount(len(columnas_deseadas))  # 3 columnas específicas
+            self.ui.tableWidget.setColumnCount(len(self.columns_to_show))  # 3 columnas específicas
             
             # Establecer encabezados de columna
             self.ui.tableWidget.setHorizontalHeaderLabels(headers_filtrats)
@@ -489,11 +563,11 @@ class MainWindow(QMainWindow):
             header.setSectionResizeMode(QHeaderView.Interactive)
 
             # Definir una amplada igual per a totes les columnes
-            # amplada_columna = 150  # pots ajustar aquest valor si vols
+            # self.columns_width = 150  # pots ajustar aquest valor si vols
             num_columnes = self.ui.tableWidget.columnCount()
 
             for i in range(num_columnes):
-                self.ui.tableWidget.setColumnWidth(i, amplada_columna[i])
+                self.ui.tableWidget.setColumnWidth(i, self.columns_width[i])
 
         else:
             self.ui.tableWidget.clear()
@@ -511,22 +585,22 @@ class MainWindow(QMainWindow):
 
         self.tag_widgets = []  # Llista per emmagatzemar els TagWidget
         print("hola")
-        if self.type_selected:
-            print("llista_filtres type_selected", self.type_selected)
-            self.llistaFiltres += self.type_selected
-            for item in self.type_selected:
+        if self.items_selected_llista_1:
+            print("llista_filtres type_selected", self.items_selected_llista_1)
+            self.llistaFiltres += self.items_selected_llista_1
+            for item in self.items_selected_llista_1:
                 self.creaTag("type", item)
-        if self.package_selected:
-            self.llistaFiltres += self.package_selected
-            for item in self.package_selected:
+        if self.items_selected_llista_2:
+            self.llistaFiltres += self.items_selected_llista_2
+            for item in self.items_selected_llista_2:
                 self.creaTag("package", item)
         if self.text_filtre_taula:
             print("llista_filtres text_filtre_taula", self.text_filtre_taula)
             self.llistaFiltres.append(self.text_filtre_taula)
             self.creaTag("text", self.text_filtre_taula)
-        if self.text_filtre_partNumber:
-            self.llistaFiltres.append(self.text_filtre_partNumber)
-            self.creaTag("partNumber", self.text_filtre_partNumber)
+        if self.text_filter_partNumber:
+            self.llistaFiltres.append(self.text_filter_partNumber)
+            self.creaTag("partNumber", self.text_filter_partNumber)
 
         # Mostre la llista amb el filtres aplicats
         self.ui.listWidget_4.clear()
@@ -554,16 +628,16 @@ class MainWindow(QMainWindow):
         print(f"El tag amb la clau '{key}'ha estat tancat...'{value}'")
         # print(">>", key)
         if key == "type":
-            self.type_selected.remove(value)
+            self.items_selected_llista_1.remove(value)
 
         if key == "package":
-            self.package_selected.remove(value)
+            self.items_selected_llista_2.remove(value)
 
         if key == "text":
             self.text_filtre_taula.clear()
 
         if key == "partNumber":
-            self.text_filtre_partNumber.clear()
+            self.text_filter_partNumber.clear()
 
 
         self.llista_filtres()
@@ -600,70 +674,70 @@ class MainWindow(QMainWindow):
     def categoria_component_seleccionada(self):
         '''S'arriba aquí quan es presion un item a la lista de tipos de components'''
         # actualitza llista de tipos de components seleccionats
-        pressionat= self.ui.listWidget.currentItem().text()
-        if pressionat in self.type_selected:
-            self.type_selected.remove(pressionat)
+        pressionat= self.ui.filter1_listWidget.currentItem().text()
+        if pressionat in self.items_selected_llista_1:
+            self.items_selected_llista_1.remove(pressionat)
         else:
-            self.type_selected.append(pressionat)
+            self.items_selected_llista_1.append(pressionat)
 
-        # print("type_selected", self.type_selected)
+        # print("type_selected", self.items_selected_llista_1)
 
         # un cop seleccionat l'item, esborrem el textEdit
-        self.ui.lineEdit.setText("")
+        self.ui.filter1_lineEdit.setText("")
 
         # Actualitzem llista de components segons filtre
-        self.filtrar_tipos_components()
+        self.filtrar_llista_1()
         
         # Actualizem taula valors segons nou filtre
         self.carregar_google_sheets_a_tablewidget()
 
-        self.filtrar_encapsulat_components()
+        self.filtrar_llista_2()
 
     def reset_llista_categoria(self):
-        # print("hola")
-        self.type_selected.clear()
-        self.filtrar_tipos_components()
+        "Acció del botó reset del filtre 1"
+        self.items_selected_llista_1.clear()
+        self.filtrar_llista_1()
         self.carregar_google_sheets_a_tablewidget()
 
     def encapsulat_component_seleccionat(self, item):
 
         # actualitza llista de tipos de components seleccionats
-        pressionat= self.ui.listWidget_3.currentItem().text()
-        if pressionat in self.package_selected:
-            self.package_selected.remove(pressionat)
+        pressionat= self.ui.filter2_listWidget.currentItem().text()
+        if pressionat in self.items_selected_llista_2:
+            self.items_selected_llista_2.remove(pressionat)
         else:
-            self.package_selected.append(pressionat)
+            self.items_selected_llista_2.append(pressionat)
 
-        # print("package_selected", self.package_selected)
-        # self.package_selected = item.text()
+        # print("package_selected", self.items_selected_llista_2)
+        # self.items_selected_llista_2 = item.text()
 
-        self.ui.lineEdit_3.setText("")
-        self.filtrar_encapsulat_components()
+        self.ui.filter2_lineEdit.setText("")
+        self.filtrar_llista_2()
 
         self.carregar_google_sheets_a_tablewidget()
 
-        self.filtrar_tipos_components()
+        self.filtrar_llista_1()
 
     def reset_llista_encapsulat(self):
-        # print("hola")
-        self.package_selected.clear()
-        self.filtrar_encapsulat_components()
+        "Acció del botó reset del filtre 2"
+        self.items_selected_llista_2.clear()
+        self.filtrar_llista_2()
         self.carregar_google_sheets_a_tablewidget()
 
     def filtrar_text_taula(self):
-        self.text_filtre_taula = self.ui.lineEdit_4.text()
+        self.text_filtre_taula = self.ui.filterG_lineEdit.text()
         self.carregar_google_sheets_a_tablewidget()
 
     def reset_llista_taula(self):
         "resetaja  el filtre de text total"
         print("reset_llista_taula")
-        self.ui.lineEdit_4.clear()  # neteja el camp de text
+        self.ui.filterG_lineEdit.clear()  # neteja el camp de text
         self.text_filtre_taula = "" # assegura que la variable també està buida
         self.carregar_google_sheets_a_tablewidget()
 
-    def filtre_partNumber(self):
-        self.text_filtre_partNumber = self.ui.lineEdit_5.text()
-        print(self.text_filtre_partNumber)
+    def filter_partNumber(self):
+        self.text_filter_partNumber = self.ui.FilterPN_lineEdit.text()
+        print(self.text_filter_partNumber)
         self.carregar_google_sheets_a_tablewidget()
 
     def goDatasheet(self):

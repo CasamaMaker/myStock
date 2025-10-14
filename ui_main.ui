@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="filter1_label">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -24,10 +24,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Categoria</string>
+     <string>Filter 1</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="filter1_listWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -83,7 +83,7 @@
      <string>📦</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="filter1_lineEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -93,7 +93,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="filter2_lineEdit">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -103,7 +103,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget_3">
+   <widget class="QListWidget" name="filter2_listWidget">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -113,7 +113,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="filter2_label">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -123,7 +123,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Encapsulat</string>
+     <string>Filter 2</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -139,7 +139,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="filterG_lineEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -149,7 +149,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="filter1_pushButton">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -167,7 +167,7 @@
      <string> reset</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="filter2_pushButton">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -226,7 +226,7 @@
      <string>↻</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="FilterPN_lineEdit">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -236,7 +236,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="FilterPN_label">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -249,7 +249,7 @@
      <string>Filtre Manufacture PN</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="filterG_label">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -265,8 +265,8 @@
    <widget class="QListWidget" name="listWidget_4">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>10</y>
+      <x>660</x>
+      <y>80</y>
       <width>121</width>
       <height>131</height>
      </rect>
@@ -354,6 +354,98 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="filter3_listWidget">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>50</y>
+      <width>121</width>
+      <height>161</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="filter3_label">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>10</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Filter 3</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="filter3_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>210</y>
+      <width>121</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>reset</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="filter3_lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>30</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="filter4_listWidget">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>50</y>
+      <width>121</width>
+      <height>161</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="filter4_label">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>10</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Filter 4</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="filter4_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>210</y>
+      <width>121</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>reset</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="filter4_lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>30</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
     </property>
    </widget>
   </widget>
