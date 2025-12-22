@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.3
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -154,6 +154,9 @@ class Ui_MainWindow(object):
         self.filter4_lineEdit = QLineEdit(self.centralwidget)
         self.filter4_lineEdit.setObjectName(u"filter4_lineEdit")
         self.filter4_lineEdit.setGeometry(QRect(440, 30, 121, 21))
+        self.clear_all_pushButton = QPushButton(self.centralwidget)
+        self.clear_all_pushButton.setObjectName(u"clear_all_pushButton")
+        self.clear_all_pushButton.setGeometry(QRect(660, 220, 75, 23))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -188,5 +191,6 @@ class Ui_MainWindow(object):
         self.filter3_pushButton.setText(QCoreApplication.translate("MainWindow", u"reset", None))
         self.filter4_label.setText(QCoreApplication.translate("MainWindow", u"Filter 4", None))
         self.filter4_pushButton.setText(QCoreApplication.translate("MainWindow", u"reset", None))
+        self.clear_all_pushButton.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
     # retranslateUi
 
