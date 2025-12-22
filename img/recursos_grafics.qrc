@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="logos">
+    <file>file_open_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>autorenew_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>link_42dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
     <file>archive_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
     <file>content_paste_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
     <file>inventory_2_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>

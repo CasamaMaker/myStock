@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="iconSize">
+   <size>
+    <width>34</width>
+    <height>34</height>
+   </size>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="filter1_label">
     <property name="geometry">
@@ -62,7 +68,17 @@
      </font>
     </property>
     <property name="text">
-     <string>🌐</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="img/recursos_grafics.qrc">
+      <normaloff>:/logos/link_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/link_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>34</width>
+      <height>34</height>
+     </size>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -80,7 +96,10 @@
      </font>
     </property>
     <property name="text">
-     <string>📦</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="img/recursos_grafics.qrc">:/logos/archive_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</pixmap>
     </property>
    </widget>
    <widget class="QLineEdit" name="filter1_lineEdit">
@@ -205,7 +224,17 @@
      </font>
     </property>
     <property name="text">
-     <string>📑</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="img/recursos_grafics.qrc">
+      <normaloff>:/logos/file_open_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/file_open_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>34</width>
+      <height>34</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_5">
@@ -223,7 +252,17 @@
      </font>
     </property>
     <property name="text">
-     <string>↻</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="img/recursos_grafics.qrc">
+      <normaloff>:/logos/autorenew_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/autorenew_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>34</width>
+      <height>34</height>
+     </size>
     </property>
    </widget>
    <widget class="QLineEdit" name="FilterPN_lineEdit">
@@ -322,7 +361,10 @@
      </font>
     </property>
     <property name="text">
-     <string>📋</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="img/recursos_grafics.qrc">:/logos/content_paste_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
@@ -340,7 +382,10 @@
      </font>
     </property>
     <property name="text">
-     <string>🗄</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="img/recursos_grafics.qrc">:/logos/inventory_2_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_9">
@@ -453,12 +498,12 @@
      <rect>
       <x>660</x>
       <y>220</y>
-      <width>75</width>
+      <width>121</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Reset all filters</string>
     </property>
    </widget>
   </widget>
@@ -474,6 +519,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="img/recursos_grafics.qrc"/>
+ </resources>
  <connections/>
 </ui>
