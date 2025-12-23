@@ -4,12 +4,13 @@ from PySide6.QtWidgets import (
     QTableWidgetItem, QAbstractItemView
 )
 from PySide6.QtCore import Signal, Qt
+from PySide6.QtGui import QColor
 from ui_main import Ui_MainWindow
 import sys
 import csv
 import requests
 import webbrowser
-from typing import List, Optional, Dict, Tuple
+from typing import List, Optional, Dict, Tuple, Set
 from dataclasses import dataclass
 
 
@@ -356,6 +357,64 @@ class MainWindow(QMainWindow):
         header_text = self.data_google_sheet[0][filter_config.column_index]
         label_widget.setText(f"{header_text} [{len(filter_manager.available_items)}]")
 
+    def _get_available_values_for_filter(self, filter_config: FilterConfig) -> Set[str]:
+        """Obté els valors disponibles per un filtre segons les dades filtrades"""
+        # Aplicar tots els filtres EXCEPTE el filtre actual
+        filtered = self.data_google_sheet[1:]
+        
+        for other_config in Config.FILTERS_CONFIG:
+            if not other_config.enabled:
+                continue
+            
+            # Saltar el filtre actual
+            if other_config.tag_key == filter_config.tag_key:
+                continue
+            
+            # Aplicar els altres filtres de llista
+            other_manager = self.filters[other_config.tag_key]
+            if other_manager.selected_items:
+                filtered = [row for row in filtered 
+                           if row[other_config.column_index] in other_manager.selected_items]
+        
+        # Aplicar filtres de text
+        if self.text_filter_general:
+            filtered = [row for row in filtered 
+                       if any(self.text_filter_general.lower() in str(cell).lower() 
+                             for cell in row)]
+        
+        if self.text_filter_part_number:
+            filtered = [row for row in filtered 
+                       if self.text_filter_part_number.lower() 
+                       in str(row[Config.MANUFACTURE_PN]).lower()]
+        
+        # Retornar els valors únics disponibles per aquest filtre
+        return {row[filter_config.column_index] for row in filtered}
+
+    def _update_filter_availability(self):
+        """Actualitza la disponibilitat visual de tots els filtres"""
+        for filter_config in Config.FILTERS_CONFIG:
+            if not filter_config.enabled:
+                continue
+            
+            # Obtenir valors disponibles segons els filtres actius
+            available_values = self._get_available_values_for_filter(filter_config)
+            
+            # Actualitzar l'aparença del list_widget
+            list_widget = getattr(self.ui, filter_config.list_widget_name)
+            
+            for i in range(list_widget.count()):
+                item = list_widget.item(i)
+                item_text = item.text()
+                
+                if item_text in available_values:
+                    # Item disponible - color normal
+                    item.setForeground(QColor(0, 0, 0))  # Negre per temes clars
+                    item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEnabled)
+                else:
+                    # Item no disponible - gris clar i deshabilitat
+                    item.setForeground(QColor(180, 180, 180))  # Gris clar
+                    item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
+
     def _filter_list(self, filter_config: FilterConfig, text: str):
         """Filtra una llista per text"""
         filter_manager = self.filters[filter_config.tag_key]
@@ -370,6 +429,9 @@ class MainWindow(QMainWindow):
             item = list_widget.item(idx)
             if item.text() in filter_manager.selected_items:
                 item.setSelected(True)
+        
+        # Actualitzar disponibilitat visual
+        self._update_filter_availability()
 
     def _on_list_item_clicked(self, filter_config: FilterConfig):
         """Gestiona el clic en un item de la llista"""
@@ -463,10 +525,15 @@ class MainWindow(QMainWindow):
         if not filtered_data:
             self._clear_table()
             self._show_status_message("No hi ha valors corresponents al filtre", 2000)
+            # Actualitzar disponibilitat dels filtres encara que no hi hagi resultats
+            self._update_filter_availability()
             return
         
         self._populate_table(filtered_data)
         self._update_filter_tags()
+        
+        # NOVA FUNCIONALITAT: Actualitzar la disponibilitat dels altres filtres
+        self._update_filter_availability()
 
     def _apply_filters(self) -> List[List[str]]:
         """Aplica tots els filtres a les dades"""
@@ -658,6 +725,7 @@ class MainWindow(QMainWindow):
         """Obre el Google Sheet en una nova pestanya"""
         url = f"https://docs.google.com/spreadsheets/d/{Config.GOOGLE_SHEET_ID}"
         webbrowser.open_new_tab(url)
+
 
     def _refresh_data(self):
         """Actualitza les dades del Google Sheet"""
