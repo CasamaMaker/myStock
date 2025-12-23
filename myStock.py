@@ -13,6 +13,7 @@ import webbrowser
 from typing import List, Optional, Dict, Tuple, Set
 from dataclasses import dataclass
 from PySide6.QtGui import QIcon
+import recursos_grafics_rc
 
 
 @dataclass
