@@ -1,2 +1,3 @@
 pyside6-uic -o .\ui_main.py .\ui_main.ui
 pyside6-rcc img/recursos_grafics.qrc -o recursos_grafics_rc.py
+pyinstaller --onefile --windowed --icon=img/inventory.ico myStock.py

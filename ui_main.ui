@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>myStock</string>
   </property>
   <property name="iconSize">
    <size>
@@ -391,7 +391,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>410</x>
       <y>270</y>
       <width>131</width>
       <height>41</height>

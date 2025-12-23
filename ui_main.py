@@ -146,7 +146,7 @@ class Ui_MainWindow(object):
         self.label_8.setPixmap(QPixmap(u":/logos/inventory_2_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"))
         self.label_9 = QLabel(self.centralwidget)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(400, 270, 131, 41))
+        self.label_9.setGeometry(QRect(410, 270, 131, 41))
         self.filter3_listWidget = QListWidget(self.centralwidget)
         self.filter3_listWidget.setObjectName(u"filter3_listWidget")
         self.filter3_listWidget.setGeometry(QRect(300, 50, 121, 161))
@@ -189,7 +189,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"myStock", None))
         self.filter1_label.setText(QCoreApplication.translate("MainWindow", u"Filter 1", None))
         self.datasheetButton.setText("")
         self.label_2.setText("")
