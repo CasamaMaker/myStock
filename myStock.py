@@ -16,6 +16,9 @@ from PySide6.QtGui import QIcon
 import recursos_grafics_rc
 
 
+import gspread
+from google.oauth2.service_account import Credentials
+
 @dataclass
 class FilterConfig:
     """Configuració d'un filtre"""
@@ -86,6 +89,7 @@ class Config:
     
     # Google Sheet ID
     GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"
+    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"
     
     # Timeout per peticions HTTP (segons)
     REQUEST_TIMEOUT = 10
@@ -309,31 +313,181 @@ class MainWindow(QMainWindow):
         self._update_table()
         self._show_status_message("Iniciat correctament", 2000)
 
-    def _fetch_google_sheet(self) -> List[List[str]]:
-        """Carrega les dades des del Google Sheet"""
+    # def _fetch_google_sheet(self) -> List[List[str]]:
+    #     """Carrega les dades des del Google Sheet"""
+    #     try:
+    #         csv_url = (
+    #             f"https://docs.google.com/spreadsheets/d/"
+    #             f"{Config.GOOGLE_SHEET_ID}/export?format=csv"
+    #         )
+            
+    #         response = requests.get(csv_url, timeout=Config.REQUEST_TIMEOUT)
+    #         response.raise_for_status()
+            
+    #         csv_content = response.content.decode('utf-8')
+    #         csv_reader = csv.reader(csv_content.splitlines())
+    #         data = list(csv_reader)
+            
+    #         if not data:
+    #             print("No s'han trobat dades al Google Sheet")
+    #             return []
+            
+    #         return data
+            
+    #     except requests.exceptions.RequestException as e:
+    #         error_msg = f"Error al accedir a Google Sheet: {e}"
+    #         print(error_msg)
+    #         self._show_status_message(error_msg, 3000)
+    #         return []
+
+    def _fetch_google_sheet(self, worksheet_name: str = None) -> List[List[str]]:
+        """
+        Carrega les dades des del Google Sheet via Google Sheets API.
+        
+        Args:
+            worksheet_name: Nom de la pestanya a carregar. Si és None, carrega la primera.
+        
+        Returns:
+            Llista de llistes amb les dades del full de càlcul, o llista buida si hi ha error.
+        """
+        import gspread
+        from google.oauth2.service_account import Credentials
+        import json
+        import os
+        
+        service_email = "desconegut"
+        
         try:
-            csv_url = (
-                f"https://docs.google.com/spreadsheets/d/"
-                f"{Config.GOOGLE_SHEET_ID}/export?format=csv"
+            # Validació de configuració
+            if not Config.GOOGLE_CREDENTIALS_JSON:
+                raise ValueError("No s'ha configurat GOOGLE_CREDENTIALS_JSON")
+            if not Config.GOOGLE_SHEET_ID:
+                raise ValueError("No s'ha configurat GOOGLE_SHEET_ID")
+            
+            # Verificar que el fitxer existeix i es pot llegir
+            creds_path = Config.GOOGLE_CREDENTIALS_JSON
+            if not os.path.exists(creds_path):
+                raise FileNotFoundError(f"No existeix el fitxer: {creds_path}")
+            
+            if not os.access(creds_path, os.R_OK):
+                raise PermissionError(f"No es pot llegir el fitxer local: {creds_path}")
+            
+            print(f"✓ Fitxer de credencials accessible: {creds_path}")
+            
+            # Llegir el service account email
+            try:
+                with open(creds_path, 'r', encoding='utf-8') as f:
+                    creds_data = json.load(f)
+                    service_email = creds_data.get('client_email', 'No trobat')
+                    print(f"Service Account: {service_email}")
+                    
+            except (json.JSONDecodeError, UnicodeDecodeError) as e:
+                raise ValueError(f"El fitxer JSON no és vàlid: {e}")
+            
+            # Àmbits amb permisos complets
+            SCOPES = [
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/drive",
+            ]
+            
+            # Autenticació
+            print(f"Carregant credencials...")
+            creds = Credentials.from_service_account_file(
+                creds_path,
+                scopes=SCOPES
             )
+            print("✓ Credencials carregades correctament")
             
-            response = requests.get(csv_url, timeout=Config.REQUEST_TIMEOUT)
-            response.raise_for_status()
+            client = gspread.authorize(creds)
+            print("✓ Client autoritzat")
             
-            csv_content = response.content.decode('utf-8')
-            csv_reader = csv.reader(csv_content.splitlines())
-            data = list(csv_reader)
+        except (FileNotFoundError, ValueError) as e:
+            print(f"Error de configuració: {e}")
+            self._show_status_message(str(e), 5000)
+            return []
+        
+        except PermissionError as e:
+            print(f"Error de permisos del fitxer local: {e}")
+            print("\nSOLUCIONS:")
+            print(f'1. icacls "{creds_path}" /grant:r "%USERNAME%:(F)"')
+            print("2. Mou el fitxer JSON a una ubicació sense restriccions")
+            self._show_status_message("Error de permisos del fitxer JSON local", 5000)
+            return []
+        
+        except Exception as e:
+            print(f"Error en autenticació: {type(e).__name__}: {e}")
+            import traceback
+            traceback.print_exc()
+            self._show_status_message("Error en autenticació", 5000)
+            return []
+        
+        # Ara intentem accedir al Google Sheet (fora del try anterior)
+        try:
+            print(f"Accedint al Google Sheet ID: {Config.GOOGLE_SHEET_ID}")
+            sheet = client.open_by_key(Config.GOOGLE_SHEET_ID)
+            print(f"✓ Connexió establerta amb '{sheet.title}'")
+            
+            # Selecció de la pestanya
+            if worksheet_name:
+                worksheet = sheet.worksheet(worksheet_name)
+            else:
+                worksheet = sheet.sheet1
+            
+            print(f"✓ Llegint pestanya: {worksheet.title}")
+            
+            # Obtenció de dades
+            data = worksheet.get_all_values()
             
             if not data:
-                print("No s'han trobat dades al Google Sheet")
+                msg = "El Google Sheet està buit"
+                print(f"Avís: {msg}")
+                self._show_status_message(msg, 3000)
                 return []
             
+            print(f"✓ S'han carregat {len(data)} files del Google Sheet")
             return data
+        
+        except gspread.exceptions.SpreadsheetNotFound as e:
+            print(f"Error: Google Sheet no trobat")
+            print(f"Sheet ID: {Config.GOOGLE_SHEET_ID}")
+            print(f"Service Account: {service_email}")
+            print(f"\nVerifica:")
+            print(f"1. Que el Google Sheet existeix: https://docs.google.com/spreadsheets/d/{Config.GOOGLE_SHEET_ID}")
+            print(f"2. Que està compartit amb: {service_email}")
+            print(f"3. Que el service account té permisos d'Editor (no només Lector)")
+            print(f"\nDetalls de l'error: {e}")
+            self._show_status_message("Google Sheet no trobat o sense accés", 5000)
+            return []
+        
+        except gspread.exceptions.WorksheetNotFound:
+            error_msg = f"Pestanya '{worksheet_name}' no trobada"
+            print(f"Error: {error_msg}")
+            self._show_status_message(error_msg, 5000)
+            return []
+        
+        except gspread.exceptions.APIError as e:
+            error_code = getattr(e.response, 'status_code', 'desconegut')
+            print(f"Error: API Error (codi {error_code})")
+            print(f"Missatge: {e}")
             
-        except requests.exceptions.RequestException as e:
-            error_msg = f"Error al accedir a Google Sheet: {e}"
-            print(error_msg)
-            self._show_status_message(error_msg, 3000)
+            if error_code == 403:
+                print(f"\n=== PROBLEMA DE PERMISOS ===")
+                print(f"El service account NO TÉ ACCÉS al Google Sheet")
+                print(f"\nPas a pas per solucionar-ho:")
+                print(f"1. Obre: https://docs.google.com/spreadsheets/d/{Config.GOOGLE_SHEET_ID}")
+                print(f"2. Clica el botó 'Compartir' (dalt a la dreta)")
+                print(f"3. Afegeix aquest email: {service_email}")
+                print(f"4. Dona-li permisos d'EDITOR")
+                print(f"5. Clica 'Enviar' o 'Compartir'")
+            
+            self._show_status_message(f"Error API Google Sheets ({error_code})", 5000)
+            return []
+        
+        except Exception as e:
+            print(f"Error inesperat en accedir al Google Sheet: {type(e).__name__}: {e}")
+            import traceback
+            traceback.print_exc()
+            self._show_status_message("Error inesperat", 5000)
             return []
 
     def _populate_all_filter_lists(self):
