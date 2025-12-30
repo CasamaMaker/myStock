@@ -42,6 +42,15 @@ class Config:
     DESCRIPTION = 5
     PACKAGE = 6
     WEB = 7
+
+    # STOCK = 0
+    # STORAGE = 11
+    # TYPE = 3
+    # LCSC_PN = 6
+    # MANUFACTURE_PN = 7
+    # DESCRIPTION = 5
+    # PACKAGE =   2
+    # WEB = 17
     
     # Columnes a mostrar i les seves amplades
     COLUMNS_TO_SHOW = [LCSC_PN, MANUFACTURE_PN, PACKAGE, DESCRIPTION]
@@ -68,7 +77,7 @@ class Config:
             enabled=True  # Canvia a False per desactivar
         ),
         FilterConfig(
-            column_index=STORAGE,
+            column_index=LCSC_PN,
             label_widget_name="filter3_label",
             line_edit_name="filter3_lineEdit",
             list_widget_name="filter3_listWidget",
@@ -77,7 +86,7 @@ class Config:
             enabled=True  # Canvia a False per desactivar
         ),
         FilterConfig(
-            column_index=STOCK,
+            column_index=DESCRIPTION,
             label_widget_name="filter4_label",
             line_edit_name="filter4_lineEdit",
             list_widget_name="filter4_listWidget",
@@ -85,11 +94,25 @@ class Config:
             tag_key="filter4",
             enabled=False  # Canvia a False per desactivar
         ),
+        FilterConfig(
+            column_index=STOCK,
+            label_widget_name="filter5_label",
+            line_edit_name="filter5_lineEdit",
+            list_widget_name="filter5_listWidget",
+            button_name="filter5_pushButton",
+            tag_key="filter5",
+            enabled=False  # Canvia a False per desactivar
+        ),
     ]
+
+    # self.ui.listWidget_4.setVisible(False)
     
     # Google Sheet ID
-    GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"
-    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"
+    GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal
+    # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
+    # GOOGLE_SHEET_ID = "13rzlU99m8AtWtMIPll6iB_1iJge1rUPmn_03aEMuvQk"              # Còpia multiplicada stock
+    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
+    # GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
     
     # Timeout per peticions HTTP (segons)
     REQUEST_TIMEOUT = 10
@@ -290,6 +313,8 @@ class MainWindow(QMainWindow):
         
         # Configurar layout de tags
         self.ui.horizontalLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+
+        self.ui.listWidget_4.setVisible(False)
 
     def _setup_tooltips(self):
         """Configura els tooltips"""
@@ -882,11 +907,47 @@ class MainWindow(QMainWindow):
         else:
             self._show_status_message("URL invàlida", 2000)
 
-    def _open_google_sheet(self):
-        """Obre el Google Sheet en una nova pestanya"""
-        url = f"https://docs.google.com/spreadsheets/d/{Config.GOOGLE_SHEET_ID}"
-        webbrowser.open_new_tab(url)
+    # def _open_google_sheet(self):
+    #     """Obre el Google Sheet en una nova pestanya"""
+    #     url = f"https://docs.google.com/spreadsheets/d/{Config.GOOGLE_SHEET_ID}"
+    #     webbrowser.open_new_tab(url)
 
+    def _open_google_sheet(self):
+        """Obre el Google Sheet en una nova pestanya a la fila del component seleccionat"""
+        base_url = f"https://docs.google.com/spreadsheets/d/{Config.GOOGLE_SHEET_ID}"
+        gid = "1061024957"  # ID de la pestanya correcta
+        
+        # Intentar obtenir el component seleccionat
+        row_index = self.ui.tableWidget.currentRow()
+        
+        if row_index < 0:
+            # Si no hi ha selecció, obrir el sheet normalment
+            url = f"{base_url}/edit#gid={gid}"
+            webbrowser.open_new_tab(url)
+            return
+        
+        # Obtenir el LCSC PN del component seleccionat
+        lcsc_pn = self.ui.tableWidget.item(row_index, 0).text()
+        
+        # Buscar la fila corresponent al Google Sheet
+        sheet_row = None
+        for idx, row in enumerate(self.data_google_sheet, start=1):
+            if idx == 1:  # Saltar capçalera
+                continue
+            if row[Config.LCSC_PN] == lcsc_pn:
+                sheet_row = idx #+ 1  # +1 perquè Google Sheets comença a 1, no a 0
+                break
+        
+        if sheet_row:
+            # Seleccionar tota la fila del component
+            url = f"{base_url}/edit#gid={gid}&range={sheet_row}:{sheet_row}"
+            webbrowser.open_new_tab(url)
+            self._show_status_message(f"Obrint Google Sheet a la fila {sheet_row}", 2000)
+        else:
+            # Si no es troba la fila, obrir normalment
+            url = f"{base_url}/edit#gid={gid}"
+            webbrowser.open_new_tab(url)
+            self._show_status_message("Component no trobat al Google Sheet", 2000)
 
     def _refresh_data(self):
         """Actualitza les dades del Google Sheet"""
