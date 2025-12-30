@@ -33,27 +33,32 @@ class FilterConfig:
 
 class Config:
     """Configuració centralitzada de columnes i visualització"""
-    # Índexs de columnes
-    STOCK = 0
-    STORAGE = 1
+    # Índexs de columnes - PARÀMETRES OBLIGATORIS
+    STOCK = 0                   # ES MOSTRE EN LABEL
+    STORAGE = 1                 # ES MOSTRE EN LABEL
+    WEB = 7                     # S'OBRE LA WEB
+    REFERENCE = 3               # PN o ID unic, PER identificar cada FILA
+    TEXT_FILTER = 4             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+
+
+    # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
     TYPE = 2
-    LCSC_PN = 3
-    MANUFACTURE_PN = 4
     DESCRIPTION = 5
     PACKAGE = 6
-    WEB = 7
 
-    # STOCK = 0
-    # STORAGE = 11
-    # TYPE = 3
-    # LCSC_PN = 6
-    # MANUFACTURE_PN = 7
-    # DESCRIPTION = 5
-    # PACKAGE =   2
-    # WEB = 17
+
+    # DEFINIR ELS FILTRES
+    FILTRE1 = TYPE
+    FILTRE2 = PACKAGE
+    FILTRE3 = STORAGE
+    FILTRE4 = REFERENCE
+    FILTRE5 = TEXT_FILTER
+
     
-    # Columnes a mostrar i les seves amplades
-    COLUMNS_TO_SHOW = [LCSC_PN, MANUFACTURE_PN, PACKAGE, DESCRIPTION]
+
+    
+    # Columnes a mostrar a la taula i les seves amplades
+    COLUMNS_TO_SHOW = [REFERENCE, TEXT_FILTER, PACKAGE, DESCRIPTION]
     COLUMNS_WIDTH = [110, 150, 70, 300]
     
     # Configuració de filtres (pots activar/desactivar els que vulguis)
@@ -65,7 +70,8 @@ class Config:
             list_widget_name="filter1_listWidget",
             button_name="filter1_pushButton",
             tag_key="filter1",
-            enabled=True  # Canvia a False per desactivar
+            # enabled=True  # Canvia a False per desactivar
+            enabled='FILTRE1' in locals()  # False perquè està comentat
         ),
         FilterConfig(
             column_index=PACKAGE,
@@ -74,16 +80,18 @@ class Config:
             list_widget_name="filter2_listWidget",
             button_name="filter2_pushButton",
             tag_key="filter2",
-            enabled=True  # Canvia a False per desactivar
+            # enabled=True  # Canvia a False per desactivar
+            enabled='FILTRE2' in locals()  # False perquè està comentat
         ),
         FilterConfig(
-            column_index=LCSC_PN,
+            column_index=REFERENCE,
             label_widget_name="filter3_label",
             line_edit_name="filter3_lineEdit",
             list_widget_name="filter3_listWidget",
             button_name="filter3_pushButton",
             tag_key="filter3",
-            enabled=True  # Canvia a False per desactivar
+            # enabled=True  # Canvia a False per desactivar
+            enabled='FILTRE3' in locals()  # False perquè està comentat
         ),
         FilterConfig(
             column_index=DESCRIPTION,
@@ -92,7 +100,8 @@ class Config:
             list_widget_name="filter4_listWidget",
             button_name="filter4_pushButton",
             tag_key="filter4",
-            enabled=False  # Canvia a False per desactivar
+            # enabled=False  # Canvia a False per desactivar
+            enabled='FILTRE4' in locals()  # False perquè està comentat
         ),
         FilterConfig(
             column_index=STOCK,
@@ -101,12 +110,16 @@ class Config:
             list_widget_name="filter5_listWidget",
             button_name="filter5_pushButton",
             tag_key="filter5",
-            enabled=False  # Canvia a False per desactivar
+            # enabled=False  # Canvia a False per desactivar
+            enabled='FILTRE5' in locals()  # False perquè està comentat
         ),
     ]
 
     # self.ui.listWidget_4.setVisible(False)
     
+    
+    FILTRER_AVAILABILITY = True     # amaga o desavilita els paràmetre de filtre NO disponibles --> True: amaga; False: desavilita
+
     # Google Sheet ID
     GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal
     # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
@@ -571,7 +584,7 @@ class MainWindow(QMainWindow):
         if self.text_filter_part_number:
             filtered = [row for row in filtered 
                        if self.text_filter_part_number.lower() 
-                       in str(row[Config.MANUFACTURE_PN]).lower()]
+                       in str(row[Config.TEXT_FILTER]).lower()]
         
         # Retornar els valors únics disponibles per aquest filtre
         return {row[filter_config.column_index] for row in filtered}
@@ -593,13 +606,25 @@ class MainWindow(QMainWindow):
                 item_text = item.text()
                 
                 if item_text in available_values:
-                    # Item disponible - color normal
-                    item.setForeground(QColor(0, 0, 0))  # Negre per temes clars
-                    item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEnabled)
+                    
+
+                    if Config.FILTRER_AVAILABILITY:
+                        # Item disponible - visible
+                        item.setHidden(False)
+                    else:
+                        # Item disponible - color normal
+                        item.setForeground(QColor(0, 0, 0))  # Negre per temes clars
+                        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEnabled)
                 else:
-                    # Item no disponible - gris clar i deshabilitat
-                    item.setForeground(QColor(180, 180, 180))  # Gris clar
-                    item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
+
+
+                    if Config.FILTRER_AVAILABILITY:
+                        # Item no disponible - invisible
+                        item.setHidden(True)
+                    else:
+                        # Item no disponible - gris clar i deshabilitat
+                        item.setForeground(QColor(180, 180, 180))  # Gris clar
+                        item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEnabled)
 
     def _filter_list(self, filter_config: FilterConfig, text: str):
         """Filtra una llista per text"""
@@ -745,7 +770,7 @@ class MainWindow(QMainWindow):
         if self.text_filter_part_number:
             filtered = [row for row in filtered 
                        if self.text_filter_part_number.lower() 
-                       in str(row[Config.MANUFACTURE_PN]).lower()]
+                       in str(row[Config.TEXT_FILTER]).lower()]
         
         return filtered
 
@@ -876,10 +901,10 @@ class MainWindow(QMainWindow):
         if row_index < 0:
             return None
         
-        lcsc_pn = self.ui.tableWidget.item(row_index, 0).text()
+        reference = self.ui.tableWidget.item(row_index, 0).text()
         
         for row in self.data_google_sheet[1:]:
-            if lcsc_pn == row[Config.LCSC_PN]:
+            if reference == row[Config.REFERENCE]:
                 return row[column]
         
         return None
@@ -927,14 +952,14 @@ class MainWindow(QMainWindow):
             return
         
         # Obtenir el LCSC PN del component seleccionat
-        lcsc_pn = self.ui.tableWidget.item(row_index, 0).text()
+        reference = self.ui.tableWidget.item(row_index, 0).text()
         
         # Buscar la fila corresponent al Google Sheet
         sheet_row = None
         for idx, row in enumerate(self.data_google_sheet, start=1):
             if idx == 1:  # Saltar capçalera
                 continue
-            if row[Config.LCSC_PN] == lcsc_pn:
+            if row[Config.REFERENCE] == reference:
                 sheet_row = idx #+ 1  # +1 perquè Google Sheets comença a 1, no a 0
                 break
         
