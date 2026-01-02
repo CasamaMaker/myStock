@@ -34,37 +34,80 @@ class FilterConfig:
 class Config:
     """Configuració centralitzada de columnes i visualització"""
     # Índexs de columnes - PARÀMETRES OBLIGATORIS
-    STOCK = 0                   # ES MOSTRE EN LABEL
-    STORAGE = 1                 # ES MOSTRE EN LABEL
-    WEB = 7                     # S'OBRE LA WEB
-    REFERENCE = 3               # PN o ID unic, PER identificar cada FILA
-    TEXT_FILTER = 4             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+    # STOCK = 0                   # ES MOSTRE EN LABEL
+    # STORAGE = 1                 # ES MOSTRE EN LABEL
+    # WEB = 7                     # S'OBRE LA WEB
+    # REFERENCE = 3               # PN o ID unic, PER identificar cada FILA
+    # TEXT_FILTER = 4             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+
+
+    # # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
+    # TYPE = 2
+    # DESCRIPTION = 5
+    # PACKAGE = 6
+
+
+    # # DEFINIR ELS FILTRES
+    # FILTRE1 = TYPE
+    # FILTRE2 = PACKAGE
+    # FILTRE3 = STORAGE
+    # FILTRE4 = REFERENCE
+    # FILTRE5 = TEXT_FILTER
+
+
+
+    CANTIDAD = 0
+    ID = 1
+    MARCA_VEHICULO = 2
+    TIPO_COMPONENTE_1 = 3
+    MARCA_COMPONENTE = 4
+    FAMILIA_COMPONENTE = 5
+    TIPO_COMPONENTE_2 = 6
+    REFERENCIA_COMPONENTE_1 = 7
+    REFERENCIA_COMPONENTE = 8
+    REFERENCIA_FABRICANTE_1 = 9
+    REFERENCIA_FABRICANTE_2 = 10
+    UBICACION = 11
+    UBICACION_NUEVA = 12
+    ESTAD0 = 13
+    DATASHEET = 19
+
+
+
+
+
+
+    STOCK = CANTIDAD                   # ES MOSTRE EN LABEL
+    STORAGE = UBICACION                # ES MOSTRE EN LABEL
+    WEB = DATASHEET                     # S'OBRE LA WEB
+    REFERENCE = REFERENCIA_COMPONENTE_1               # PN o ID unic, PER identificar cada FILA
+    TEXT_FILTER = REFERENCIA_COMPONENTE_1             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
 
 
     # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
-    TYPE = 2
-    DESCRIPTION = 5
-    PACKAGE = 6
+    # TYPE = 3                    # Tipo components
+    # DESCRIPTION = 5             # Familia components
+    # MARCA_COMPONENT = 4
 
 
     # DEFINIR ELS FILTRES
-    FILTRE1 = TYPE
-    FILTRE2 = PACKAGE
-    FILTRE3 = STORAGE
-    FILTRE4 = REFERENCE
-    FILTRE5 = TEXT_FILTER
+    FILTRE1 = MARCA_VEHICULO
+    FILTRE2 = TIPO_COMPONENTE_1
+    FILTRE3 = MARCA_COMPONENTE  
+    FILTRE4 = FAMILIA_COMPONENTE
+    FILTRE5 = TIPO_COMPONENTE_2
 
     
 
     
     # Columnes a mostrar a la taula i les seves amplades
-    COLUMNS_TO_SHOW = [REFERENCE, TEXT_FILTER, PACKAGE, DESCRIPTION]
+    COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_COMPONENTE_1, REFERENCIA_FABRICANTE_1]
     COLUMNS_WIDTH = [110, 150, 70, 300]
     
     # Configuració de filtres (pots activar/desactivar els que vulguis)
     FILTERS_CONFIG = [
         FilterConfig(
-            column_index=TYPE,
+            column_index=FILTRE1,
             label_widget_name="filter1_label",
             line_edit_name="filter1_lineEdit",
             list_widget_name="filter1_listWidget",
@@ -74,7 +117,7 @@ class Config:
             enabled='FILTRE1' in locals()  # False perquè està comentat
         ),
         FilterConfig(
-            column_index=PACKAGE,
+            column_index=FILTRE2,
             label_widget_name="filter2_label",
             line_edit_name="filter2_lineEdit",
             list_widget_name="filter2_listWidget",
@@ -84,7 +127,7 @@ class Config:
             enabled='FILTRE2' in locals()  # False perquè està comentat
         ),
         FilterConfig(
-            column_index=REFERENCE,
+            column_index=FILTRE3,
             label_widget_name="filter3_label",
             line_edit_name="filter3_lineEdit",
             list_widget_name="filter3_listWidget",
@@ -94,7 +137,7 @@ class Config:
             enabled='FILTRE3' in locals()  # False perquè està comentat
         ),
         FilterConfig(
-            column_index=DESCRIPTION,
+            column_index=FILTRE4,
             label_widget_name="filter4_label",
             line_edit_name="filter4_lineEdit",
             list_widget_name="filter4_listWidget",
@@ -104,7 +147,7 @@ class Config:
             enabled='FILTRE4' in locals()  # False perquè està comentat
         ),
         FilterConfig(
-            column_index=STOCK,
+            column_index=FILTRE5,
             label_widget_name="filter5_label",
             line_edit_name="filter5_lineEdit",
             list_widget_name="filter5_listWidget",
@@ -121,11 +164,11 @@ class Config:
     FILTRER_AVAILABILITY = True     # amaga o desavilita els paràmetre de filtre NO disponibles --> True: amaga; False: desavilita
 
     # Google Sheet ID
-    GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal
-    # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
+    # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal
+    GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
     # GOOGLE_SHEET_ID = "13rzlU99m8AtWtMIPll6iB_1iJge1rUPmn_03aEMuvQk"              # Còpia multiplicada stock
-    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
-    # GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
+    # GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
+    GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
     
     # Timeout per peticions HTTP (segons)
     REQUEST_TIMEOUT = 10
