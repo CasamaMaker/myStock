@@ -101,8 +101,8 @@ class Config:
 
     
     # Columnes a mostrar a la taula i les seves amplades
-    COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_COMPONENTE_1, REFERENCIA_FABRICANTE_1]
-    COLUMNS_WIDTH = [110, 150, 70, 300]
+    COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
+    COLUMNS_WIDTH = [150, 400, 150]
     
     # Configuració de filtres (pots activar/desactivar els que vulguis)
     FILTERS_CONFIG = [
@@ -838,8 +838,11 @@ class MainWindow(QMainWindow):
         header = self.ui.tableWidget.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.Interactive)
         
-        for idx, width in enumerate(Config.COLUMNS_WIDTH):
-            self.ui.tableWidget.setColumnWidth(idx, width)
+        if hasattr(Config, "COLUMNS_WIDTH"):
+            for idx, width in enumerate(Config.COLUMNS_WIDTH):
+                self.ui.tableWidget.setColumnWidth(idx, width)
+        else:
+            self.ui.tableWidget.resizeColumnsToContents()
         
         # Actualitzar comptador
         self.ui.label_5.setText(str(len(display_data)))
