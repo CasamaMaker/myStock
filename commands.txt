@@ -1,3 +1,9 @@
 pyside6-uic -o .\ui_main.py .\ui_main.ui
 pyside6-rcc img/recursos_grafics.qrc -o recursos_grafics_rc.py
 pyinstaller --onefile --windowed --icon=img/inventory.ico myStock.py
+
+pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/model-folio-482716-e4-e9eb4cc77d58.json;credentials" myStock.py
+
+
+pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/model-folio-482716-e4-e9eb4cc77d58.json;credentials" myStock.py
+pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/mystock-482208-a553ed840217.json;credentials" myStock.py

@@ -5,7 +5,7 @@ a = Analysis(
     ['myStock.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('credentials/mystock-482208-a553ed840217.json', 'credentials')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

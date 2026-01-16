@@ -2,7 +2,7 @@
 echo Activant l'entorn virtual...
 call .venv\Scripts\activate.bat
 
-echo Executant main.py...
-python main.py
+echo Executant myStock.py...
+python myStock.py
 
 pause

@@ -14,6 +14,7 @@ from typing import List, Optional, Dict, Tuple, Set
 from dataclasses import dataclass
 from PySide6.QtGui import QIcon
 import recursos_grafics_rc
+from pathlib import Path
 
 
 import gspread
@@ -34,74 +35,78 @@ class FilterConfig:
 class Config:
     """Configuració centralitzada de columnes i visualització"""
     # Índexs de columnes - PARÀMETRES OBLIGATORIS
-    # STOCK = 0                   # ES MOSTRE EN LABEL
-    # STORAGE = 1                 # ES MOSTRE EN LABEL
-    # WEB = 7                     # S'OBRE LA WEB
-    # REFERENCE = 3               # PN o ID unic, PER identificar cada FILA
-    # TEXT_FILTER = 4             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
-
-
-    # # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
-    # TYPE = 2
-    # DESCRIPTION = 5
-    # PACKAGE = 6
-
-
-    # # DEFINIR ELS FILTRES
-    # FILTRE1 = TYPE
-    # FILTRE2 = PACKAGE
-    # FILTRE3 = STORAGE
-    # FILTRE4 = REFERENCE
-    # FILTRE5 = TEXT_FILTER
-
-
-
-    CANTIDAD = 0
-    ID = 1
-    MARCA_VEHICULO = 2
-    TIPO_COMPONENTE_1 = 3
-    MARCA_COMPONENTE = 4
-    FAMILIA_COMPONENTE = 5
-    TIPO_COMPONENTE_2 = 6
-    REFERENCIA_COMPONENTE_1 = 7
-    REFERENCIA_COMPONENTE = 8
-    REFERENCIA_FABRICANTE_1 = 9
-    REFERENCIA_FABRICANTE_2 = 10
-    UBICACION = 11
-    UBICACION_NUEVA = 12
-    ESTAD0 = 13
-    DATASHEET = 19
-
-
-
-
-
-
-    STOCK = CANTIDAD                   # ES MOSTRE EN LABEL
-    STORAGE = UBICACION                # ES MOSTRE EN LABEL
-    WEB = DATASHEET                     # S'OBRE LA WEB
-    REFERENCE = REFERENCIA_COMPONENTE_1               # PN o ID unic, PER identificar cada FILA
-    TEXT_FILTER = REFERENCIA_COMPONENTE_1             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+    STOCK = 0                   # ES MOSTRE EN LABEL
+    STORAGE = 1                 # ES MOSTRE EN LABEL
+    WEB = 7                     # S'OBRE LA WEB
+    REFERENCE = 3               # PN o ID unic, PER identificar cada FILA
+    TEXT_FILTER = 4             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
 
 
     # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
-    # TYPE = 3                    # Tipo components
-    # DESCRIPTION = 5             # Familia components
-    # MARCA_COMPONENT = 4
+    TYPE = 2
+    DESCRIPTION = 5
+    PACKAGE = 6
 
 
     # DEFINIR ELS FILTRES
-    FILTRE1 = MARCA_VEHICULO
-    FILTRE2 = TIPO_COMPONENTE_1
-    FILTRE3 = MARCA_COMPONENTE  
-    FILTRE4 = FAMILIA_COMPONENTE
-    FILTRE5 = TIPO_COMPONENTE_2
+    FILTRE1 = TYPE
+    FILTRE2 = PACKAGE
+    FILTRE3 = STORAGE
+    FILTRE4 = REFERENCE
+    FILTRE5 = TEXT_FILTER
+
+
+
+
+
+
+    # CANTIDAD = 0
+    # ID = 1
+    # MARCA_VEHICULO = 2
+    # TIPO_COMPONENTE_1 = 3
+    # MARCA_COMPONENTE = 4
+    # FAMILIA_COMPONENTE = 5
+    # TIPO_COMPONENTE_2 = 6
+    # REFERENCIA_COMPONENTE_1 = 7
+    # REFERENCIA_COMPONENTE = 8
+    # REFERENCIA_FABRICANTE_1 = 9
+    # REFERENCIA_FABRICANTE_2 = 10
+    # UBICACION = 11
+    # UBICACION_NUEVA = 12
+    # ESTAD0 = 13
+    # DATASHEET = 19
+
+
+
+    # STOCK = CANTIDAD                   # ES MOSTRE EN LABEL
+    # STORAGE = UBICACION                # ES MOSTRE EN LABEL
+    # WEB = DATASHEET                     # S'OBRE LA WEB
+    # REFERENCE = REFERENCIA_COMPONENTE_1               # PN o ID unic, PER identificar cada FILA
+    # TEXT_FILTER = REFERENCIA_COMPONENTE_1             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+
+
+
+    # # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
+    # # TYPE = 3                    # Tipo components
+    # # DESCRIPTION = 5             # Familia components
+    # # MARCA_COMPONENT = 4
+
+
+    # # DEFINIR ELS FILTRES
+    # FILTRE1 = MARCA_VEHICULO
+    # FILTRE2 = TIPO_COMPONENTE_1
+    # FILTRE3 = MARCA_COMPONENTE  
+    # FILTRE4 = FAMILIA_COMPONENTE
+    # FILTRE5 = TIPO_COMPONENTE_2
 
     
 
     
     # Columnes a mostrar a la taula i les seves amplades
-    COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
+    COLUMNS_TO_SHOW = [REFERENCE, TEXT_FILTER, DESCRIPTION]
+    COLUMNS_WIDTH = [150, 150, 400]
+
+    # COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
     COLUMNS_WIDTH = [150, 400, 150]
     
     # Configuració de filtres (pots activar/desactivar els que vulguis)
@@ -164,11 +169,11 @@ class Config:
     FILTRER_AVAILABILITY = True     # amaga o desavilita els paràmetre de filtre NO disponibles --> True: amaga; False: desavilita
 
     # Google Sheet ID
-    # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal
-    GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
+    GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal
+    # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
     # GOOGLE_SHEET_ID = "13rzlU99m8AtWtMIPll6iB_1iJge1rUPmn_03aEMuvQk"              # Còpia multiplicada stock
-    # GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
-    GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
+    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
+    # GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
     
     # Timeout per peticions HTTP (segons)
     REQUEST_TIMEOUT = 10
@@ -263,6 +268,10 @@ class FilterManager:
         return [item for item in self.available_items 
                 if text.lower() in item.lower()]
 
+def resource_path(relative_path: str) -> Path:
+    if getattr(sys, 'frozen', False):
+        return Path(sys._MEIPASS) / relative_path
+    return Path(__file__).parent / relative_path
 
 class MainWindow(QMainWindow):
     """Finestra principal de l'aplicació"""
@@ -421,6 +430,8 @@ class MainWindow(QMainWindow):
     #         self._show_status_message(error_msg, 3000)
     #         return []
 
+
+
     def _fetch_google_sheet(self, worksheet_name: str = None) -> List[List[str]]:
         """
         Carrega les dades des del Google Sheet via Google Sheets API.
@@ -446,9 +457,14 @@ class MainWindow(QMainWindow):
                 raise ValueError("No s'ha configurat GOOGLE_SHEET_ID")
             
             # Verificar que el fitxer existeix i es pot llegir
-            creds_path = Config.GOOGLE_CREDENTIALS_JSON
-            if not os.path.exists(creds_path):
+            # creds_path = Config.GOOGLE_CREDENTIALS_JSON
+            # if not os.path.exists(creds_path):
+            #     raise FileNotFoundError(f"No existeix el fitxer: {creds_path}")
+            creds_path = resource_path(Config.GOOGLE_CREDENTIALS_JSON)
+
+            if not creds_path.exists():
                 raise FileNotFoundError(f"No existeix el fitxer: {creds_path}")
+
             
             if not os.access(creds_path, os.R_OK):
                 raise PermissionError(f"No es pot llegir el fitxer local: {creds_path}")
