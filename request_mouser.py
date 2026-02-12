@@ -68,55 +68,7 @@ def get_mouser_data(part_number, api_key):
     
     # Agafar el primer resultat (normalment és el més rellevant)
     product = parts[0]
-    # print(product)
-    
-    # # Informació bàsica
-    # print("="*80)
-    # # print(f"✅ DADES DEL COMPONENT")
-    # print(f"✅ Manufacturer P/N: {product.get('ManufacturerPartNumber', 'N/A')}  [Mouser P/N: {product.get('MouserPartNumber', 'N/A')}]")
-    # # print(f"Mouser P/N: {product.get('MouserPartNumber', 'N/A')}")
-    # print("="*80)
 
-    # print(f"Description: {product.get('Description', 'N/A')}")
-
-    # # print(f"Mouser Part Number: {product.get('MouserPartNumber', 'N/A')}")
-    # print(f"Manufacturer: {product.get('Manufacturer', 'N/A')}")
-    # # print(f"MPN: {product.get('ManufacturerPartNumber', 'N/A')}")
-    
-    # print(f"Category: {product.get('Category', 'N/A')}")
-    # print(f"Product Status: {product.get('LifecycleStatus', 'N/A')}")
-    # # print("="*80)
-    
-    # # Datasheet
-    # if product.get('DataSheetUrl'):
-    #     print(f"\n📄 Datasheet: {product['DataSheetUrl']}")
-    
-    # # Imatge del producte
-    # if product.get('ImagePath'):
-    #     print(f"🖼️  Imatge: {product['ImagePath']}")
-    
-    # # Product Detail URL
-    # if product.get('ProductDetailUrl'):
-    #     print(f"🔗 URL Mouser: {product['ProductDetailUrl']}")
-    
-    # # Stock i disponibilitat
-    # availability = product.get('Availability', 'N/A')
-    # print(f"\n📦 Disponibilitat: {availability}")
-
-    # price_breaks = product.get("PriceBreaks", [])
-    # filtered_prices = []
-
-    # for price_break in price_breaks:
-    #     qty = price_break.get("Quantity")
-    #     if isinstance(qty, (int, float)) and qty <= 100:
-    #         filtered_prices.append({
-    #             "quantity": qty,
-    #             "price": price_break.get("Price"),
-    #             "currency": price_break.get("Currency")
-    #         })
-    
-
-    # print("="*80)
     component = {}
     component["name"] = product.get('ManufacturerPartNumber')
     component["store_name"] = product.get('MouserPartNumber')
