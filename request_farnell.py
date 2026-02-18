@@ -1,6 +1,8 @@
 import requests
 import json
 
+API_KEY_FARNELL = "j8ez8wawuv2ka9r2bamn499r"
+
 def get_farnell_data(part_number, api_key, store_region="es.farnell.com"):
     """
     Cerca un component per part number (manufacturer part number)
@@ -159,7 +161,7 @@ def get_farnell_data(part_number, api_key, store_region="es.farnell.com"):
     return component
 
 
-def get_farnell_by_sku(sku, api_key, store_region="es.farnell.com"):
+def get_farnell_by_sku(sku, api_key=API_KEY_FARNELL, store_region="es.farnell.com"):
     """
     Cerca un component pel SKU/Order Code de Farnell
     
@@ -180,7 +182,7 @@ def get_farnell_by_sku(sku, api_key, store_region="es.farnell.com"):
         "resultsSettings.responseGroup": "large"
     }
     
-    print(f"🔍 Cercant SKU: {sku} a {store_region}\n")
+    # print(f"🔍 Cercant codi: {sku} a {store_region}\n")
     
     try:
         response = requests.get(url, params=params, timeout=10)
@@ -214,8 +216,8 @@ def get_farnell_by_sku(sku, api_key, store_region="es.farnell.com"):
             print(f"   S'han trobat {len(products)} resultats similars")
             return None
         
-        for pro, duct in product.items():
-            print(f"{pro}: {duct}")
+        # for pro, duct in product.items():
+        #     print(f"{pro}: {duct}")
         # Utilitzar la mateixa estructura que get_farnell_data
         component = {}
         component["name"] = product.get("translatedManufacturerPartNumber", 
@@ -291,7 +293,7 @@ def get_farnell_by_sku(sku, api_key, store_region="es.farnell.com"):
         # component["pack_size"] = product.get("packSize", 1)
         # component["unit_of_measure"] = product.get("unitOfMeasure", "")
         
-        print("✅ Component trobat!\n")
+        # print("✅ Component trobat!\n")
         return component
         
     except Exception as e:
@@ -422,7 +424,7 @@ def search_farnell_keyword(keyword, api_key, store_region="es.farnell.com", max_
 # Prova
 if __name__ == "__main__":
     # SUBSTITUEIX AQUÍ AMB EL TEU API KEY
-    API_KEY = "j8ez8wawuv2ka9r2bamn499r"
+    # API_KEY = "j8ez8wawuv2ka9r2bamn499r"
     
     # Pots canviar la regió segons necessitis:
     # "es.farnell.com" (Espanya)
@@ -447,9 +449,9 @@ if __name__ == "__main__":
     print("\n" + "="*80)
     print("CERCA PER FARNELL SKU/ORDER CODE")
     print("="*80 + "\n")
-    component2 = get_farnell_by_sku("2323924", API_KEY, STORE_REGION)       #2323924   1236670
+    component2 = get_farnell_by_sku("2988437", API_KEY_FARNELL, STORE_REGION)       #2988437       2323924   1236670
     if component2:
-        print(">>>>>>>>>>>")
+        # print(">>>>>>>>>>>")
         for key, value in component2.items():
             print(f"{key}: {value}")
         print()

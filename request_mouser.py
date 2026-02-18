@@ -1,7 +1,9 @@
 import requests
 import json
 
-def get_mouser_data(part_number, api_key):
+API_KEY_MOUSER = "34e727c3-3810-4ccd-b06e-d97149772242"
+
+def get_mouser_data(part_number, api_key=API_KEY_MOUSER):
     url = "https://api.mouser.com/api/v1/search/partnumber"
     
     # Body de la petició
@@ -27,7 +29,7 @@ def get_mouser_data(part_number, api_key):
     api_key_masked = api_key[:8] + "..." + api_key[-4:] if len(api_key) > 12 else "***"
     full_url = f"{url}?apiKey={api_key_masked}"
     
-
+    # print(f"🔍 Cercant codi: {part_number} a MOUSER\n")
     
     try:
         response = requests.post(
@@ -82,7 +84,7 @@ def get_mouser_data(part_number, api_key):
     component["price_unit"] = product.get('PriceBreaks')
     component["store_availability"] = product.get('Availability')
 
-
+    # print("✅ Component trobat!\n")
     # return product
     return component
 
@@ -137,14 +139,15 @@ def search_mouser_keyword(keyword, api_key, max_results=10):
 # Prova
 if __name__ == "__main__":
     # SUBSTITUEIX AQUÍ AMB EL TEU API KEY
-    API_KEY = "34e727c3-3810-4ccd-b06e-d97149772242"
+    # API_KEY_MOUSER = "34e727c3-3810-4ccd-b06e-d97149772242"
     
     # Cerca per part number específic
     # print("\n" + "="*80)
     # print("CERCA PER PART NUMBER")
     # print("="*80 + "\n")
     # components = get_mouser_data("CRCW04021K65FKEE", API_KEY)
-    components = get_mouser_data("AANI-CH-0068-T", API_KEY)
+    # components = get_mouser_data("AANI-CH-0068-T", API_KEY)
+    components = get_mouser_data("AE1206BR-0710KL", API_KEY_MOUSER)     # AE1206BR-0710KL         815-AANI-CH-0068-T
     print(">>>>>>>>>>>")
     for key, value in components.items():
         print(f"{key}: {value}")

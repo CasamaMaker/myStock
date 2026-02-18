@@ -26,6 +26,7 @@ def get_lcsc_data(part_number):
     # Construir URL completa per mostrar-la
     full_url = f"{url}?productCode={part_number}"
 
+    # print(f"🔍 Cercant codi: {part_number} a LCSC\n")
     
     try:
         response = requests.get(url, params=params, headers=headers, timeout=10)
@@ -58,86 +59,6 @@ def get_lcsc_data(part_number):
         return None
     
     product = data["result"]
-    
-    # # Informació bàsica
-    # print("="*80)
-    # # print(f"✅ COMPONENT: {part_number}")
-    # # print(f"✅ LCSC Part Number: {part_number}")
-    # print(f"✅ MPN: {product.get('productModel', 'N/A')}")
-    # print("="*80)
-    
-    # print(f"- Product Name: {product.get('productNameEn', 'N/A')}")
-    # # print(f"MPN: {product.get('productModel', 'N/A')}")
-    # print(f"Manufacturer: {product.get('brandNameEn', 'N/A')}")
-    # print(f"LCSC Part Number: {part_number}")
-    # print(f"Description: {product.get('productDescEn', 'N/A')}")
-    # print(f"Category: {product.get('catalogName', 'N/A')}")
-    # print(f"Package: {product.get('encapStandard', 'N/A')}")
-    
-    
-    # # print("="*80)
-    
-    # # Datasheet
-    # if product.get('pdfUrl'):
-    #     print(f"\n📄 Datasheet: {product['pdfUrl']}")
-    
-    # # Stock i compra
-    # print(f"📦 Stock disponible: {product.get('stockNumber', 0):,}")
-    # # print(f"   Min. compra: {product.get('minBuyNumber', 'N/A')} unitats")
-    # # print(f"   Min. empaquetament: {product.get('minPacketNumber', 'N/A')} unitats")
-
-    # # Link de compra
-    # # buy_link = f"https://www.lcsc.com/product-detail/{part_number}.html"
-    # # print(f"🔗 Link de compra: {buy_link}")
-
-    # buy_link = f"https://www.lcsc.com/product-detail/{product.get('productCode')}.html"
-    # print(f"🔗 Link de compra: {buy_link}")
-
-    
-    # # Preus
-    # print(f"💰 Preus:")# (en {product.get('currencySymbol', '$')}):")
-    # for price_tier in product.get('productPriceList', []):
-    #     qty = price_tier.get('ladder')
-    #     if qty <= 100:  # Només fins a 100 unitats
-    #         price = price_tier.get('productPrice')
-    #         print(f"   {qty:>7,} unitats → {price} $/u")
-    # # print("="*80)
-
-    # # # Especificacions tècniques
-    # # print("\n🔧 Especificacions tècniques:")
-    # # print("-"*80)
-    # # for param in product.get('paramVOList', []):
-    # #     param_name = param.get('paramNameEn', 'N/A')
-    # #     param_value = param.get('paramValueEn', 'N/A')
-    # #     is_main = "⭐" if param.get('isMain') else "  "
-    # #     print(f"{is_main} {param_name:.<45} {param_value}")
-
-    # print("")
-
-    # # Imatge del producte
-    # if product.get('productImages'):
-    #     image_list = product.get('productImages')
-    #     if isinstance(image_list, list) and image_list:
-    #         for i, a in enumerate(image_list, start=1):
-    #             print(f"🖼️ Imatge {i}: {a}")
-
-
-
-
-
-    # # image_url = product.get('productImageUrl')
-
-    # # if not image_url and product.get('productImages'):
-    # #     images = product.get('productImages')
-    # #     if isinstance(images, list) and images:
-    # #         image_url = images[0]
-
-    # # if image_url:
-    # #     print(f"\n🖼️ Imatge: {image_url}")
-
-
-
-    # print("="*80)
 
     component = {}
     component["name"] = product.get('productModel')
@@ -166,6 +87,7 @@ def get_lcsc_data(part_number):
 
     component["price_unit"] = filtered_prices
     
+    # print("✅ Component trobat!\n")
     # return product
     return component
 
@@ -202,7 +124,7 @@ def search_by_mpn(mpn):
 
 # Prova
 if __name__ == "__main__":
-    components = get_lcsc_data("C2980306")
+    components = get_lcsc_data("C17902")      #C17902         C2980306
     print(">>>>>>>>>>>")
     for key, value in components.items():
         print(f"{key}: {value}")
