@@ -147,7 +147,7 @@ if __name__ == "__main__":
     # print("="*80 + "\n")
     # components = get_mouser_data("CRCW04021K65FKEE", API_KEY)
     # components = get_mouser_data("AANI-CH-0068-T", API_KEY)
-    components = get_mouser_data("AE1206BR-0710KL", API_KEY_MOUSER)     # AE1206BR-0710KL         815-AANI-CH-0068-T
+    components = get_mouser_data("BZX84-A20,215", API_KEY_MOUSER)     # AE1206BR-0710KL         815-AANI-CH-0068-T
     print(">>>>>>>>>>>")
     for key, value in components.items():
         print(f"{key}: {value}")
