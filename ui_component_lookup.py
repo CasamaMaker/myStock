@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_component_lookup.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.1
+## Created by: Qt User Interface Compiler version 6.10.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -69,10 +69,10 @@ class Ui_MainWindow(object):
 
         self.widget_result = QWidget(self.centralwidget)
         self.widget_result.setObjectName(u"widget_result")
-        self.widget_result.setGeometry(QRect(20, 170, 681, 331))
+        self.widget_result.setGeometry(QRect(20, 170, 681, 291))
         self.verticalLayoutWidget_2 = QWidget(self.widget_result)
         self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(-1, -1, 681, 331))
+        self.verticalLayoutWidget_2.setGeometry(QRect(-1, -1, 681, 291))
         self.verticalLayout_result = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_result.setObjectName(u"verticalLayout_result")
         self.verticalLayout_result.setContentsMargins(0, 0, 0, 0)
@@ -115,7 +115,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_info.addWidget(self.label_description)
 
-        self.verticalSpacer = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.verticalSpacer = QSpacerItem(20, 10, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
 
         self.verticalLayout_info.addItem(self.verticalSpacer)
 
@@ -215,10 +215,36 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_result.addLayout(self.horizontalLayout)
 
+        self.horizontalLayoutWidget = QWidget(self.centralwidget)
+        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
+        self.horizontalLayoutWidget.setGeometry(QRect(20, 470, 681, 22))
+        self.horizontalLayout_4 = QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.label_stocktext = QLabel(self.horizontalLayoutWidget)
+        self.label_stocktext.setObjectName(u"label_stocktext")
+
+        self.horizontalLayout_4.addWidget(self.label_stocktext)
+
+        self.lineEdit = QLineEdit(self.horizontalLayoutWidget)
+        self.lineEdit.setObjectName(u"lineEdit")
+
+        self.horizontalLayout_4.addWidget(self.lineEdit)
+
+        self.label_storagetext = QLabel(self.horizontalLayoutWidget)
+        self.label_storagetext.setObjectName(u"label_storagetext")
+
+        self.horizontalLayout_4.addWidget(self.label_storagetext)
+
+        self.lineEdit_storagevariable = QLineEdit(self.horizontalLayoutWidget)
+        self.lineEdit_storagevariable.setObjectName(u"lineEdit_storagevariable")
+
+        self.horizontalLayout_4.addWidget(self.lineEdit_storagevariable)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 717, 33))
+        self.menubar.setGeometry(QRect(0, 0, 717, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -251,5 +277,9 @@ class Ui_MainWindow(object):
         self.label_pricetext.setText(QCoreApplication.translate("MainWindow", u"Preus", None))
         self.label_botigalink.setText(QCoreApplication.translate("MainWindow", u"Botiga", None))
         self.label_datasheetlink.setText(QCoreApplication.translate("MainWindow", u"Datasheet", None))
+        self.label_stocktext.setText(QCoreApplication.translate("MainWindow", u"stock-text", None))
+        self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"stock-variable", None))
+        self.label_storagetext.setText(QCoreApplication.translate("MainWindow", u"storage-variable", None))
+        self.lineEdit_storagevariable.setText(QCoreApplication.translate("MainWindow", u"stock-variable", None))
     # retranslateUi
 

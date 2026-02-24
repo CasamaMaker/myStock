@@ -1,3 +1,5 @@
+#  document name: mystock.py
+
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QLabel, QPushButton, 
     QHBoxLayout, QVBoxLayout, QSizePolicy, QHeaderView, 
