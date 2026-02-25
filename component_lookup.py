@@ -2838,6 +2838,8 @@ QLabel#label_img_placeholder {
 # ── Finestra principal ────────────────────────────────────────────────────────
 
 class MainWindow(QMainWindow):
+    # closed = Signal()
+
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
@@ -2845,6 +2847,8 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Component Lookup — Mouser · Farnell · LCSC")
         self.setMinimumSize(717, 559)
+
+        QApplication.instance().setStyleSheet(STYLE)
 
         # ── StockChecker ──────────────────────────────────────────────────────
         self._stock_checker    = StockChecker()
@@ -3204,12 +3208,23 @@ class MainWindow(QMainWindow):
         if self._datasheet_url:
             QDesktopServices.openUrl(QUrl(self._datasheet_url))
 
+    
+
+    def search(self, code: str):
+        """Llança una cerca programàticament."""
+        self.ui.lineEdit_search_box.setText(code)
+        self._on_search()
+
+    def closeEvent(self, event):  # ← afegeix aquest mètode
+        super().closeEvent(event)
+        # self.closed.emit()
+
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 def main():
     app = QApplication(sys.argv)
-    app.setStyleSheet(STYLE)
+    # app.setStyleSheet(STYLE)
     app.setFont(QFont("Segoe UI", 11))
     win = MainWindow()
     win.show()

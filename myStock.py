@@ -22,6 +22,9 @@ from pathlib import Path
 import gspread
 from google.oauth2.service_account import Credentials
 
+
+import component_lookup
+
 @dataclass
 class FilterConfig:
     """Configuració d'un filtre"""
@@ -295,6 +298,8 @@ class MainWindow(QMainWindow):
         
         # Dades del Google Sheet
         self.data_google_sheet: List[List[str]] = []
+
+        self._lookup_window = None
         
         self._setup_filters()
         self._setup_ui()
@@ -362,7 +367,8 @@ class MainWindow(QMainWindow):
 
         # Botons d'acció
         self.ui.pushButton_4.clicked.connect(self._open_google_sheet)
-        self.ui.pushButton_5.clicked.connect(self._refresh_data)
+        # self.ui.pushButton_5.clicked.connect(self._refresh_data)
+        self.ui.pushButton_5.clicked.connect(self._open_lookup)
         self.ui.datasheetButton.clicked.connect(self._open_datasheet)
         
         # Botó per esborrar tots els filtres
@@ -382,6 +388,37 @@ class MainWindow(QMainWindow):
         self.ui.horizontalLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         self.ui.listWidget_4.setVisible(False)
+
+    # def _open_lookup(self):
+    #     # Obtenir la referència del component seleccionat (si n'hi ha)
+    #     reference = self._get_selected_row_data(Config.REFERENCE)
+        
+    #     if self._lookup_window is None or not self._lookup_window.isVisible():
+    #         self._lookup_window = component_lookup.MainWindow()
+    #         self._lookup_window.show()
+    #     else:
+    #         self._lookup_window.raise_()
+    #         self._lookup_window.activateWindow()
+        
+    #     # Si hi ha un component seleccionat, buscar-lo automàticament
+    #     if reference:
+    #         self._lookup_window.search(reference)
+
+    def _open_lookup(self):
+        reference = self._get_selected_row_data(Config.REFERENCE)
+
+        if self._lookup_window is None or not self._lookup_window.isVisible():
+            self._lookup_window = component_lookup.MainWindow()
+            # Fa la finestra modal respecte a mystock: bloqueja la interacció
+            # però sense tocar cap estil
+            self._lookup_window.setWindowModality(Qt.WindowModality.ApplicationModal)
+            self._lookup_window.show()
+        else:
+            self._lookup_window.raise_()
+            self._lookup_window.activateWindow()
+
+        if reference:
+            self._lookup_window.search(reference)
 
     def _setup_tooltips(self):
         """Configura els tooltips"""
