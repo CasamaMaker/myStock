@@ -56,7 +56,7 @@
    <widget class="QPushButton" name="datasheetButton">
     <property name="geometry">
      <rect>
-      <x>660</x>
+      <x>620</x>
       <y>270</y>
       <width>41</width>
       <height>41</height>
@@ -84,7 +84,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>510</x>
       <y>270</y>
       <width>41</width>
       <height>41</height>
@@ -148,7 +148,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>310</x>
       <y>270</y>
       <width>51</width>
       <height>41</height>
@@ -202,7 +202,7 @@
    <widget class="QLineEdit" name="stock_text">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>550</x>
       <y>270</y>
       <width>61</width>
       <height>41</height>
@@ -212,7 +212,7 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>740</x>
+      <x>700</x>
       <y>270</y>
       <width>41</width>
       <height>41</height>
@@ -240,7 +240,7 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>660</x>
       <y>270</y>
       <width>41</width>
       <height>41</height>
@@ -349,7 +349,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>270</x>
       <y>270</y>
       <width>41</width>
       <height>41</height>
@@ -370,7 +370,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>360</x>
       <y>270</y>
       <width>41</width>
       <height>41</height>
@@ -391,9 +391,9 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>400</x>
       <y>270</y>
-      <width>131</width>
+      <width>111</width>
       <height>41</height>
      </rect>
     </property>
@@ -550,6 +550,34 @@
       <width>121</width>
       <height>21</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>270</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="img/recursos_grafics.qrc">
+      <normaloff>:/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>34</width>
+      <height>34</height>
+     </size>
     </property>
    </widget>
   </widget>

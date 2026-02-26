@@ -367,8 +367,8 @@ class MainWindow(QMainWindow):
 
         # Botons d'acció
         self.ui.pushButton_4.clicked.connect(self._open_google_sheet)
-        # self.ui.pushButton_5.clicked.connect(self._refresh_data)
-        self.ui.pushButton_5.clicked.connect(self._open_lookup)
+        self.ui.pushButton_5.clicked.connect(self._refresh_data)
+        self.ui.pushButton_6.clicked.connect(self._open_lookup)
         self.ui.datasheetButton.clicked.connect(self._open_datasheet)
         
         # Botó per esborrar tots els filtres
@@ -389,20 +389,6 @@ class MainWindow(QMainWindow):
 
         self.ui.listWidget_4.setVisible(False)
 
-    # def _open_lookup(self):
-    #     # Obtenir la referència del component seleccionat (si n'hi ha)
-    #     reference = self._get_selected_row_data(Config.REFERENCE)
-        
-    #     if self._lookup_window is None or not self._lookup_window.isVisible():
-    #         self._lookup_window = component_lookup.MainWindow()
-    #         self._lookup_window.show()
-    #     else:
-    #         self._lookup_window.raise_()
-    #         self._lookup_window.activateWindow()
-        
-    #     # Si hi ha un component seleccionat, buscar-lo automàticament
-    #     if reference:
-    #         self._lookup_window.search(reference)
 
     def _open_lookup(self):
         reference = self._get_selected_row_data(Config.REFERENCE)

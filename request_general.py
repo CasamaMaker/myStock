@@ -25,6 +25,7 @@ from request_mouser import get_mouser_data
 
 
 import re
+import time
 
 part_numbers = [
     "NGT B40N120FL2WG",
@@ -67,12 +68,17 @@ part_numbers = [
     "SI2312BDS-T1-GE3",
     "MSS1210-103MEB",
     "NR6045T1R0N",
+    "SBC856BWT1G",
+    " ",
+    "1N4148",
     "815-PRO-OB-536",
     "UCC27524AQDGNRQ1",
+    " ",
     "BZX84C18-HE3-08",
     "VS-25TTS12SLHM3",
     "AUIPS2031R",
     "93LC46B-I/SN",
+    "SBC856BWT1G",
     "SQ2318AES-T1_GE3",
     "LM2904BAQDRQ1",
     "DCP020515DP",
@@ -94,6 +100,7 @@ part_numbers = [
     "ESP32-C3-MINI-1-H4",
     "DRV8300NPWR",
     "IPD90N04S403ATMA1",
+    " ",
     "IZB0312S15"
 ]
 
@@ -189,22 +196,43 @@ def parse_barcode(data: str) -> dict:
     return {"supplier": "Unknown", "raw": data}
 
 
-print("="*80 + "\n")
-codi1 = parse_barcode(">[)>06K1167277914K0151PRN60D3920FB14Q411K0434158114LUS")
-for key, value in codi1.items():
-    # print(f"{key}: {value}")
-    if key == "part_number":
-        component_mouser = get_mouser_data(value)     # AE1206BR-0710KL         815-AANI-CH-0068-T
-        # for key, value in component_mouser.items():
-        #     print(f"{key}: {value}")
-        print(f"> {component_mouser['name']} [{component_mouser['store_name']}]: {component_mouser['description']}")
+# print("="*80 + "\n")
+# codi1 = parse_barcode(">[)>06K1167277914K0151PRN60D3920FB14Q411K0434158114LUS")
+# for key, value in codi1.items():
+#     # print(f"{key}: {value}")
+#     if key == "part_number":
+#         component_mouser = get_mouser_data(value)     # AE1206BR-0710KL         815-AANI-CH-0068-T
+#         # for key, value in component_mouser.items():
+#         #     print(f"{key}: {value}")
+#         print(f"> {component_mouser['name']} [{component_mouser['store_name']}]: {component_mouser['description']}")
+
+# print("="*80 + "\n")
+# codi2 = parse_barcode("{pbn:PICK2107030009,on:SO2106299988,pc:C621425,pm:LAN8742AI-CZ-TR,qty:200,mc:,cc:1,pdi:44710295}")
+# for key, value in codi2.items():
+#     # print(f"{key}: {value}")
+#     if key == "sku":
+#         component_lcsc = get_lcsc_data(value)      #C17902         C2980306
+#         # for key, value in component_lcsc.items():
+#         #     print(f"{key}: {value}")
+#         print(f"> {component_lcsc['name']} [{component_lcsc['store_name']}]: {component_lcsc['description']}")
+
+
+
+print(">> BUSCA SUPPLIER NAME << "+"="*80 + "\n")
+for part in part_numbers:
+
+    if part.strip() == "":
+        print("")
+        time.sleep(2)
+        continue
+    component_mouser = get_mouser_data(part)
+    if component_mouser is None:
+        continue
+
+
+    for key, value in component_mouser.items():
+        if key == "store_name":
+            print(value)
+            time.sleep(2)
 
 print("="*80 + "\n")
-codi2 = parse_barcode("{pbn:PICK2107030009,on:SO2106299988,pc:C621425,pm:LAN8742AI-CZ-TR,qty:200,mc:,cc:1,pdi:44710295}")
-for key, value in codi2.items():
-    # print(f"{key}: {value}")
-    if key == "sku":
-        component_lcsc = get_lcsc_data(value)      #C17902         C2980306
-        # for key, value in component_lcsc.items():
-        #     print(f"{key}: {value}")
-        print(f"> {component_lcsc['name']} [{component_lcsc['store_name']}]: {component_lcsc['description']}")
