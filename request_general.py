@@ -27,83 +27,6 @@ from request_mouser import get_mouser_data
 import re
 import time
 
-part_numbers = [
-    "NGT B40N120FL2WG",
-    "2SK1317-E",
-    "STB37N60DM2AG",
-    "TIP32C",
-    "TIP31C",
-    "SBC856BWT1G",
-    "PIC12F683",
-    "PIC12F675",
-    "PIC18F4550",
-    "PIC16F628",
-    "ATMEGA8A",
-    "ATMEGA328P-AU",
-    "LM317",
-    "TL785",
-    "1N4148",
-    "MCP4726A0T-E/CH",
-    "RD-1205D",
-    "AFGB30T65SQDN",
-    "L293",
-    "ISO7720QDWRQ1",
-    "ADUM5402WCRWZ-1",
-    "SI8235BD-C-IS",
-    "LM2904YST",
-    "SQS460EN-T1_GE3",
-    "UCC27424QDGNRQ1",
-    "SQ7414AEN-T1_GE3",
-    "ASSR-601JT-000E",
-    "ADC128S022CIMT/NOPB",
-    "MAX15006AASA+",
-    "STY145N65M5",
-    "XP3N5R0M",
-    "TPS40210QDGQRQ1",
-    "MAX11080GUU/V+",
-    "SQ4840EY-T1-GE3",
-    "IE0512D",
-    "IK0515SA",
-    "NCS3S1212SC",
-    "SI2312BDS-T1-GE3",
-    "MSS1210-103MEB",
-    "NR6045T1R0N",
-    "SBC856BWT1G",
-    " ",
-    "1N4148",
-    "815-PRO-OB-536",
-    "UCC27524AQDGNRQ1",
-    " ",
-    "BZX84C18-HE3-08",
-    "VS-25TTS12SLHM3",
-    "AUIPS2031R",
-    "93LC46B-I/SN",
-    "SBC856BWT1G",
-    "SQ2318AES-T1_GE3",
-    "LM2904BAQDRQ1",
-    "DCP020515DP",
-    "IRS2302SPBF",
-    "AUIPS1011R",
-    "BZX84-A20,215",
-    "MMBZ27VALT1G",
-    "SMBJ33CAHE3_A/H",
-    "SMBJ36CAHE3_A/",
-    "TPS3813K33QDBVRQ1",
-    "TPS3808G33QDBVRQ1",
-    "RSS070P05HZGTB",
-    "SSM3K15F,LF",
-    "QS6K1FRATR",
-    "SSM3J15FU,LF",
-    "IRFS7437TRLPBF",
-    "NVHL082N65S3F",
-    "IPD50P04P4L-11",
-    "ESP32-C3-MINI-1-H4",
-    "DRV8300NPWR",
-    "IPD90N04S403ATMA1",
-    " ",
-    "IZB0312S15"
-]
-
 
 def detect_supplier(code: str) -> str:
     code = code.strip().upper()
@@ -118,8 +41,6 @@ def detect_supplier(code: str) -> str:
 
     # Mouser → la resta (MPN o format amb guions)
     return "mouser"
-
-
 
 def get_component(code: str):
     supplier = detect_supplier(code)
@@ -148,8 +69,6 @@ def get_component(code: str):
 #         print(f"> {component['name']}: {component['store_name']}")
 #     # else:
 #     #     print(f"> {codi}: NO TROBAT")
-
-
 
 
 def parse_barcode(data: str) -> dict:
@@ -218,21 +137,153 @@ def parse_barcode(data: str) -> dict:
 
 
 
-print(">> BUSCA SUPPLIER NAME << "+"="*80 + "\n")
+
+
+
+
+
+# part_numbers = [
+#     "NGT B40N120FL2WG",
+#     "2SK1317-E",
+#     "STB37N60DM2AG",
+#     "TIP32C",
+#     "TIP31C",
+#     "SBC856BWT1G",
+#     "PIC12F683",
+#     "PIC12F675",
+#     "PIC18F4550",
+#     "PIC16F628",
+#     "ATMEGA8A",
+#     "ATMEGA328P-AU",
+#     "LM317",
+#     "TL785",
+#     "1N4148",
+#     "MCP4726A0T-E/CH",
+#     "RD-1205D",
+#     "AFGB30T65SQDN",
+#     "L293",
+#     "ISO7720QDWRQ1",
+#     "ADUM5402WCRWZ-1",
+#     "SI8235BD-C-IS",
+#     "LM2904YST",
+#     "SQS460EN-T1_GE3",
+#     "UCC27424QDGNRQ1",
+#     "SQ7414AEN-T1_GE3",
+#     "ASSR-601JT-000E",
+#     "ADC128S022CIMT/NOPB",
+#     "MAX15006AASA+",
+#     "STY145N65M5",
+#     "XP3N5R0M",
+#     "TPS40210QDGQRQ1",
+#     "MAX11080GUU/V+",
+#     "SQ4840EY-T1-GE3",
+#     "IE0512D",
+#     "IK0515SA",
+#     "NCS3S1212SC",
+#     "SI2312BDS-T1-GE3",
+#     "MSS1210-103MEB",
+#     "NR6045T1R0N",
+#     "SBC856BWT1G",
+#     " ",
+#     "1N4148",
+#     "815-PRO-OB-536",
+#     "UCC27524AQDGNRQ1",
+#     " ",
+#     "BZX84C18-HE3-08",
+#     "VS-25TTS12SLHM3",
+#     "AUIPS2031R",
+#     "93LC46B-I/SN",
+#     "SBC856BWT1G",
+#     "SQ2318AES-T1_GE3",
+#     "LM2904BAQDRQ1",
+#     "DCP020515DP",
+#     "IRS2302SPBF",
+#     "AUIPS1011R",
+#     "BZX84-A20,215",
+#     "MMBZ27VALT1G",
+#     "SMBJ33CAHE3_A/H",
+#     "SMBJ36CAHE3_A/",
+#     "TPS3813K33QDBVRQ1",
+#     "TPS3808G33QDBVRQ1",
+#     "RSS070P05HZGTB",
+#     "SSM3K15F,LF",
+#     "QS6K1FRATR",
+#     "SSM3J15FU,LF",
+#     "IRFS7437TRLPBF",
+#     "NVHL082N65S3F",
+#     "IPD50P04P4L-11",
+#     "ESP32-C3-MINI-1-H4",
+#     "DRV8300NPWR",
+#     "IPD90N04S403ATMA1",
+#     " ",
+#     "IZB0312S15"
+# ]
+
+# print(">> BUSCA SUPPLIER NAME en Mouser << "+"="*80 + "\n")
+# for part in part_numbers:
+
+#     if part.strip() == "":
+#         print("")
+#         time.sleep(2)
+#         continue
+#     component_mouser = get_mouser_data(part)
+#     if component_mouser is None:
+#         continue
+
+
+#     for key, value in component_mouser.items():
+#         if key == "store_name":
+#             print(value)
+#             time.sleep(2)
+
+# print("="*80 + "\n")
+
+
+
+
+
+part_numbers = [
+    "1175073",
+    "2164804",
+    "1459052",
+    "1902435",
+    "2576227",
+    "3581533",
+    "2083914",
+    "1209558",
+    "2777520",
+    "2575185",
+    "2463634",
+    "1773494",
+    "1793830",
+    "1256513",
+    "1256511",
+    "1011407",
+    "1011408",
+    "1011410"
+]
+
+print(">> BUSCA DESCRIPTION en farnell << "+"="*80 + "\n")
 for part in part_numbers:
 
     if part.strip() == "":
         print("")
         time.sleep(2)
         continue
-    component_mouser = get_mouser_data(part)
-    if component_mouser is None:
+    component_farnell = get_farnell_by_sku(part)
+    if component_farnell is None:
         continue
+# OEG - TE CONNECTIVITY - PCH-112D2H,000 - RELÉ, SPDT, 250VAC, 30VDC, 5A
+# NXP - NCX2200GW,125 - Comparador Analógico, Raíl a Raíl, Bajo Voltaje, 1 Canales, 0.8 µs, 1.3V a 5.5V, TSSOP, 5 Pines
 
-
-    for key, value in component_mouser.items():
-        if key == "store_name":
-            print(value)
+    for key, value in component_farnell.items():
+        if key == "description":
+            # print(value)
+            if "-" in part:
+                print("".join(value.split("-")[5:]))
+            else:
+                print("".join(value.split("-")[2:]))
             time.sleep(2)
+
 
 print("="*80 + "\n")
