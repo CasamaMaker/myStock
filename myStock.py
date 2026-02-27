@@ -40,17 +40,17 @@ class FilterConfig:
 class Config:
     """Configuració centralitzada de columnes i visualització"""
     # Índexs de columnes - PARÀMETRES OBLIGATORIS
-    STOCK = 0                   # ES MOSTRE EN LABEL
-    STORAGE = 1                 # ES MOSTRE EN LABEL
-    WEB = 7                     # S'OBRE LA WEB
-    REFERENCE = 3               # PN o ID unic, PER identificar cada FILA
-    TEXT_FILTER = 4             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+    STOCK = 9                   # ES MOSTRE EN LABEL
+    STORAGE = 10                 # ES MOSTRE EN LABEL
+    WEB = 11                     # S'OBRE LA WEB
+    REFERENCE = 5               # PN o ID unic, PER identificar cada FILA
+    TEXT_FILTER = 1             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
 
 
     # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
-    TYPE = 2
-    DESCRIPTION = 5
-    PACKAGE = 6
+    TYPE = 3
+    DESCRIPTION = 8
+    PACKAGE = 7
 
 
     # DEFINIR ELS FILTRES
@@ -174,7 +174,8 @@ class Config:
     FILTRER_AVAILABILITY = True     # amaga o desavilita els paràmetre de filtre NO disponibles --> True: amaga; False: desavilita
 
     # Google Sheet ID
-    GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal
+    # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal Stock
+    GOOGLE_SHEET_ID = "1jTJQL-PM7Uq1Gvns65RWnZOWWBl-359ZsKDoc6suoGQ"                # personal Stock22
     # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
     # GOOGLE_SHEET_ID = "13rzlU99m8AtWtMIPll6iB_1iJge1rUPmn_03aEMuvQk"              # Còpia multiplicada stock
     GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
