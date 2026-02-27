@@ -53,9 +53,9 @@ def get_lcsc_data(part_number):
     
     if data.get("code") != 200 or not data.get("result"):
         print(f"❌ Resposta no vàlida:")
-        print(f"   Code: {data.get('code')}")
-        print(f"   Message: {data.get('msg', 'Error desconegut')}")
-        print(f"   OK: {data.get('ok')}")
+        # print(f"   Code: {data.get('code')}")
+        # print(f"   Message: {data.get('msg', 'Error desconegut')}")
+        # print(f"   OK: {data.get('ok')}")
         return None
     
     product = data["result"]
