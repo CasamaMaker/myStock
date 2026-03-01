@@ -40,25 +40,40 @@ class FilterConfig:
 class Config:
     """Configuració centralitzada de columnes i visualització"""
     # Índexs de columnes - PARÀMETRES OBLIGATORIS
-    STOCK = 9                   # ES MOSTRE EN LABEL
-    STORAGE = 10                 # ES MOSTRE EN LABEL
-    WEB = 11                     # S'OBRE LA WEB
-    REFERENCE = 5               # PN o ID unic, PER identificar cada FILA
-    TEXT_FILTER = 1             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
-
-
-    # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
-    TYPE = 3
-    DESCRIPTION = 8
+    ID = 0
+    MANUFACTURER_PN = 1
+    MANUFACTURER_NAME = 2
+    CATEGORY = 3
+    SUPPLIER = 4
+    SUPPLIER_PN = 5
+    SUPPLIER_CATEGORY = 6
     PACKAGE = 7
+    DESCRIPTION = 8
+    STOCK = 9
+    STORAGE = 10
+    DATASHEET = 11
+    SUPPLIER_PRODUCT = 12
+
+
+
+
+    ## FOR LABELS
+    STOCK = STOCK                   # ES MOSTRE EN LABEL
+    STORAGE = STORAGE                 # ES MOSTRE EN LABEL
+    WEB = DATASHEET                     # S'OBRE LA WEB
+    REFERENCE = SUPPLIER_PN               # PN o ID unic, PER identificar cada FILA
+    TEXT_FILTER = MANUFACTURER_PN             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+
+
+
 
 
     # DEFINIR ELS FILTRES
-    FILTRE1 = TYPE
-    FILTRE2 = PACKAGE
-    FILTRE3 = STORAGE
-    FILTRE4 = REFERENCE
-    FILTRE5 = TEXT_FILTER
+    FILTRE1 = CATEGORY
+    FILTRE2 = SUPPLIER_CATEGORY
+    FILTRE3 = PACKAGE
+    FILTRE4 = SUPPLIER
+    FILTRE5 = MANUFACTURER_NAME
 
 
 
@@ -111,8 +126,8 @@ class Config:
     COLUMNS_TO_SHOW = [REFERENCE, TEXT_FILTER, DESCRIPTION]
     COLUMNS_WIDTH = [150, 150, 400]
 
-    # COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
-    COLUMNS_WIDTH = [150, 400, 150]
+    # # COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
+    # COLUMNS_WIDTH = [150, 400, 150]
     
     # Configuració de filtres (pots activar/desactivar els que vulguis)
     FILTERS_CONFIG = [
