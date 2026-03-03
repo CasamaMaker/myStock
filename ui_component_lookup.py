@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(717, 559)
+        MainWindow.resize(717, 557)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
         self.verticalLayoutWidget_2.setGeometry(QRect(-1, -1, 681, 291))
         self.verticalLayout_result = QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout_result.setObjectName(u"verticalLayout_result")
-        self.verticalLayout_result.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_result.setContentsMargins(12, 8, 12, 8)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.widget_imatge = QWidget(self.verticalLayoutWidget_2)
@@ -115,7 +115,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_info.addWidget(self.label_description)
 
-        self.verticalSpacer = QSpacerItem(20, 10, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+        self.verticalSpacer = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
 
         self.verticalLayout_info.addItem(self.verticalSpacer)
 
@@ -240,6 +240,10 @@ class Ui_MainWindow(object):
         self.lineEdit_storagevariable.setObjectName(u"lineEdit_storagevariable")
 
         self.horizontalLayout_4.addWidget(self.lineEdit_storagevariable)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
