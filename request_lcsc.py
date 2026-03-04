@@ -124,7 +124,7 @@ def search_by_mpn(mpn):
 
 # Prova
 if __name__ == "__main__":
-    components = get_lcsc_data("C17902")      #C17902         C2980306
+    components = get_lcsc_data("C364262")      #C17902         C2980306
     print(">>>>>>>>>>>")
     for key, value in components.items():
         print(f"{key}: {value}")
