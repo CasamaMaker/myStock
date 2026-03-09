@@ -123,8 +123,8 @@ class Config:
 
     
     # Columnes a mostrar a la taula i les seves amplades
-    COLUMNS_TO_SHOW = [REFERENCE, TEXT_FILTER, DESCRIPTION]
-    COLUMNS_WIDTH = [150, 150, 400]
+    COLUMNS_TO_SHOW = [ID, REFERENCE, PACKAGE, DESCRIPTION, MANUFACTURER_PN, MANUFACTURER_NAME]
+    COLUMNS_WIDTH = [50, 150, 80, 300, 150, 150]
 
     # # COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
     # COLUMNS_WIDTH = [150, 400, 150]
@@ -378,8 +378,7 @@ class MainWindow(QMainWindow):
         
         # Icona principal
         # self.setWindowIcon(QIcon("img\inventory.ico"))
-        self.setWindowIcon(QIcon(":/logos/inventory_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg")
-)
+        self.setWindowIcon(QIcon(":/logos/inventory_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"))
 
         # Botons d'acció
         self.ui.pushButton_4.clicked.connect(self._open_google_sheet)
@@ -407,6 +406,10 @@ class MainWindow(QMainWindow):
 
 
     def _open_lookup(self):
+        id = self._get_selected_row_data(Config.ID)
+        print(id)
+        supplier = self._get_selected_row_data(Config.SUPPLIER)
+        print(supplier)
         reference = self._get_selected_row_data(Config.REFERENCE)
 
         if self._lookup_window is None or not self._lookup_window.isVisible():
@@ -443,34 +446,6 @@ class MainWindow(QMainWindow):
         self._populate_all_filter_lists()
         self._update_table()
         self._show_status_message("Iniciat correctament", 2000)
-
-    # def _fetch_google_sheet(self) -> List[List[str]]:
-    #     """Carrega les dades des del Google Sheet"""
-    #     try:
-    #         csv_url = (
-    #             f"https://docs.google.com/spreadsheets/d/"
-    #             f"{Config.GOOGLE_SHEET_ID}/export?format=csv"
-    #         )
-            
-    #         response = requests.get(csv_url, timeout=Config.REQUEST_TIMEOUT)
-    #         response.raise_for_status()
-            
-    #         csv_content = response.content.decode('utf-8')
-    #         csv_reader = csv.reader(csv_content.splitlines())
-    #         data = list(csv_reader)
-            
-    #         if not data:
-    #             print("No s'han trobat dades al Google Sheet")
-    #             return []
-            
-    #         return data
-            
-    #     except requests.exceptions.RequestException as e:
-    #         error_msg = f"Error al accedir a Google Sheet: {e}"
-    #         print(error_msg)
-    #         self._show_status_message(error_msg, 3000)
-    #         return []
-
 
 
     def _fetch_google_sheet(self, worksheet_name: str = None) -> List[List[str]]:
@@ -1004,7 +979,8 @@ class MainWindow(QMainWindow):
         if row_index < 0:
             return None
         
-        reference = self.ui.tableWidget.item(row_index, 0).text()
+        reference = self.ui.tableWidget.item(row_index, 1).text()
+        print("<>", reference)
         
         for row in self.data_google_sheet[1:]:
             if reference == row[Config.REFERENCE]:
@@ -1034,11 +1010,6 @@ class MainWindow(QMainWindow):
             webbrowser.open_new_tab(web)
         else:
             self._show_status_message("URL invàlida", 2000)
-
-    # def _open_google_sheet(self):
-    #     """Obre el Google Sheet en una nova pestanya"""
-    #     url = f"https://docs.google.com/spreadsheets/d/{Config.GOOGLE_SHEET_ID}"
-    #     webbrowser.open_new_tab(url)
 
     def _open_google_sheet(self):
         """Obre el Google Sheet en una nova pestanya a la fila del component seleccionat"""

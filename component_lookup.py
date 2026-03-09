@@ -53,11 +53,12 @@ except ImportError as e:
 # ── Configuració d'estoc ──────────────────────────────────────────────────────
 
 class StockConfig:
-    STOCK      = 0
-    STORAGE    = 1
-    REFERENCE  = 3
+    STOCK      = 9 #0
+    STORAGE    = 10 #1
+    REFERENCE  = 5 #3
 
-    GOOGLE_SHEET_ID         = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"
+    # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal Stock
+    GOOGLE_SHEET_ID = "1jTJQL-PM7Uq1Gvns65RWnZOWWBl-359ZsKDoc6suoGQ"                # personal Stock22
     GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"
 
 
@@ -905,7 +906,7 @@ class MainWindow(QMainWindow):
         self._clear_price_pills()
         prices = parse_prices(component.get("price_unit"))
         if prices:
-            for entry in prices:
+            for entry in prices[:3]:
                 qty_p  = entry.get("quantity", "?")
                 price  = entry.get("price", "?")
                 try:
