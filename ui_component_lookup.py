@@ -1,9 +1,10 @@
+# document name: ui_component_lookup.py
 # -*- coding: utf-8 -*-
 
 ################################################################################
 ## Form generated from reading UI file 'ui_component_lookup.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +24,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(550, 401)
+        MainWindow.resize(550, 441)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
@@ -238,10 +239,26 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addLayout(self.verticalLayout_info)
 
+        self.horizontalLayoutWidget = QWidget(self.centralwidget)
+        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
+        self.horizontalLayoutWidget.setGeometry(QRect(10, 350, 521, 28))
+        self.horizontalLayout_10 = QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.pushButton = QPushButton(self.horizontalLayoutWidget)
+        self.pushButton.setObjectName(u"pushButton")
+
+        self.horizontalLayout_10.addWidget(self.pushButton)
+
+        self.pushButton_2 = QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+
+        self.horizontalLayout_10.addWidget(self.pushButton_2)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 550, 21))
+        self.menubar.setGeometry(QRect(0, 0, 550, 33))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -274,5 +291,7 @@ class Ui_MainWindow(object):
         self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"stock-variable", None))
         self.label_storagetext.setText(QCoreApplication.translate("MainWindow", u"storage-variable", None))
         self.lineEdit_storagevariable.setText(QCoreApplication.translate("MainWindow", u"stock-variable", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
     # retranslateUi
 

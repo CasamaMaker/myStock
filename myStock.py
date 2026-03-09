@@ -405,22 +405,46 @@ class MainWindow(QMainWindow):
         self.ui.listWidget_4.setVisible(False)
 
 
+    # def _open_lookup(self):
+    #     id = self._get_selected_row_data(Config.ID)
+    #     print(id)
+    #     supplier = self._get_selected_row_data(Config.SUPPLIER)
+    #     print(supplier)
+    #     reference = self._get_selected_row_data(Config.REFERENCE)
+
+    #     if self._lookup_window is None or not self._lookup_window.isVisible():
+    #         self._lookup_window = component_lookup.MainWindow()
+    #         # Fa la finestra modal respecte a mystock: bloqueja la interacció
+    #         # però sense tocar cap estil
+    #         self._lookup_window.setWindowModality(Qt.WindowModality.ApplicationModal)
+    #         self._lookup_window.show()
+    #     else:
+    #         self._lookup_window.raise_()
+    #         self._lookup_window.activateWindow()
+
+    #     if reference:
+    #         self._lookup_window.search(reference)
+
     def _open_lookup(self):
-        id = self._get_selected_row_data(Config.ID)
-        print(id)
-        supplier = self._get_selected_row_data(Config.SUPPLIER)
-        print(supplier)
         reference = self._get_selected_row_data(Config.REFERENCE)
 
         if self._lookup_window is None or not self._lookup_window.isVisible():
             self._lookup_window = component_lookup.MainWindow()
-            # Fa la finestra modal respecte a mystock: bloqueja la interacció
-            # però sense tocar cap estil
             self._lookup_window.setWindowModality(Qt.WindowModality.ApplicationModal)
             self._lookup_window.show()
         else:
             self._lookup_window.raise_()
             self._lookup_window.activateWindow()
+
+        # Construeix la llista de referències de la llista filtrada actual
+        filtered_data = self._apply_filters()
+        filtered_refs = [row[Config.REFERENCE] for row in filtered_data]
+
+        current_index = 0
+        if reference and reference in filtered_refs:
+            current_index = filtered_refs.index(reference)
+
+        self._lookup_window.set_navigation_list(filtered_refs, current_index)
 
         if reference:
             self._lookup_window.search(reference)

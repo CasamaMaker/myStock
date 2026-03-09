@@ -676,6 +676,27 @@ class MainWindow(QMainWindow):
 
         self.ui.lineEdit_search_box.setFocus()
 
+        # ── Navegació prev/next ───────────────────────────────────────────────────
+        self._nav_list: List[str] = []
+        self._nav_index: int = 0
+
+        self.ui.pushButton.setText("◀  Anterior")
+        self.ui.pushButton_2.setText("Següent  ▶")
+
+        # Etiqueta de posició entre els dos botons (afegida per codi)
+        self._nav_counter_label = QLabel("")
+        self._nav_counter_label.setAlignment(Qt.AlignCenter)
+        self._nav_counter_label.setStyleSheet(
+            "font-size: 11px; color: #606060; background: transparent;"
+        )
+        # Insereix l'etiqueta entre pushButton i pushButton_2
+        nav_layout = self.ui.horizontalLayout_10
+        nav_layout.insertWidget(1, self._nav_counter_label)
+
+        self.ui.pushButton.clicked.connect(self._nav_prev)
+        self.ui.pushButton_2.clicked.connect(self._nav_next)
+        self._update_nav_buttons()
+
     # ── Correccions de layout ─────────────────────────────────────────────────
 
     def _fix_result_layouts(self):
@@ -791,21 +812,56 @@ class MainWindow(QMainWindow):
         else:
             self._signals.stock_missing.emit()
 
+    # def _on_search(self):
+    #     code = self.ui.lineEdit_search_box.text().strip()
+    #     if not code:
+    #         return
+
+    #     self._last_search_code = code
+    #     self._reset_stock_fields()
+
+    #     self.ui.widget_result.setVisible(False)
+    #     self.ui.pushButton_search_button.setEnabled(False)
+    #     self._set_status(f"Cercant «{code}»…", "#505050")
+
+    #     def run():
+    #         try:
+    #             comp, supplier = fetch_component(code)
+    #             self._signals.finished.emit(comp, supplier)
+    #         except Exception as exc:
+    #             self._signals.error.emit(str(exc))
+
+    #     threading.Thread(target=run, daemon=True).start()
+
     def _on_search(self):
         code = self.ui.lineEdit_search_box.text().strip()
         if not code:
             return
 
-        self._last_search_code = code
-        self._reset_stock_fields()
+        # ── Extreu l'identificador efectiu per a la cerca d'estoc ──────────────
+        parsed = parse_barcode(code)
+        supplier = parsed.get("supplier", "Unknown")
 
+        if supplier == "LCSC":
+            effective_code = parsed.get("sku") or parsed.get("part_number") or code
+        elif supplier == "Mouser":
+            effective_code = parsed.get("part_number") or parsed.get("mfr_part") or code
+        elif supplier == "Farnell":
+            effective_code = parsed.get("sku") or code
+        else:
+            effective_code = code  # entrada manual: ja és l'identificador
+
+        self._last_search_code = effective_code  # ← ara és "C434068", no el QR sencer
+        # ───────────────────────────────────────────────────────────────────────
+
+        self._reset_stock_fields()
         self.ui.widget_result.setVisible(False)
         self.ui.pushButton_search_button.setEnabled(False)
         self._set_status(f"Cercant «{code}»…", "#505050")
 
         def run():
             try:
-                comp, supplier = fetch_component(code)
+                comp, supplier = fetch_component(code)  # fetch_component segueix rebent el codi original
                 self._signals.finished.emit(comp, supplier)
             except Exception as exc:
                 self._signals.error.emit(str(exc))
@@ -1032,6 +1088,37 @@ class MainWindow(QMainWindow):
         """Llança una cerca programàticament."""
         self.ui.lineEdit_search_box.setText(code)
         self._on_search()
+
+    # ── Navegació per la llista filtrada ─────────────────────────────────────
+
+    def set_navigation_list(self, references: List[str], current_index: int):
+        """Rep la llista filtrada de mystock i l'índex del component actual."""
+        self._nav_list = references
+        self._nav_index = current_index
+        self._update_nav_buttons()
+
+    def _nav_prev(self):
+        if self._nav_index > 0:
+            self._nav_index -= 1
+            self.search(self._nav_list[self._nav_index])
+            self._update_nav_buttons()
+
+    def _nav_next(self):
+        if self._nav_index < len(self._nav_list) - 1:
+            self._nav_index += 1
+            self.search(self._nav_list[self._nav_index])
+            self._update_nav_buttons()
+
+    def _update_nav_buttons(self):
+        has_list = len(self._nav_list) > 0
+        self.ui.pushButton.setEnabled(has_list and self._nav_index > 0)
+        self.ui.pushButton_2.setEnabled(has_list and self._nav_index < len(self._nav_list) - 1)
+        if has_list:
+            self._nav_counter_label.setText(
+                f"{self._nav_index + 1} / {len(self._nav_list)}"
+            )
+        else:
+            self._nav_counter_label.setText("")
 
     def closeEvent(self, event):
         super().closeEvent(event)
