@@ -1042,6 +1042,7 @@ class MainWindow(QMainWindow):
         
         # Intentar obtenir el component seleccionat
         row_index = self.ui.tableWidget.currentRow()
+        print(row_index)
         
         if row_index < 0:
             # Si no hi ha selecció, obrir el sheet normalment
@@ -1057,7 +1058,8 @@ class MainWindow(QMainWindow):
         for idx, row in enumerate(self.data_google_sheet, start=1):
             if idx == 1:  # Saltar capçalera
                 continue
-            if row[Config.REFERENCE] == reference:
+            # if row[Config.REFERENCE] == reference:
+            if row[Config.ID] == reference:
                 sheet_row = idx #+ 1  # +1 perquè Google Sheets comença a 1, no a 0
                 break
         

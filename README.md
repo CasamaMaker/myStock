@@ -1,4 +1,4 @@
-# myStock
+<!-- # myStock
 descktop app for stock control from ddbb google sheets
 
 
@@ -476,4 +476,250 @@ Abans d'executar l'aplicació, verifica:
 **Solució**:
 1. Obre `main.py`
 2. Cerca `FILTERS_CONFIG` dins la classe `Config`
-3. Canvia `enabled=False` a `enabled=True` per al filtre desitjat
+3. Canvia `enabled=False` a `enabled=True` per al filtre desitjat -->
+
+
+
+
+
+
+# 📦 MyStock
+
+A flexible desktop app to visualize and filter your personal inventory.
+
+**MyStock** is a simple tool designed by a maker, for makers.  
+It helps you quickly find what components you already have at home, using a more convenient interface than browsing a spreadsheet.
+
+The app reads your inventory from **Google Sheets** and lets you filter, search and explore your stock instantly.
+
+Although it was originally designed for **electronic components**, it can be adapted to **any type of inventory**.
+
+![Main](docs\images\myStock_screenshot.png)
+---
+
+# ✨ Features
+
+### 🔍 Powerful filtering
+- Multiple dynamic filters
+- Free text search across the database
+- Visual filter tags that can be removed with one click
+- Filters automatically disable when no results are available
+
+### 📊 Clean stock visualization
+- See **stock quantity**
+- See **storage location**
+- View **component description**
+- Open **datasheets or product pages** directly
+
+### ☁️ Google Sheets integration
+- Uses a Google Sheet as the database
+- Real-time updates
+- Easy multi-device editing
+- No local database needed
+
+### 🧩 Highly configurable
+MyStock was designed to be **easy to adapt**.
+
+You can configure:
+
+- Which columns are used from google sheets
+- Which colums use as filters
+- Which columns show to present the components filtered
+- How many filters use
+
+This allows you to reuse the app for:
+- electronic components
+- workshop parts
+- tools
+- mechanical parts
+- any personal inventory
+
+---
+
+# 🧰 Built With
+
+| Technology | Purpose |
+|------------|---------|
+| Python 3.8+ | Core language |
+| PySide6 (Qt6) | Desktop GUI |
+| gspread | Google Sheets API |
+| google-auth | Google authentication |
+| requests | HTTP requests |
+| Qt Designer | UI design |
+
+---
+
+# 📷 Screenshots
+
+### Main interface
+![Main](docs\images\myStock_screenshot_labels.png)
+
+### Components lookup from supplier
+![Filters](docs\images\component_loockup_screenshot.png)
+
+<!-- ### Component detail
+![Detail](docs/images/screenshot_detail.png) -->
+
+---
+
+# 🎯 Example Use Case
+
+Imagine you are building a project and need a **3.3V regulator in SOT-23 package**.
+
+With MyStock you can:
+
+1. Filter **Type → Voltage Regulator**
+2. Filter **Package → SOT-23**
+3. Search **3.3V**
+4. Instantly see all matching components
+5. Check **how many you have**
+6. See **where they are stored**
+7. Open the **datasheet** with one click
+8. More over, once once component from the table is selected, you can press the button "component lookup" and it will find this component to Mouser/Farnell/LCSC and show more info, include a picture
+
+No more scrolling through spreadsheets.
+
+---
+
+# ⚙️ Requirements
+
+Before installing MyStock, make sure you have:
+
+- **Python 3.8 or newer**
+- A **Google Cloud account** and **api key**
+- A **Google Sheet** containing your inventory
+- A **Mouse, Farnell** api key
+
+---
+
+# 📁 Project Structure
+
+```
+mystock/
+│
+├── mystock.py
+├── component_lookup.py
+├── ui_main.py
+├── ui_main.ui
+│
+├── credentials/          # Google service account credentials (not in git)
+│
+├── docs/
+│   └── images/           # screenshots
+│
+├── requirements.txt
+├── README.md
+└── LICENSE
+```
+
+---
+
+# ⚙️ Setup
+
+## 1. Enable Google Sheets API
+
+Create a project in **Google Cloud Console** and enable:
+
+- Google Sheets API
+- Google Drive API
+
+## 2. Create a Service Account
+
+Generate a **JSON key** and place it inside:
+
+```
+credentials/
+```
+
+Example:
+
+```
+credentials/mystock-service-account.json
+```
+
+Make sure this folder is ignored by git.
+
+## 3. Share the Google Sheet
+
+Share your Google Sheet with the service account email.
+
+
+## 4. Obtain the token for each marketplace
+
+Register on the respective API platforms. Here are the links where you can sign up and get your API tokens (to be provided):
+   - **[Market Mouser API Registration Link]** - 
+   https://eu.mouser.com/api-search/#signup
+   <!-- - **[Market DIGIKEY API Registration Link]** -
+   https://www.digikey.es/en/resources/api-solutions -->
+   - **[Market ELEMENT 14 API Registration Link]** - 
+   https://partner.element14.com/docs 
+   <!-- - **[Market TME API Registration Link]** -
+   https://developers.tme.eu/signup -->
+---
+
+# 🛠 Configuration
+
+The behavior of MyStock can be customized inside:
+
+```
+mystock.py
+```
+
+You can configure:
+
+- column indexes
+- filters
+- table columns
+- data sources
+
+Example:
+
+```python
+STOCK = 0
+STORAGE = 1
+REFERENCE = 3
+TEXT_FILTER = 4
+```
+
+This makes the application flexible for different spreadsheet layouts.
+
+---
+
+# 📈 Roadmap
+
+Possible future improvements:
+
+- add/modify component from app
+- import BoM file from project and generate a table with component location and be able to rest they from stock.
+
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+If you'd like to improve MyStock:
+
+1. Fork the repository
+2. Create a branch
+3. Commit your changes
+4. Open a Pull Request
+
+Ideas are also welcome via Issues.
+
+---
+
+# 📄 License
+
+MIT License
+
+---
+
+# 👨‍💻 Author
+
+Created by a maker who was tired of searching components in spreadsheets.
+
+If this project is useful to you, consider giving it a ⭐ on GitHub.
+
+**GitHub**: [@CasamaMaker](https://github.com/el-teu-usuari)

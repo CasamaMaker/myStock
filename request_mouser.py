@@ -2,6 +2,7 @@ import requests
 import json
 
 API_KEY_MOUSER = "34e727c3-3810-4ccd-b06e-d97149772242"
+# API_KEY_MOUSER= ""
 
 def get_mouser_data(part_number, api_key=API_KEY_MOUSER):
     url = "https://api.mouser.com/api/v1/search/partnumber"
