@@ -494,7 +494,7 @@ The app reads your inventory from **Google Sheets** and lets you filter, search 
 
 Although it was originally designed for **electronic components**, it can be adapted to **any type of inventory**.
 
-![Main](docs\images\myStock_screenshot.png)
+![Main](docs/images/myStock_screenshot.png)
 ---
 
 # ✨ Features
@@ -552,10 +552,10 @@ This allows you to reuse the app for:
 # 📷 Screenshots
 
 ### Main interface
-![Main](docs\images\myStock_screenshot_labels.png)
+![Main](docs/images/myStock_screenshot_labels.png)
 
 ### Components lookup from supplier
-![Filters](docs\images\component_loockup_screenshot.png)
+![Filters](docs/images/component_loockup_screenshot.png)
 
 <!-- ### Component detail
 ![Detail](docs/images/screenshot_detail.png) -->
