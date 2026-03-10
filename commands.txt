@@ -1,11 +1,24 @@
+
+## user interface designer using qtdesigner .ui to .py
 pyside6-uic -o .\ui_main.py .\ui_main.ui
 pyside6-uic -o .\ui_component_lookup.py .\ui_component_lookup.ui
 
+
+## recursos grafics
 pyside6-rcc img/recursos_grafics.qrc -o recursos_grafics_rc.py
+
+
+## creat executable file without credential incorparated
 pyinstaller --onefile --windowed --icon=img/inventory.ico myStock.py
 
-pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/model-folio-482716-e4-e9eb4cc77d58.json;credentials" myStock.py
-
-
+## creat executable file with credential incorparated
 pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/model-folio-482716-e4-e9eb4cc77d58.json;credentials" myStock.py
 pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/mystock-482208-a553ed840217.json;credentials" myStock.py
+
+
+# Des de dins del teu entorn virtual (.venv) pots generar el requirements.txt
+pip freeze > requirements.txt
+
+
+# Per instal·lar totes les dependències d’un requirements.txt
+pip install -r requirements.txt
