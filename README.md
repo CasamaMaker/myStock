@@ -1,15 +1,5 @@
 
-[Features](#-features) •
-[Screenshots](#-screenshots) •
-Example Use Case
-Requirements
-[Built With](#-built-with) •
-[Installation](#-installation) •
-[Configuration](#️-configuration) •
-[Contributing](#-contributing) •
-[License](#-license)
-
-
+![Main](docs/images/myStock_screenshot.png)
 # 📦 MyStock
 
 A flexible desktop app to visualize and filter your personal inventory.
@@ -21,7 +11,22 @@ The app reads your inventory from **Google Sheets** and lets you filter, search 
 
 Although it was originally designed for **electronic components**, it can be adapted to **any type of inventory**.
 
-![Main](docs/images/myStock_screenshot.png)
+
+---
+[![GitHub stars](https://img.shields.io/github/stars/CasamaMaker/myStock.svg)](https://github.com/CasamaMaker/myStock/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/CasamaMaker/myStock.svg)](https://github.com/CasamaMaker/myStock/network)
+[![GitHub repo size](https://img.shields.io/github/repo-size/CasamaMaker/myStock.svg)](https://github.com/CasamaMaker/myStock)
+[![License](https://img.shields.io/github/license/CasamaMaker/myStock.svg)](LICENSE.txt)
+
+[Features](#-features) •
+[Screenshots](#-screenshots) •
+[Example Use Case](#-example-use-case) •
+[Requirements](#-requirements) •
+[Built With](#-built-with) •
+[Installation](#-installation) •
+[Configuration](#️-configuration) •
+[Contributing](#-contributing) •
+[License](#-license)
 ---
 
 # ✨ Features
