@@ -1,9 +1,14 @@
 
 [Features](#-features) •
-[How It Works](#-how-it-works) •
+[Screenshots](#-screenshots) •
+Example Use Case
+Requirements
+[Built With](#-built-with) •
 [Installation](#-installation) •
 [Configuration](#️-configuration) •
-[Contributing](#-contributing)
+[Contributing](#-contributing) •
+[License](#-license)
+
 
 # 📦 MyStock
 
@@ -59,22 +64,10 @@ This allows you to reuse the app for:
 
 ---
 
-# 🧰 Built With
-
-| Technology | Purpose |
-|------------|---------|
-| Python 3.8+ | Core language |
-| PySide6 (Qt6) | Desktop GUI |
-| gspread | Google Sheets API |
-| google-auth | Google authentication |
-| requests | HTTP requests |
-| Qt Designer | UI design |
-
----
-
 # 📷 Screenshots
 
 ### Main interface
+![Main](docs/images/myStock_screenshot_filters.png)
 ![Main](docs/images/myStock_screenshot_labels.png)
 
 ### Components lookup from supplier
@@ -98,7 +91,7 @@ With MyStock you can:
 5. Check **how many you have**
 6. See **where they are stored**
 7. Open the **datasheet** with one click
-8. More over, once once component from the table is selected, you can press the button "component lookup" and it will find this component to Mouser/Farnell/LCSC and show more info, include a picture
+8. More over, once component from the table is selected, you can press the button "component lookup" and it will find this component to Mouser/Farnell/LCSC and show more info, include a picture
 
 No more scrolling through spreadsheets.
 
@@ -115,7 +108,7 @@ Before installing MyStock, make sure you have:
 
 ---
 
-## 🚀 Installation
+# 🚀 Installation
 
 ```bash
 # 1. Clone the repository
@@ -136,7 +129,7 @@ requests
 
 ---
 
-## ⚙️ Configuration
+# ⚙️ Configuration
 
 All configuration lives in the `Config` class at the top of `mystock.py`. You only need to touch this one place.
 
@@ -236,22 +229,43 @@ python mystock.py
 
 ---
 
+# 🧰 Built With
+
+| Technology | Purpose |
+|------------|---------|
+| Python 3.8+ | Core language |
+| PySide6 (Qt6) | Desktop GUI |
+| gspread | Google Sheets API |
+| google-auth | Google authentication |
+| requests | HTTP requests |
+| Qt Designer | UI design |
+
+---
+
 # 📁 Project Structure
 
 ```
 mystock/
 │
-├── mystock.py
-├── component_lookup.py
-├── ui_main.py
-├── ui_main.ui
+├── mystock.py             # main program
+├── component_lookup.py    # lookup components windows program
+├── request_general.py     # test of request functions
+├── request_mouser.py      # mouser api request functions
+├── request_lcsc.py        # lcsc web request functions
+├── request_farnell.py     # farnell api request functions
+├── ui_main.py             # main UI from QTdesigner converted to .py
+├── ui_main.ui             # main UI from QTdesigner
+├── ui_component_lookup.py # lookup components UI from QTdesigner converted to .py
+├── ui_component_lookup.ui # lookup components UI from QTdesigner
+├── recursos_grafics_rc.py # Qt resource file compiled to Python (icons, images, etc.)
 │
-├── credentials/          # Google service account credentials (not in git)
+├── credentials/           # Google service account credentials (not in git)
 │
 ├── docs/
-│   └── images/           # screenshots
+│   └── images/            # screenshots
 │
 ├── requirements.txt
+├── myStock.spec
 ├── README.md
 └── LICENSE
 ```
@@ -264,7 +278,7 @@ mystock/
 ---
 
 ## 🔍 Component Lookup window
-![Filters](docs/images/component_loockup_screenshot.png)
+![Component Lookup](docs/images/component_loockup_screenshot.png)
 `component_lookup.py` is a companion window that lets you search any component by part number, or by scanning a barcode from LCSC, Mouser, or Farnell packages.
 
 It shows:

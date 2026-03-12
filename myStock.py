@@ -193,7 +193,10 @@ class Config:
     GOOGLE_SHEET_ID = "1jTJQL-PM7Uq1Gvns65RWnZOWWBl-359ZsKDoc6suoGQ"                # personal Stock22
     # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
     # GOOGLE_SHEET_ID = "13rzlU99m8AtWtMIPll6iB_1iJge1rUPmn_03aEMuvQk"              # Còpia multiplicada stock
-    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
+
+
+    # GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
+    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-9ff7a94ae596.json"        # personal2
     # GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
     
     # Timeout per peticions HTTP (segons)
@@ -404,27 +407,6 @@ class MainWindow(QMainWindow):
 
         self.ui.listWidget_4.setVisible(False)
 
-
-    # def _open_lookup(self):
-    #     id = self._get_selected_row_data(Config.ID)
-    #     print(id)
-    #     supplier = self._get_selected_row_data(Config.SUPPLIER)
-    #     print(supplier)
-    #     reference = self._get_selected_row_data(Config.REFERENCE)
-
-    #     if self._lookup_window is None or not self._lookup_window.isVisible():
-    #         self._lookup_window = component_lookup.MainWindow()
-    #         # Fa la finestra modal respecte a mystock: bloqueja la interacció
-    #         # però sense tocar cap estil
-    #         self._lookup_window.setWindowModality(Qt.WindowModality.ApplicationModal)
-    #         self._lookup_window.show()
-    #     else:
-    #         self._lookup_window.raise_()
-    #         self._lookup_window.activateWindow()
-
-    #     if reference:
-    #         self._lookup_window.search(reference)
-
     def _open_lookup(self):
         reference = self._get_selected_row_data(Config.REFERENCE)
 
@@ -470,7 +452,6 @@ class MainWindow(QMainWindow):
         self._populate_all_filter_lists()
         self._update_table()
         self._show_status_message("Iniciat correctament", 2000)
-
 
     def _fetch_google_sheet(self, worksheet_name: str = None) -> List[List[str]]:
         """
@@ -1003,24 +984,33 @@ class MainWindow(QMainWindow):
         if row_index < 0:
             return None
         
-        reference = self.ui.tableWidget.item(row_index, 1).text()
-        print("<>", reference)
+        # reference = self.ui.tableWidget.item(row_index, 1).text()
+        # print("<>", reference)
+        
+        # for row in self.data_google_sheet[1:]:
+        #     if reference == row[Config.REFERENCE]:
+        #         return row[column]
+
+        id = self.ui.tableWidget.item(row_index, 0).text()
+        # print("<>", id)
         
         for row in self.data_google_sheet[1:]:
-            if reference == row[Config.REFERENCE]:
+            if id == row[Config.ID]:
                 return row[column]
         
         return None
+    
+    # def _get_info_from_selected_row_id(self, info_column: int) -> Optional[str]
 
     def _update_stock_info(self):
         """Actualitza la informació d'stock"""
         stock = self._get_selected_row_data(Config.STOCK)
         storage = self._get_selected_row_data(Config.STORAGE)
         
-        if stock:
-            self.ui.stock_text.setText(stock)
-        if storage:
-            self.ui.label_9.setText(storage)
+        # if stock:
+        self.ui.stock_text.setText(stock)
+        # if storage:
+        self.ui.label_9.setText(storage)
 
     def _open_datasheet(self):
         """Obre el datasheet del component seleccionat"""
