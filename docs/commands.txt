@@ -12,8 +12,7 @@ pyside6-rcc img/recursos_grafics.qrc -o recursos_grafics_rc.py
 pyinstaller --onefile --windowed --icon=img/inventory.ico myStock.py
 
 ## creat executable file with credential incorparated
-pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/model-folio-482716-e4-e9eb4cc77d58.json;credentials" myStock.py
-pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/mystock-482208-a553ed840217.json;credentials" myStock.py
+pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/model-folio-482716-e4-ef9a987e1f30.json;credentials" myStock.py
 pyinstaller --onefile --windowed --icon=img/inventory.ico --add-data "credentials/mystock-482208-9ff7a94ae596.json;credentials" myStock.py
 
 

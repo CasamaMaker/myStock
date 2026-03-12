@@ -24,6 +24,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
 
 from ui_component_lookup import Ui_MainWindow
+from configuration import Config
 
 try:
     from request_farnell import get_farnell_by_sku
@@ -50,17 +51,17 @@ except ImportError as e:
     def get_mouser_data(mpn):     return _dummy(f"Mouser {mpn}")
 
 
-# ── Configuració d'estoc ──────────────────────────────────────────────────────
+# # ── Configuració d'estoc ──────────────────────────────────────────────────────
 
-class StockConfig:
-    STOCK      = 9 #0
-    STORAGE    = 10 #1
-    REFERENCE  = 5 #3
+# class Config:
+#     STOCK      = 9 #0
+#     STORAGE    = 10 #1
+#     REFERENCE  = 5 #3
 
-    # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal Stock
-    GOOGLE_SHEET_ID = "1jTJQL-PM7Uq1Gvns65RWnZOWWBl-359ZsKDoc6suoGQ"                # personal Stock22
-    # GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
-    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-9ff7a94ae596.json"        # personal2
+#     # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal Stock
+#     GOOGLE_SHEET_ID = "1jTJQL-PM7Uq1Gvns65RWnZOWWBl-359ZsKDoc6suoGQ"                # personal Stock22
+#     # GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
+#     GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-9ff7a94ae596.json"        # personal2
 
 
 def resource_path(relative_path: str) -> Path:
@@ -82,7 +83,7 @@ class StockChecker:
             import gspread
             from google.oauth2.service_account import Credentials as GCreds
 
-            creds_path = resource_path(StockConfig.GOOGLE_CREDENTIALS_JSON)
+            creds_path = resource_path(Config.GOOGLE_CREDENTIALS_JSON)
             if not creds_path.exists():
                 print(f"[StockChecker] Credencials no trobades: {creds_path}")
                 return False
@@ -93,7 +94,7 @@ class StockChecker:
             ]
             creds  = GCreds.from_service_account_file(str(creds_path), scopes=SCOPES)
             client = gspread.authorize(creds)
-            sheet  = client.open_by_key(StockConfig.GOOGLE_SHEET_ID)
+            sheet  = client.open_by_key(Config.GOOGLE_SHEET_ID)
 
             self._worksheet = sheet.sheet1
             self._data      = self._worksheet.get_all_values()
@@ -119,20 +120,20 @@ class StockChecker:
             return None, None, None
 
         for i, row in enumerate(self._data[1:], start=2):
-            ref = row[StockConfig.REFERENCE].strip().lower()
+            ref = row[Config.REFERENCE].strip().lower()
             if any(term == ref for term in terms):
                 return (
-                    row[StockConfig.STOCK].strip() or "0",
-                    row[StockConfig.STORAGE].strip() or "—",
+                    row[Config.STOCK].strip() or "0",
+                    row[Config.STORAGE].strip() or "—",
                     i,
                 )
 
         for i, row in enumerate(self._data[1:], start=2):
-            ref = row[StockConfig.REFERENCE].strip().lower()
+            ref = row[Config.REFERENCE].strip().lower()
             if any(term in ref or ref in term for term in terms):
                 return (
-                    row[StockConfig.STOCK].strip() or "0",
-                    row[StockConfig.STORAGE].strip() or "—",
+                    row[Config.STOCK].strip() or "0",
+                    row[Config.STORAGE].strip() or "—",
                     i,
                 )
 
@@ -144,16 +145,16 @@ class StockChecker:
             return False
 
         try:
-            stock_col   = StockConfig.STOCK   + 1
-            storage_col = StockConfig.STORAGE + 1
+            stock_col   = Config.STOCK   + 1
+            storage_col = Config.STORAGE + 1
 
             self._worksheet.update_cell(sheet_row, stock_col,   qty)
             self._worksheet.update_cell(sheet_row, storage_col, storage)
 
             row_idx = sheet_row - 1
             if 0 <= row_idx < len(self._data):
-                self._data[row_idx][StockConfig.STOCK]   = qty
-                self._data[row_idx][StockConfig.STORAGE] = storage
+                self._data[row_idx][Config.STOCK]   = qty
+                self._data[row_idx][Config.STORAGE] = storage
 
             print(f"[StockChecker] Fila {sheet_row} actualitzada → qty={qty!r}, storage={storage!r}")
             return True

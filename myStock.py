@@ -24,183 +24,184 @@ from google.oauth2.service_account import Credentials
 
 
 import component_lookup
+from configuration import Config, FilterConfig
 
-@dataclass
-class FilterConfig:
-    """Configuració d'un filtre"""
-    column_index: int
-    label_widget_name: str
-    line_edit_name: str
-    list_widget_name: str
-    button_name: str
-    tag_key: str
-    enabled: bool = True
-
-
-class Config:
-    """Configuració centralitzada de columnes i visualització"""
-    # Índexs de columnes - PARÀMETRES OBLIGATORIS
-    ID = 0
-    MANUFACTURER_PN = 1
-    MANUFACTURER_NAME = 2
-    CATEGORY = 3
-    SUPPLIER = 4
-    SUPPLIER_PN = 5
-    SUPPLIER_CATEGORY = 6
-    PACKAGE = 7
-    DESCRIPTION = 8
-    STOCK = 9
-    STORAGE = 10
-    DATASHEET = 11
-    SUPPLIER_PRODUCT = 12
+# @dataclass
+# class FilterConfig:
+#     """Configuració d'un filtre"""
+#     column_index: int
+#     label_widget_name: str
+#     line_edit_name: str
+#     list_widget_name: str
+#     button_name: str
+#     tag_key: str
+#     enabled: bool = True
 
 
-
-
-    ## FOR LABELS
-    STOCK = STOCK                   # ES MOSTRE EN LABEL
-    STORAGE = STORAGE                 # ES MOSTRE EN LABEL
-    WEB = DATASHEET                     # S'OBRE LA WEB
-    REFERENCE = SUPPLIER_PN               # PN o ID unic, PER identificar cada FILA
-    TEXT_FILTER = MANUFACTURER_PN             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+# class Config:
+#     """Configuració centralitzada de columnes i visualització"""
+#     # Índexs de columnes - PARÀMETRES OBLIGATORIS
+#     ID = 0
+#     MANUFACTURER_PN = 1
+#     MANUFACTURER_NAME = 2
+#     CATEGORY = 3
+#     SUPPLIER = 4
+#     SUPPLIER_PN = 5
+#     SUPPLIER_CATEGORY = 6
+#     PACKAGE = 7
+#     DESCRIPTION = 8
+#     STOCK = 9
+#     STORAGE = 10
+#     DATASHEET = 11
+#     SUPPLIER_PRODUCT = 12
 
 
 
 
-
-    # DEFINIR ELS FILTRES
-    FILTRE1 = CATEGORY
-    FILTRE2 = SUPPLIER_CATEGORY
-    FILTRE3 = PACKAGE
-    FILTRE4 = SUPPLIER
-    FILTRE5 = MANUFACTURER_NAME
+#     ## FOR LABELS
+#     STOCK = STOCK                   # ES MOSTRE EN LABEL
+#     STORAGE = STORAGE                 # ES MOSTRE EN LABEL
+#     WEB = DATASHEET                     # S'OBRE LA WEB
+#     REFERENCE = SUPPLIER_PN               # PN o ID unic, PER identificar cada FILA
+#     TEXT_FILTER = MANUFACTURER_PN             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
 
 
 
 
 
-
-    # CANTIDAD = 0
-    # ID = 1
-    # MARCA_VEHICULO = 2
-    # TIPO_COMPONENTE_1 = 3
-    # MARCA_COMPONENTE = 4
-    # FAMILIA_COMPONENTE = 5
-    # TIPO_COMPONENTE_2 = 6
-    # REFERENCIA_COMPONENTE_1 = 7
-    # REFERENCIA_COMPONENTE = 8
-    # REFERENCIA_FABRICANTE_1 = 9
-    # REFERENCIA_FABRICANTE_2 = 10
-    # UBICACION = 11
-    # UBICACION_NUEVA = 12
-    # ESTAD0 = 13
-    # DATASHEET = 19
+#     # DEFINIR ELS FILTRES
+#     FILTRE1 = CATEGORY
+#     FILTRE2 = SUPPLIER_CATEGORY
+#     FILTRE3 = PACKAGE
+#     FILTRE4 = SUPPLIER
+#     FILTRE5 = MANUFACTURER_NAME
 
 
 
-    # STOCK = CANTIDAD                   # ES MOSTRE EN LABEL
-    # STORAGE = UBICACION                # ES MOSTRE EN LABEL
-    # WEB = DATASHEET                     # S'OBRE LA WEB
-    # REFERENCE = REFERENCIA_COMPONENTE_1               # PN o ID unic, PER identificar cada FILA
-    # TEXT_FILTER = REFERENCIA_COMPONENTE_1             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
 
 
 
-    # # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
-    # # TYPE = 3                    # Tipo components
-    # # DESCRIPTION = 5             # Familia components
-    # # MARCA_COMPONENT = 4
+#     # CANTIDAD = 0
+#     # ID = 1
+#     # MARCA_VEHICULO = 2
+#     # TIPO_COMPONENTE_1 = 3
+#     # MARCA_COMPONENTE = 4
+#     # FAMILIA_COMPONENTE = 5
+#     # TIPO_COMPONENTE_2 = 6
+#     # REFERENCIA_COMPONENTE_1 = 7
+#     # REFERENCIA_COMPONENTE = 8
+#     # REFERENCIA_FABRICANTE_1 = 9
+#     # REFERENCIA_FABRICANTE_2 = 10
+#     # UBICACION = 11
+#     # UBICACION_NUEVA = 12
+#     # ESTAD0 = 13
+#     # DATASHEET = 19
 
 
-    # # DEFINIR ELS FILTRES
-    # FILTRE1 = MARCA_VEHICULO
-    # FILTRE2 = TIPO_COMPONENTE_1
-    # FILTRE3 = MARCA_COMPONENTE  
-    # FILTRE4 = FAMILIA_COMPONENTE
-    # FILTRE5 = TIPO_COMPONENTE_2
+
+#     # STOCK = CANTIDAD                   # ES MOSTRE EN LABEL
+#     # STORAGE = UBICACION                # ES MOSTRE EN LABEL
+#     # WEB = DATASHEET                     # S'OBRE LA WEB
+#     # REFERENCE = REFERENCIA_COMPONENTE_1               # PN o ID unic, PER identificar cada FILA
+#     # TEXT_FILTER = REFERENCIA_COMPONENTE_1             # COLUMNA EN LA QUAL APLICAREM EL FILTRE DE TEXT
+
+
+
+#     # # ALTRES  - PARÀMETRES OPCIONALS - NOMÉS SÓN PER UTILITZAR DINS DE LA FUNCIÓ CONFIG
+#     # # TYPE = 3                    # Tipo components
+#     # # DESCRIPTION = 5             # Familia components
+#     # # MARCA_COMPONENT = 4
+
+
+#     # # DEFINIR ELS FILTRES
+#     # FILTRE1 = MARCA_VEHICULO
+#     # FILTRE2 = TIPO_COMPONENTE_1
+#     # FILTRE3 = MARCA_COMPONENTE  
+#     # FILTRE4 = FAMILIA_COMPONENTE
+#     # FILTRE5 = TIPO_COMPONENTE_2
 
     
 
     
-    # Columnes a mostrar a la taula i les seves amplades
-    COLUMNS_TO_SHOW = [ID, REFERENCE, PACKAGE, DESCRIPTION, MANUFACTURER_PN, MANUFACTURER_NAME]
-    COLUMNS_WIDTH = [50, 150, 80, 300, 150, 150]
+#     # Columnes a mostrar a la taula i les seves amplades
+#     COLUMNS_TO_SHOW = [ID, REFERENCE, PACKAGE, DESCRIPTION, MANUFACTURER_PN, MANUFACTURER_NAME]
+#     COLUMNS_WIDTH = [50, 150, 80, 300, 150, 150]
 
-    # # COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
-    # COLUMNS_WIDTH = [150, 400, 150]
+#     # # COLUMNS_TO_SHOW = [REFERENCIA_COMPONENTE_1, FAMILIA_COMPONENTE, REFERENCIA_FABRICANTE_1]
+#     # COLUMNS_WIDTH = [150, 400, 150]
     
-    # Configuració de filtres (pots activar/desactivar els que vulguis)
-    FILTERS_CONFIG = [
-        FilterConfig(
-            column_index=FILTRE1,
-            label_widget_name="filter1_label",
-            line_edit_name="filter1_lineEdit",
-            list_widget_name="filter1_listWidget",
-            button_name="filter1_pushButton",
-            tag_key="filter1",
-            # enabled=True  # Canvia a False per desactivar
-            enabled='FILTRE1' in locals()  # False perquè està comentat
-        ),
-        FilterConfig(
-            column_index=FILTRE2,
-            label_widget_name="filter2_label",
-            line_edit_name="filter2_lineEdit",
-            list_widget_name="filter2_listWidget",
-            button_name="filter2_pushButton",
-            tag_key="filter2",
-            # enabled=True  # Canvia a False per desactivar
-            enabled='FILTRE2' in locals()  # False perquè està comentat
-        ),
-        FilterConfig(
-            column_index=FILTRE3,
-            label_widget_name="filter3_label",
-            line_edit_name="filter3_lineEdit",
-            list_widget_name="filter3_listWidget",
-            button_name="filter3_pushButton",
-            tag_key="filter3",
-            # enabled=True  # Canvia a False per desactivar
-            enabled='FILTRE3' in locals()  # False perquè està comentat
-        ),
-        FilterConfig(
-            column_index=FILTRE4,
-            label_widget_name="filter4_label",
-            line_edit_name="filter4_lineEdit",
-            list_widget_name="filter4_listWidget",
-            button_name="filter4_pushButton",
-            tag_key="filter4",
-            # enabled=False  # Canvia a False per desactivar
-            enabled='FILTRE4' in locals()  # False perquè està comentat
-        ),
-        FilterConfig(
-            column_index=FILTRE5,
-            label_widget_name="filter5_label",
-            line_edit_name="filter5_lineEdit",
-            list_widget_name="filter5_listWidget",
-            button_name="filter5_pushButton",
-            tag_key="filter5",
-            # enabled=False  # Canvia a False per desactivar
-            enabled='FILTRE5' in locals()  # False perquè està comentat
-        ),
-    ]
+#     # Configuració de filtres (pots activar/desactivar els que vulguis)
+#     FILTERS_CONFIG = [
+#         FilterConfig(
+#             column_index=FILTRE1,
+#             label_widget_name="filter1_label",
+#             line_edit_name="filter1_lineEdit",
+#             list_widget_name="filter1_listWidget",
+#             button_name="filter1_pushButton",
+#             tag_key="filter1",
+#             # enabled=True  # Canvia a False per desactivar
+#             enabled='FILTRE1' in locals()  # False perquè està comentat
+#         ),
+#         FilterConfig(
+#             column_index=FILTRE2,
+#             label_widget_name="filter2_label",
+#             line_edit_name="filter2_lineEdit",
+#             list_widget_name="filter2_listWidget",
+#             button_name="filter2_pushButton",
+#             tag_key="filter2",
+#             # enabled=True  # Canvia a False per desactivar
+#             enabled='FILTRE2' in locals()  # False perquè està comentat
+#         ),
+#         FilterConfig(
+#             column_index=FILTRE3,
+#             label_widget_name="filter3_label",
+#             line_edit_name="filter3_lineEdit",
+#             list_widget_name="filter3_listWidget",
+#             button_name="filter3_pushButton",
+#             tag_key="filter3",
+#             # enabled=True  # Canvia a False per desactivar
+#             enabled='FILTRE3' in locals()  # False perquè està comentat
+#         ),
+#         FilterConfig(
+#             column_index=FILTRE4,
+#             label_widget_name="filter4_label",
+#             line_edit_name="filter4_lineEdit",
+#             list_widget_name="filter4_listWidget",
+#             button_name="filter4_pushButton",
+#             tag_key="filter4",
+#             # enabled=False  # Canvia a False per desactivar
+#             enabled='FILTRE4' in locals()  # False perquè està comentat
+#         ),
+#         FilterConfig(
+#             column_index=FILTRE5,
+#             label_widget_name="filter5_label",
+#             line_edit_name="filter5_lineEdit",
+#             list_widget_name="filter5_listWidget",
+#             button_name="filter5_pushButton",
+#             tag_key="filter5",
+#             # enabled=False  # Canvia a False per desactivar
+#             enabled='FILTRE5' in locals()  # False perquè està comentat
+#         ),
+#     ]
 
-    # self.ui.listWidget_4.setVisible(False)
+#     # self.ui.listWidget_4.setVisible(False)
     
     
-    FILTRER_AVAILABILITY = True     # amaga o desavilita els paràmetre de filtre NO disponibles --> True: amaga; False: desavilita
+#     FILTRER_AVAILABILITY = True     # amaga o desavilita els paràmetre de filtre NO disponibles --> True: amaga; False: desavilita
 
-    # Google Sheet ID
-    # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal Stock
-    GOOGLE_SHEET_ID = "1jTJQL-PM7Uq1Gvns65RWnZOWWBl-359ZsKDoc6suoGQ"                # personal Stock22
-    # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
-    # GOOGLE_SHEET_ID = "13rzlU99m8AtWtMIPll6iB_1iJge1rUPmn_03aEMuvQk"              # Còpia multiplicada stock
+#     # Google Sheet ID
+#     # GOOGLE_SHEET_ID = "1U3H3R8ggRW-nEao_R1RXQ-l8WJdiGkXbWTSRkL0peRA"                # personal Stock
+#     GOOGLE_SHEET_ID = "1jTJQL-PM7Uq1Gvns65RWnZOWWBl-359ZsKDoc6suoGQ"                # personal Stock22
+#     # GOOGLE_SHEET_ID = "1cbyUW76l9EDPyHaKr98ARRroAWqfM3ctaYlRFw9enBg"              ## grupeina 
+#     # GOOGLE_SHEET_ID = "13rzlU99m8AtWtMIPll6iB_1iJge1rUPmn_03aEMuvQk"              # Còpia multiplicada stock
 
 
-    # GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
-    GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-9ff7a94ae596.json"        # personal2
-    # GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
+#     # GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-a553ed840217.json"        # personal
+#     GOOGLE_CREDENTIALS_JSON = "credentials/mystock-482208-9ff7a94ae596.json"        # personal2
+#     # GOOGLE_CREDENTIALS_JSON = "credentials/model-folio-482716-e4-e9eb4cc77d58.json" ## grupeina 
     
-    # Timeout per peticions HTTP (segons)
-    REQUEST_TIMEOUT = 10
+#     # Timeout per peticions HTTP (segons)
+#     REQUEST_TIMEOUT = 10
 
 
 class TagWidget(QWidget):
