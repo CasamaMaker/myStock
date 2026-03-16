@@ -234,7 +234,7 @@ class MainWindow(QMainWindow):
         # Configurar layout de tags
         self.ui.horizontalLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-        self.ui.listWidget_4.setVisible(False)
+        # self.ui.listWidget_4.setVisible(False)
 
     def _open_lookup(self):
         reference = self._get_selected_row_data(Config.REFERENCE)
@@ -746,9 +746,9 @@ class MainWindow(QMainWindow):
             self._create_tag("partNumber", self.text_filter_part_number)
             all_filters.append(self.text_filter_part_number)
         
-        # Actualitzar llista de filtres
-        self.ui.listWidget_4.clear()
-        self.ui.listWidget_4.addItems(all_filters)
+        # # Actualitzar llista de filtres
+        # self.ui.listWidget_4.clear()
+        # self.ui.listWidget_4.addItems(all_filters)
 
     def _create_tag(self, key: str, value: str):
         """Crea un nou tag"""
