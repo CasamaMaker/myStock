@@ -25,7 +25,7 @@ from google.oauth2.service_account import Credentials
 
 import component_lookup
 from configuration import Config, FilterConfig
-
+from nowStock import MainWindow as NowStockWindow
 
 
 class TagWidget(QWidget):
@@ -144,6 +144,7 @@ class MainWindow(QMainWindow):
         self.data_google_sheet: List[List[str]] = []
 
         self._lookup_window = None
+        self._nowstock_window = None
         
         self._setup_filters()
         self._setup_ui()
@@ -218,6 +219,8 @@ class MainWindow(QMainWindow):
             self.ui.pushButton_6.setVisible(False)
         self.ui.datasheetButton.clicked.connect(self._open_datasheet)
         
+        self.ui.pushButton_7.clicked.connect(self._open_nowstock)
+        
         # Botó per esborrar tots els filtres
         self.ui.clear_all_pushButton.clicked.connect(self._clear_all_filters)
         
@@ -259,6 +262,15 @@ class MainWindow(QMainWindow):
 
         if reference:
             self._lookup_window.search(reference)
+
+    def _open_nowstock(self):
+        """Obre la finestra d'importació d'albarans LCSC"""
+        if self._nowstock_window is None or not self._nowstock_window.isVisible():
+            self._nowstock_window = NowStockWindow()
+            self._nowstock_window.show()
+        else:
+            self._nowstock_window.raise_()
+            self._nowstock_window.activateWindow()
 
     def _setup_tooltips(self):
         """Configura els tooltips"""

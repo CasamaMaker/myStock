@@ -440,3 +440,6 @@ class Config:
 
     # Visibilitat botons
     COMPONENT_LOOPUP_BUTTON_VISIBILITY = True
+
+    BACKUP_FOLDER = r"C:\Users\ecasamayor\Documents\GitHub\myStock\backups"
+    LCSC_BOM_FOLDER = r"C:\Users\ecasamayor\Documents\GitHub\myStock"

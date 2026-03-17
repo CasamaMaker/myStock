@@ -19,6 +19,9 @@
     <height>34</height>
    </size>
   </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QListWidget" name="listWidget_4">
     <property name="geometry">
@@ -206,7 +209,7 @@
           <number>6</number>
          </property>
          <property name="sizeConstraint">
-          <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
+          <enum>QLayout::SetDefaultConstraint</enum>
          </property>
          <item>
           <widget class="QPushButton" name="datasheetButton">
@@ -344,6 +347,40 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>41</width>
+             <height>41</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="img/recursos_grafics.qrc">
+             <normaloff>:/logos/note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>34</width>
+             <height>34</height>
+            </size>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -390,9 +427,6 @@
            <property name="text">
             <string>Filtre general</string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignCenter</set>
-           </property>
           </widget>
          </item>
          <item>
@@ -413,9 +447,6 @@
           <widget class="QLabel" name="FilterPN_label">
            <property name="text">
             <string>Filtre Manufacture PN</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -588,7 +619,7 @@
      <x>0</x>
      <y>0</y>
      <width>820</width>
-     <height>33</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
