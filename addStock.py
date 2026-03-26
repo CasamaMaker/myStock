@@ -9,6 +9,8 @@ from typing import Optional
 
 from PySide6.QtCore import Signal, QObject
 from PySide6.QtWidgets import QMainWindow, QMessageBox
+from PySide6.QtWidgets import QLineEdit, QTextEdit
+from PySide6.QtGui import QTextCursor
 
 from ui_addStock import Ui_MainWindow
 from configuration import Config
@@ -253,7 +255,7 @@ class AddStockWindow(QMainWindow):
             "SupplierPN":       self.ui.lineEdit_SupplierPN,
             "SupplierCategory": self.ui.lineEdit_SupplierCategory,
             "Package":          self.ui.lineEdit_Package,
-            "Description":      self.ui.lineEdit_Description,
+            "Description":      self.ui.textEdit_Description,
             "Stock":            self.ui.lineEdit_Stock,
             "Storage":          self.ui.lineEdit_Storage,
             "Datasheet":        self.ui.lineEdit_Datasheet,
@@ -316,9 +318,24 @@ class AddStockWindow(QMainWindow):
         self._set_status(f"Error: {msg}")
         self._show_error(msg)
 
+    # def _update_empty_style(self):
+    #     for name, widget in self._fields.items():
+    #         if widget.text().strip() == "":
+    #             widget.setStyleSheet("background-color: #ffe6e6;")  # vermell suau
+    #         else:
+    #             widget.setStyleSheet("")
+
     def _update_empty_style(self):
         for name, widget in self._fields.items():
-            if widget.text().strip() == "":
+            # Obtenir el text segons el tipus
+            if isinstance(widget, QLineEdit):
+                text = widget.text().strip()
+            elif isinstance(widget, QTextEdit):
+                text = widget.toPlainText().strip()
+            else:
+                continue
+
+            if text == "":
                 widget.setStyleSheet("background-color: #ffe6e6;")  # vermell suau
             else:
                 widget.setStyleSheet("")
@@ -330,24 +347,73 @@ class AddStockWindow(QMainWindow):
     def _get_field_text(self, name: str) -> str:
         return self._fields[name].text().strip()
 
+    # def _set_field_text(self, name: str, value: str) -> None:
+    #     self._fields[name].blockSignals(True)
+    #     self._fields[name].setText(str(value))
+    #     self._fields[name].setCursorPosition(0)
+    #     self._fields[name].blockSignals(False)
+
     def _set_field_text(self, name: str, value: str) -> None:
-        self._fields[name].setText(str(value))
+        field = self._fields[name]
+        # field.blockSignals(True)
+        field.setText(str(value))
+
+        if isinstance(field, QLineEdit):
+            field.setCursorPosition(0)
+        elif isinstance(field, QTextEdit):
+            cursor = field.textCursor()
+            cursor.setPosition(0)
+            field.setTextCursor(cursor)
+
+        # field.blockSignals(False)
 
     def _clear_fields(self) -> None:
         for widget in self._fields.values():
             widget.setText("")
 
+    # def _row_to_fields(self, row: list[str]) -> None:
+    #     """Omple els camps de la UI a partir d'una fila del sheet."""
+    #     for field_name, col_idx in FIELD_MAP.items():
+    #         value = row[col_idx] if col_idx < len(row) else ""
+    #         self._fields[field_name].blockSignals(True)
+    #         self._fields[field_name].setText(str(value))
+    #         self._fields[field_name].setCursorPosition(0)
+    #         self._fields[field_name].blockSignals(False)
+
     def _row_to_fields(self, row: list[str]) -> None:
-        """Omple els camps de la UI a partir d'una fila del sheet."""
         for field_name, col_idx in FIELD_MAP.items():
             value = row[col_idx] if col_idx < len(row) else ""
-            self._fields[field_name].setText(str(value))
+            field = self._fields[field_name]
+            # field.blockSignals(True)
+            field.setText(str(value))
+
+            if isinstance(field, QLineEdit):
+                field.setCursorPosition(0)
+            elif isinstance(field, QTextEdit):
+                cursor = field.textCursor()
+                cursor.setPosition(0)
+                field.setTextCursor(cursor)
+
+            # field.blockSignals(False)
+
+    # def _fields_to_row(self) -> list[str]:
+    #     """Recull els camps de la UI i retorna una fila posicional."""
+    #     row = [""] * NUM_COLUMNS
+    #     for field_name, col_idx in FIELD_MAP.items():
+    #         row[col_idx] = self._fields[field_name].text().strip()
+    #     return row
 
     def _fields_to_row(self) -> list[str]:
         """Recull els camps de la UI i retorna una fila posicional."""
         row = [""] * NUM_COLUMNS
         for field_name, col_idx in FIELD_MAP.items():
-            row[col_idx] = self._fields[field_name].text().strip()
+            widget = self._fields[field_name]
+            if isinstance(widget, QLineEdit):
+                row[col_idx] = widget.text().strip()
+            elif isinstance(widget, QTextEdit):
+                row[col_idx] = widget.toPlainText().strip()
+            else:
+                row[col_idx] = ""
         return row
 
     # -----------------------------------------------------------------------
@@ -578,7 +644,7 @@ class AddStockWindow(QMainWindow):
         self.ui.pushButton_next.setEnabled(enabled)
 
     def _set_status(self, msg: str) -> None:
-        self.statusBar().showMessage(msg)
+        self.statusBar().showMessage(msg, 3000)
 
     def _show_info(self, message: str) -> None:
         QMessageBox.information(self, "myStock", message)
