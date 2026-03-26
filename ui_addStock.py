@@ -15,15 +15,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+    QLineEdit, QMainWindow, QMenuBar, QPushButton,
+    QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(561, 349)
+        MainWindow.resize(561, 394)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -118,15 +119,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.label_5)
 
-        self.lineEdit_Category = QLineEdit(self.centralwidget)
-        self.lineEdit_Category.setObjectName(u"lineEdit_Category")
-        sizePolicy.setHeightForWidth(self.lineEdit_Category.sizePolicy().hasHeightForWidth())
-        self.lineEdit_Category.setSizePolicy(sizePolicy)
+        self.comboBox_Category = QComboBox(self.centralwidget)
+        self.comboBox_Category.setObjectName(u"comboBox_Category")
 
-        self.verticalLayout_4.addWidget(self.lineEdit_Category)
+        self.verticalLayout_4.addWidget(self.comboBox_Category)
 
         self.verticalLayout_4.setStretch(0, 1)
-        self.verticalLayout_4.setStretch(1, 1)
 
         self.horizontalLayout.addLayout(self.verticalLayout_4)
 
@@ -152,6 +150,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.addWidget(self.textEdit_Description)
 
         self.verticalLayout_5.setStretch(0, 1)
+        self.verticalLayout_5.setStretch(1, 1)
 
         self.verticalLayout_14.addLayout(self.verticalLayout_5)
 
@@ -167,15 +166,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.label_6)
 
-        self.lineEdit_Supplier = QLineEdit(self.centralwidget)
-        self.lineEdit_Supplier.setObjectName(u"lineEdit_Supplier")
-        sizePolicy.setHeightForWidth(self.lineEdit_Supplier.sizePolicy().hasHeightForWidth())
-        self.lineEdit_Supplier.setSizePolicy(sizePolicy)
+        self.comboBox_Supplier = QComboBox(self.centralwidget)
+        self.comboBox_Supplier.setObjectName(u"comboBox_Supplier")
 
-        self.verticalLayout_6.addWidget(self.lineEdit_Supplier)
+        self.verticalLayout_6.addWidget(self.comboBox_Supplier)
 
         self.verticalLayout_6.setStretch(0, 1)
-        self.verticalLayout_6.setStretch(1, 1)
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_6)
 
@@ -357,7 +353,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.horizontalLayout_5.setContentsMargins(0, 10, 0, 10)
+        self.horizontalLayout_5.setContentsMargins(0, 20, 0, 0)
         self.pushButton_previous = QPushButton(self.centralwidget)
         self.pushButton_previous.setObjectName(u"pushButton_previous")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
@@ -401,7 +397,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_14.setStretch(2, 1)
         self.verticalLayout_14.setStretch(3, 1)
         self.verticalLayout_14.setStretch(4, 1)
-        self.verticalLayout_14.setStretch(5, 2)
+        self.verticalLayout_14.setStretch(5, 1)
 
         self.verticalLayout_15.addLayout(self.verticalLayout_14)
 

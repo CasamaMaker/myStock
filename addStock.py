@@ -11,6 +11,8 @@ from PySide6.QtCore import Signal, QObject
 from PySide6.QtWidgets import QMainWindow, QMessageBox
 from PySide6.QtWidgets import QLineEdit, QTextEdit
 from PySide6.QtGui import QTextCursor
+from PySide6.QtWidgets import QComboBox
+from PySide6.QtGui import QIntValidator
 
 from ui_addStock import Ui_MainWindow
 from configuration import Config
@@ -250,8 +252,8 @@ class AddStockWindow(QMainWindow):
             "ID":               self.ui.lineEdit_Id,
             "ManufacturerPN":   self.ui.lineEdit_ManufacturerPN,
             "Manufacturer":     self.ui.lineEdit_Manufacturer,
-            "Category":         self.ui.lineEdit_Category,
-            "Supplier":         self.ui.lineEdit_Supplier,
+            "Category":         self.ui.comboBox_Category,
+            "Supplier":         self.ui.comboBox_Supplier,
             "SupplierPN":       self.ui.lineEdit_SupplierPN,
             "SupplierCategory": self.ui.lineEdit_SupplierCategory,
             "Package":          self.ui.lineEdit_Package,
@@ -261,6 +263,10 @@ class AddStockWindow(QMainWindow):
             "Datasheet":        self.ui.lineEdit_Datasheet,
             "SupplierLink":     self.ui.lineEdit_SupplierLink,
         }
+
+        # Permet només enters >= 0 (pots canviar límits)
+        validator = QIntValidator(0, 999999)
+        self.ui.lineEdit_Stock.setValidator(validator)
 
         # Connexió de signals (cross-thread → UI)
         self._signals.load_ok.connect(self._on_load_ok)
@@ -279,8 +285,18 @@ class AddStockWindow(QMainWindow):
         self.ui.lineEdit_Id.returnPressed.connect(self._id_return_pressed)
 
         # Estil de camps buits
+        # for widget in self._fields.values():
+        #     widget.textChanged.connect(self._update_empty_style)
         for widget in self._fields.values():
-            widget.textChanged.connect(self._update_empty_style)
+            if isinstance(widget, QLineEdit):
+                widget.textChanged.connect(self._update_empty_style)
+
+            elif isinstance(widget, QTextEdit):
+                widget.textChanged.connect(self._update_empty_style)
+
+            elif isinstance(widget, QComboBox):
+                widget.currentTextChanged.connect(self._update_empty_style)
+                widget.editTextChanged.connect(self._update_empty_style)
 
         # Obrir links
         self._enable_link_open(self.ui.lineEdit_Datasheet)
@@ -307,10 +323,11 @@ class AddStockWindow(QMainWindow):
                 "Comprova les credencials i la connexió a Internet."
             )
 
-    def _on_load_ok(self, _rows):
+    def _on_load_ok(self, rows):
         self._set_ui_enabled(True)
         self._set_status("Sheet carregat correctament.")
         # self._on_new()
+        self._populate_comboboxes(rows)
         self._on_last()
 
     def _on_load_error(self, msg: str):
@@ -332,6 +349,8 @@ class AddStockWindow(QMainWindow):
                 text = widget.text().strip()
             elif isinstance(widget, QTextEdit):
                 text = widget.toPlainText().strip()
+            elif isinstance(widget, QComboBox):
+                text = widget.currentText().strip()
             else:
                 continue
 
@@ -340,12 +359,45 @@ class AddStockWindow(QMainWindow):
             else:
                 widget.setStyleSheet("")
 
+    def _populate_comboboxes(self, rows):
+        suppliers = set()
+        categories = set()
+
+        for row in rows:
+            if len(row) > Config.SUPPLIER:
+                suppliers.add(row[Config.SUPPLIER].strip())
+            if len(row) > Config.CATEGORY:
+                categories.add(row[Config.CATEGORY].strip())
+
+        combo_supplier = self._fields["Supplier"]
+        combo_category = self._fields["Category"]
+
+        if isinstance(combo_supplier, QComboBox):
+            combo_supplier.clear()
+            combo_supplier.addItems(sorted(suppliers))
+            combo_supplier.setEditable(True)
+
+        if isinstance(combo_category, QComboBox):
+            combo_category.clear()
+            combo_category.addItems(sorted(categories))
+            combo_category.setEditable(True)
+
     # -----------------------------------------------------------------------
     # Camps de la UI
     # -----------------------------------------------------------------------
 
+    # def _get_field_text(self, name: str) -> str:
+    #     return self._fields[name].text().strip()
+    
     def _get_field_text(self, name: str) -> str:
-        return self._fields[name].text().strip()
+        widget = self._fields[name]
+        if isinstance(widget, QLineEdit):
+            return widget.text().strip()
+        elif isinstance(widget, QTextEdit):
+            return widget.toPlainText().strip()
+        elif isinstance(widget, QComboBox):
+            return widget.currentText().strip()
+        return ""
 
     # def _set_field_text(self, name: str, value: str) -> None:
     #     self._fields[name].blockSignals(True)
@@ -353,23 +405,54 @@ class AddStockWindow(QMainWindow):
     #     self._fields[name].setCursorPosition(0)
     #     self._fields[name].blockSignals(False)
 
+    # def _set_field_text(self, name: str, value: str) -> None:
+    #     field = self._fields[name]
+    #     # field.blockSignals(True)
+    #     field.setText(str(value))
+
+    #     if isinstance(field, QLineEdit):
+    #         field.setCursorPosition(0)
+    #     elif isinstance(field, QTextEdit):
+    #         cursor = field.textCursor()
+    #         cursor.setPosition(0)
+    #         field.setTextCursor(cursor)
+
+    #     # field.blockSignals(False)
+
     def _set_field_text(self, name: str, value: str) -> None:
         field = self._fields[name]
-        # field.blockSignals(True)
-        field.setText(str(value))
 
         if isinstance(field, QLineEdit):
+            field.setText(str(value))
             field.setCursorPosition(0)
-        elif isinstance(field, QTextEdit):
-            cursor = field.textCursor()
-            cursor.setPosition(0)
-            field.setTextCursor(cursor)
 
-        # field.blockSignals(False)
+        elif isinstance(field, QTextEdit):
+            field.setPlainText(str(value))
+
+        elif isinstance(field, QComboBox):
+            index = field.findText(str(value))
+            if index >= 0:
+                field.setCurrentIndex(index)
+            else:
+                field.setCurrentText(str(value))  # opcional si és editable
+
+    # def _clear_fields(self) -> None:
+    #     for widget in self._fields.values():
+    #         widget.setText("")
 
     def _clear_fields(self) -> None:
         for widget in self._fields.values():
-            widget.setText("")
+
+            if isinstance(widget, QLineEdit):
+                widget.setText("")
+
+            elif isinstance(widget, QTextEdit):
+                widget.clear()
+
+            elif isinstance(widget, QComboBox):
+                widget.setCurrentIndex(-1)  # deselecciona
+                # si és editable:
+                widget.setCurrentText("")
 
     # def _row_to_fields(self, row: list[str]) -> None:
     #     """Omple els camps de la UI a partir d'una fila del sheet."""
@@ -380,21 +463,47 @@ class AddStockWindow(QMainWindow):
     #         self._fields[field_name].setCursorPosition(0)
     #         self._fields[field_name].blockSignals(False)
 
+    # def _row_to_fields(self, row: list[str]) -> None:
+    #     for field_name, col_idx in FIELD_MAP.items():
+    #         value = row[col_idx] if col_idx < len(row) else ""
+    #         field = self._fields[field_name]
+    #         # field.blockSignals(True)
+    #         field.setText(str(value))
+
+    #         if isinstance(field, QLineEdit):
+    #             field.setCursorPosition(0)
+    #         elif isinstance(field, QTextEdit):
+    #             cursor = field.textCursor()
+    #             cursor.setPosition(0)
+    #             field.setTextCursor(cursor)
+
+    #         # field.blockSignals(False)
+
     def _row_to_fields(self, row: list[str]) -> None:
         for field_name, col_idx in FIELD_MAP.items():
             value = row[col_idx] if col_idx < len(row) else ""
             field = self._fields[field_name]
-            # field.blockSignals(True)
-            field.setText(str(value))
 
             if isinstance(field, QLineEdit):
+                field.setText(str(value))
                 field.setCursorPosition(0)
+
             elif isinstance(field, QTextEdit):
+                field.setPlainText(str(value))
                 cursor = field.textCursor()
                 cursor.setPosition(0)
                 field.setTextCursor(cursor)
 
-            # field.blockSignals(False)
+            elif isinstance(field, QComboBox):
+                text = str(value)
+
+                index = field.findText(text)
+                if index >= 0:
+                    field.setCurrentIndex(index)
+                else:
+                    # Si no existeix, el posem (important si és editable)
+                    field.addItem(text)
+                    field.setCurrentText(text)
 
     # def _fields_to_row(self) -> list[str]:
     #     """Recull els camps de la UI i retorna una fila posicional."""
@@ -412,6 +521,8 @@ class AddStockWindow(QMainWindow):
                 row[col_idx] = widget.text().strip()
             elif isinstance(widget, QTextEdit):
                 row[col_idx] = widget.toPlainText().strip()
+            elif isinstance(widget, QComboBox):
+                row[col_idx] = widget.currentText().strip()
             else:
                 row[col_idx] = ""
         return row
@@ -420,22 +531,54 @@ class AddStockWindow(QMainWindow):
     # Validació visual
     # -----------------------------------------------------------------------
 
+    # def _validate_fields(self) -> bool:
+    #     """
+    #     Marca en vermell els camps de MANDATORY_COLUMNS que estiguin buits.
+    #     MANDATORY_COLUMNS es deriva dels paràmetres obligatoris de Config:
+    #     ID, STOCK, STORAGE, WEB i REFERENCE.
+    #     Retorna True si tots estan omplerts.
+    #     """
+    #     all_ok = True
+    #     for name, widget in self._fields.items():
+    #         col_idx      = FIELD_MAP[name]
+    #         is_mandatory = col_idx in MANDATORY_COLUMNS
+    #         if is_mandatory and not widget.text().strip():
+    #             widget.setStyleSheet(STYLE_EMPTY)
+    #             all_ok = False
+    #         else:
+    #             widget.setStyleSheet(STYLE_NORMAL)
+    #     return all_ok
+
     def _validate_fields(self) -> bool:
-        """
-        Marca en vermell els camps de MANDATORY_COLUMNS que estiguin buits.
-        MANDATORY_COLUMNS es deriva dels paràmetres obligatoris de Config:
-        ID, STOCK, STORAGE, WEB i REFERENCE.
-        Retorna True si tots estan omplerts.
-        """
         all_ok = True
+
         for name, widget in self._fields.items():
-            col_idx      = FIELD_MAP[name]
+            col_idx = FIELD_MAP[name]
             is_mandatory = col_idx in MANDATORY_COLUMNS
-            if is_mandatory and not widget.text().strip():
-                widget.setStyleSheet(STYLE_EMPTY)
+
+            # Obtenir valor
+            if isinstance(widget, QLineEdit):
+                value = widget.text().strip()
+
+            elif isinstance(widget, QTextEdit):
+                value = widget.toPlainText().strip()
+
+            elif isinstance(widget, QComboBox):
+                value = widget.currentText().strip()
+
+            else:
+                value = ""
+
+            # Validació + estil
+            if is_mandatory and not value:
+                if isinstance(widget, QComboBox):
+                    widget.setStyleSheet("QComboBox { background-color: #FFCCCC; }")
+                else:
+                    widget.setStyleSheet(STYLE_EMPTY)
                 all_ok = False
             else:
                 widget.setStyleSheet(STYLE_NORMAL)
+
         return all_ok
 
     def _reset_styles(self) -> None:
