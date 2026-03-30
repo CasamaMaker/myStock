@@ -253,6 +253,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_9.addWidget(self.pushButton_7)
 
+        self.pushButton_8 = QPushButton(self.verticalLayoutWidget_6)
+        self.pushButton_8.setObjectName(u"pushButton_8")
+        sizePolicy.setHeightForWidth(self.pushButton_8.sizePolicy().hasHeightForWidth())
+        self.pushButton_8.setSizePolicy(sizePolicy)
+        self.pushButton_8.setMinimumSize(QSize(41, 41))
+        self.pushButton_8.setFont(font2)
+        self.pushButton_8.setIcon(icon4)
+        self.pushButton_8.setIconSize(QSize(34, 34))
+
+        self.verticalLayout_9.addWidget(self.pushButton_8)
+
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_9)
 
@@ -419,6 +430,7 @@ class Ui_MainWindow(object):
         self.pushButton_4.setText("")
         self.pushButton_6.setText("")
         self.pushButton_7.setText("")
+        self.pushButton_8.setText("")
         self.filterG_label.setText(QCoreApplication.translate("MainWindow", u"Filtre general", None))
         self.FilterPN_label.setText(QCoreApplication.translate("MainWindow", u"Filtre Manufacture PN", None))
         self.clear_all_pushButton.setText(QCoreApplication.translate("MainWindow", u"Reset all filters", None))
