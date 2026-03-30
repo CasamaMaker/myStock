@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,11 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QLabel,
-    QLayout, QLineEdit, QListWidget, QListWidgetItem,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QHeaderView,
+    QLabel, QLayout, QLineEdit, QListWidget,
+    QListWidgetItem, QMainWindow, QMenuBar, QPushButton,
+    QSizePolicy, QStatusBar, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget)
 import recursos_grafics_rc
 
 class Ui_MainWindow(object):
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(820, 610)
         MainWindow.setIconSize(QSize(34, 34))
-        MainWindow.setToolButtonStyle(Qt.ToolButtonIconOnly)
+        MainWindow.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.listWidget_4 = QListWidget(self.centralwidget)
@@ -67,6 +67,7 @@ class Ui_MainWindow(object):
         font = QFont()
         font.setPointSize(8)
         self.filter1_pushButton.setFont(font)
+        self.filter1_pushButton.setFlat(True)
 
         self.verticalLayout.addWidget(self.filter1_pushButton)
 
@@ -93,6 +94,7 @@ class Ui_MainWindow(object):
 
         self.filter2_pushButton = QPushButton(self.verticalLayoutWidget_6)
         self.filter2_pushButton.setObjectName(u"filter2_pushButton")
+        self.filter2_pushButton.setFlat(True)
 
         self.verticalLayout_2.addWidget(self.filter2_pushButton)
 
@@ -119,6 +121,7 @@ class Ui_MainWindow(object):
 
         self.filter3_pushButton = QPushButton(self.verticalLayoutWidget_6)
         self.filter3_pushButton.setObjectName(u"filter3_pushButton")
+        self.filter3_pushButton.setFlat(True)
 
         self.verticalLayout_3.addWidget(self.filter3_pushButton)
 
@@ -145,6 +148,7 @@ class Ui_MainWindow(object):
 
         self.filter4_pushButton = QPushButton(self.verticalLayoutWidget_6)
         self.filter4_pushButton.setObjectName(u"filter4_pushButton")
+        self.filter4_pushButton.setFlat(True)
 
         self.verticalLayout_4.addWidget(self.filter4_pushButton)
 
@@ -171,6 +175,7 @@ class Ui_MainWindow(object):
 
         self.filter5_pushButton = QPushButton(self.verticalLayoutWidget_6)
         self.filter5_pushButton.setObjectName(u"filter5_pushButton")
+        self.filter5_pushButton.setFlat(True)
 
         self.verticalLayout_5.addWidget(self.filter5_pushButton)
 
@@ -180,37 +185,25 @@ class Ui_MainWindow(object):
         self.verticalLayout_9 = QVBoxLayout()
         self.verticalLayout_9.setSpacing(6)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.verticalLayout_9.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.datasheetButton = QPushButton(self.verticalLayoutWidget_6)
-        self.datasheetButton.setObjectName(u"datasheetButton")
+        self.verticalLayout_9.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
+        self.verticalLayout_9.setContentsMargins(-1, 15, -1, -1)
+        self.pushButton_5 = QPushButton(self.verticalLayoutWidget_6)
+        self.pushButton_5.setObjectName(u"pushButton_5")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.datasheetButton.sizePolicy().hasHeightForWidth())
-        self.datasheetButton.setSizePolicy(sizePolicy)
-        self.datasheetButton.setMinimumSize(QSize(41, 41))
-        font1 = QFont()
-        font1.setPointSize(18)
-        self.datasheetButton.setFont(font1)
-        icon = QIcon()
-        icon.addFile(u":/logos/link_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.datasheetButton.setIcon(icon)
-        self.datasheetButton.setIconSize(QSize(34, 34))
-
-        self.verticalLayout_9.addWidget(self.datasheetButton)
-
-        self.pushButton_5 = QPushButton(self.verticalLayoutWidget_6)
-        self.pushButton_5.setObjectName(u"pushButton_5")
         sizePolicy.setHeightForWidth(self.pushButton_5.sizePolicy().hasHeightForWidth())
         self.pushButton_5.setSizePolicy(sizePolicy)
-        self.pushButton_5.setMinimumSize(QSize(41, 41))
-        font2 = QFont()
-        font2.setPointSize(20)
-        self.pushButton_5.setFont(font2)
-        icon1 = QIcon()
-        icon1.addFile(u":/logos/autorenew_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.pushButton_5.setIcon(icon1)
+        self.pushButton_5.setMinimumSize(QSize(50, 50))
+        self.pushButton_5.setMaximumSize(QSize(50, 50))
+        font1 = QFont()
+        font1.setPointSize(20)
+        self.pushButton_5.setFont(font1)
+        icon = QIcon()
+        icon.addFile(u":/logos/autorenew_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_5.setIcon(icon)
         self.pushButton_5.setIconSize(QSize(34, 34))
+        self.pushButton_5.setFlat(True)
 
         self.verticalLayout_9.addWidget(self.pushButton_5)
 
@@ -218,38 +211,31 @@ class Ui_MainWindow(object):
         self.pushButton_4.setObjectName(u"pushButton_4")
         sizePolicy.setHeightForWidth(self.pushButton_4.sizePolicy().hasHeightForWidth())
         self.pushButton_4.setSizePolicy(sizePolicy)
-        self.pushButton_4.setMinimumSize(QSize(41, 41))
-        self.pushButton_4.setFont(font1)
-        icon2 = QIcon()
-        icon2.addFile(u":/logos/file_open_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.pushButton_4.setIcon(icon2)
+        self.pushButton_4.setMinimumSize(QSize(50, 50))
+        self.pushButton_4.setMaximumSize(QSize(50, 50))
+        font2 = QFont()
+        font2.setPointSize(18)
+        self.pushButton_4.setFont(font2)
+        icon1 = QIcon()
+        icon1.addFile(u":/logos/file_open_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_4.setIcon(icon1)
         self.pushButton_4.setIconSize(QSize(34, 34))
+        self.pushButton_4.setFlat(True)
 
         self.verticalLayout_9.addWidget(self.pushButton_4)
-
-        self.pushButton_6 = QPushButton(self.verticalLayoutWidget_6)
-        self.pushButton_6.setObjectName(u"pushButton_6")
-        sizePolicy.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
-        self.pushButton_6.setSizePolicy(sizePolicy)
-        self.pushButton_6.setMinimumSize(QSize(41, 41))
-        self.pushButton_6.setFont(font2)
-        icon3 = QIcon()
-        icon3.addFile(u":/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.pushButton_6.setIcon(icon3)
-        self.pushButton_6.setIconSize(QSize(34, 34))
-
-        self.verticalLayout_9.addWidget(self.pushButton_6)
 
         self.pushButton_7 = QPushButton(self.verticalLayoutWidget_6)
         self.pushButton_7.setObjectName(u"pushButton_7")
         sizePolicy.setHeightForWidth(self.pushButton_7.sizePolicy().hasHeightForWidth())
         self.pushButton_7.setSizePolicy(sizePolicy)
-        self.pushButton_7.setMinimumSize(QSize(41, 41))
-        self.pushButton_7.setFont(font2)
-        icon4 = QIcon()
-        icon4.addFile(u":/logos/note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.pushButton_7.setIcon(icon4)
+        self.pushButton_7.setMinimumSize(QSize(50, 50))
+        self.pushButton_7.setMaximumSize(QSize(50, 50))
+        self.pushButton_7.setFont(font1)
+        icon2 = QIcon()
+        icon2.addFile(u":/logos/upload_file_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_7.setIcon(icon2)
         self.pushButton_7.setIconSize(QSize(34, 34))
+        self.pushButton_7.setFlat(True)
 
         self.verticalLayout_9.addWidget(self.pushButton_7)
 
@@ -257,10 +243,14 @@ class Ui_MainWindow(object):
         self.pushButton_8.setObjectName(u"pushButton_8")
         sizePolicy.setHeightForWidth(self.pushButton_8.sizePolicy().hasHeightForWidth())
         self.pushButton_8.setSizePolicy(sizePolicy)
-        self.pushButton_8.setMinimumSize(QSize(41, 41))
-        self.pushButton_8.setFont(font2)
-        self.pushButton_8.setIcon(icon4)
+        self.pushButton_8.setMinimumSize(QSize(50, 50))
+        self.pushButton_8.setMaximumSize(QSize(50, 50))
+        self.pushButton_8.setFont(font1)
+        icon3 = QIcon()
+        icon3.addFile(u":/logos/edit_document_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_8.setIcon(icon3)
         self.pushButton_8.setIconSize(QSize(34, 34))
+        self.pushButton_8.setFlat(True)
 
         self.verticalLayout_9.addWidget(self.pushButton_8)
 
@@ -329,14 +319,17 @@ class Ui_MainWindow(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.clear_all_pushButton.sizePolicy().hasHeightForWidth())
         self.clear_all_pushButton.setSizePolicy(sizePolicy2)
+        self.clear_all_pushButton.setFlat(True)
 
         self.horizontalLayout_4.addWidget(self.clear_all_pushButton)
 
         self.label_7 = QLabel(self.verticalLayoutWidget_6)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setMinimumSize(QSize(41, 41))
-        self.label_7.setFont(font2)
+        self.label_7.setMinimumSize(QSize(34, 34))
+        self.label_7.setMaximumSize(QSize(34, 34))
+        self.label_7.setFont(font1)
         self.label_7.setPixmap(QPixmap(u":/logos/content_paste_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"))
+        self.label_7.setScaledContents(True)
 
         self.horizontalLayout_4.addWidget(self.label_7)
 
@@ -345,14 +338,17 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
         self.label_5.setSizePolicy(sizePolicy2)
         self.label_5.setMinimumSize(QSize(50, 0))
+        self.label_5.setFrameShape(QFrame.Shape.StyledPanel)
 
         self.horizontalLayout_4.addWidget(self.label_5)
 
         self.label_8 = QLabel(self.verticalLayoutWidget_6)
         self.label_8.setObjectName(u"label_8")
-        self.label_8.setMinimumSize(QSize(41, 41))
-        self.label_8.setFont(font2)
+        self.label_8.setMinimumSize(QSize(34, 34))
+        self.label_8.setMaximumSize(QSize(34, 34))
+        self.label_8.setFont(font1)
         self.label_8.setPixmap(QPixmap(u":/logos/inventory_2_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"))
+        self.label_8.setScaledContents(True)
 
         self.horizontalLayout_4.addWidget(self.label_8)
 
@@ -361,6 +357,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
         self.label_9.setSizePolicy(sizePolicy2)
         self.label_9.setMinimumSize(QSize(100, 0))
+        self.label_9.setFrameShape(QFrame.Shape.StyledPanel)
 
         self.horizontalLayout_4.addWidget(self.label_9)
 
@@ -368,9 +365,11 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName(u"label_2")
         sizePolicy2.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy2)
-        self.label_2.setMinimumSize(QSize(41, 41))
-        self.label_2.setFont(font2)
+        self.label_2.setMinimumSize(QSize(34, 34))
+        self.label_2.setMaximumSize(QSize(34, 34))
+        self.label_2.setFont(font1)
         self.label_2.setPixmap(QPixmap(u":/logos/archive_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg"))
+        self.label_2.setScaledContents(True)
 
         self.horizontalLayout_4.addWidget(self.label_2)
 
@@ -389,12 +388,54 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addLayout(self.horizontalLayout_4)
 
         self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setSpacing(6)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.tableWidget = QTableWidget(self.verticalLayoutWidget_6)
         self.tableWidget.setObjectName(u"tableWidget")
 
         self.horizontalLayout_3.addWidget(self.tableWidget)
 
+        self.verticalLayout_10 = QVBoxLayout()
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.pushButton_6 = QPushButton(self.verticalLayoutWidget_6)
+        self.pushButton_6.setObjectName(u"pushButton_6")
+        sizePolicy.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
+        self.pushButton_6.setSizePolicy(sizePolicy)
+        self.pushButton_6.setMinimumSize(QSize(50, 50))
+        self.pushButton_6.setMaximumSize(QSize(50, 50))
+        font3 = QFont()
+        font3.setPointSize(20)
+        font3.setKerning(True)
+        self.pushButton_6.setFont(font3)
+        icon4 = QIcon()
+        icon4.addFile(u":/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_6.setIcon(icon4)
+        self.pushButton_6.setIconSize(QSize(34, 34))
+        self.pushButton_6.setCheckable(False)
+        self.pushButton_6.setFlat(True)
+
+        self.verticalLayout_10.addWidget(self.pushButton_6)
+
+        self.datasheetButton = QPushButton(self.verticalLayoutWidget_6)
+        self.datasheetButton.setObjectName(u"datasheetButton")
+        sizePolicy.setHeightForWidth(self.datasheetButton.sizePolicy().hasHeightForWidth())
+        self.datasheetButton.setSizePolicy(sizePolicy)
+        self.datasheetButton.setMinimumSize(QSize(50, 50))
+        self.datasheetButton.setMaximumSize(QSize(50, 50))
+        self.datasheetButton.setFont(font2)
+        icon5 = QIcon()
+        icon5.addFile(u":/logos/open_in_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.datasheetButton.setIcon(icon5)
+        self.datasheetButton.setIconSize(QSize(34, 34))
+        self.datasheetButton.setFlat(True)
+
+        self.verticalLayout_10.addWidget(self.datasheetButton)
+
+
+        self.horizontalLayout_3.addLayout(self.verticalLayout_10)
+
+        self.horizontalLayout_3.setStretch(0, 10)
 
         self.verticalLayout_6.addLayout(self.horizontalLayout_3)
 
@@ -402,7 +443,7 @@ class Ui_MainWindow(object):
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setEnabled(False)
-        self.menubar.setGeometry(QRect(0, 0, 820, 21))
+        self.menubar.setGeometry(QRect(0, 0, 820, 33))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -425,10 +466,8 @@ class Ui_MainWindow(object):
         self.filter4_pushButton.setText(QCoreApplication.translate("MainWindow", u"reset", None))
         self.filter5_label.setText(QCoreApplication.translate("MainWindow", u"Filter 5", None))
         self.filter5_pushButton.setText(QCoreApplication.translate("MainWindow", u"reset", None))
-        self.datasheetButton.setText("")
         self.pushButton_5.setText("")
         self.pushButton_4.setText("")
-        self.pushButton_6.setText("")
         self.pushButton_7.setText("")
         self.pushButton_8.setText("")
         self.filterG_label.setText(QCoreApplication.translate("MainWindow", u"Filtre general", None))
@@ -439,5 +478,7 @@ class Ui_MainWindow(object):
         self.label_8.setText("")
         self.label_9.setText("")
         self.label_2.setText("")
+        self.pushButton_6.setText("")
+        self.datasheetButton.setText("")
     # retranslateUi
 

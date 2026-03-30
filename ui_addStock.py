@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_addStock.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: Qt User Interface Compiler version 6.10.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -19,12 +19,13 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
     QLineEdit, QMainWindow, QMenuBar, QPushButton,
     QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
     QWidget)
+import recursos_grafics_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(561, 394)
+        MainWindow.resize(561, 431)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -47,7 +48,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
-        self.label.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout.addWidget(self.label)
 
@@ -68,7 +69,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_2.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_2.addWidget(self.label_2)
 
@@ -94,7 +95,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy1)
-        self.label_4.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_4.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_3.addWidget(self.label_4)
 
@@ -115,7 +116,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_5.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_4.addWidget(self.label_5)
 
@@ -140,7 +141,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.label_3 = QLabel(self.centralwidget)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_3.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_5.addWidget(self.label_3)
 
@@ -162,7 +163,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_6.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_6.addWidget(self.label_6)
 
@@ -180,7 +181,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.label_7 = QLabel(self.centralwidget)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_7.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_7.addWidget(self.label_7)
 
@@ -201,7 +202,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.label_8 = QLabel(self.centralwidget)
         self.label_8.setObjectName(u"label_8")
-        self.label_8.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_8.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_8.addWidget(self.label_8)
 
@@ -231,7 +232,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.label_9 = QLabel(self.centralwidget)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_9.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_9.addWidget(self.label_9)
 
@@ -252,7 +253,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.label_10 = QLabel(self.centralwidget)
         self.label_10.setObjectName(u"label_10")
-        self.label_10.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_10.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_10.addWidget(self.label_10)
 
@@ -283,7 +284,7 @@ class Ui_MainWindow(object):
         self.label_11.setObjectName(u"label_11")
         sizePolicy1.setHeightForWidth(self.label_11.sizePolicy().hasHeightForWidth())
         self.label_11.setSizePolicy(sizePolicy1)
-        self.label_11.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_11.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_11.addWidget(self.label_11)
 
@@ -306,7 +307,7 @@ class Ui_MainWindow(object):
         self.label_12.setObjectName(u"label_12")
         sizePolicy1.setHeightForWidth(self.label_12.sizePolicy().hasHeightForWidth())
         self.label_12.setSizePolicy(sizePolicy1)
-        self.label_12.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_12.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_12.addWidget(self.label_12)
 
@@ -329,7 +330,7 @@ class Ui_MainWindow(object):
         self.label_13.setObjectName(u"label_13")
         sizePolicy1.setHeightForWidth(self.label_13.sizePolicy().hasHeightForWidth())
         self.label_13.setSizePolicy(sizePolicy1)
-        self.label_13.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+        self.label_13.setAlignment(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignHCenter)
 
         self.verticalLayout_13.addWidget(self.label_13)
 
@@ -356,11 +357,16 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setContentsMargins(0, 20, 0, 0)
         self.pushButton_previous = QPushButton(self.centralwidget)
         self.pushButton_previous.setObjectName(u"pushButton_previous")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.pushButton_previous.sizePolicy().hasHeightForWidth())
         self.pushButton_previous.setSizePolicy(sizePolicy2)
+        icon = QIcon()
+        icon.addFile(u":/logos/arrow_back_ios_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_previous.setIcon(icon)
+        self.pushButton_previous.setIconSize(QSize(34, 34))
+        self.pushButton_previous.setFlat(True)
 
         self.horizontalLayout_5.addWidget(self.pushButton_previous)
 
@@ -368,6 +374,11 @@ class Ui_MainWindow(object):
         self.pushButton_Nou.setObjectName(u"pushButton_Nou")
         sizePolicy2.setHeightForWidth(self.pushButton_Nou.sizePolicy().hasHeightForWidth())
         self.pushButton_Nou.setSizePolicy(sizePolicy2)
+        icon1 = QIcon()
+        icon1.addFile(u":/logos/add_circle_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_Nou.setIcon(icon1)
+        self.pushButton_Nou.setIconSize(QSize(34, 34))
+        self.pushButton_Nou.setFlat(True)
 
         self.horizontalLayout_5.addWidget(self.pushButton_Nou)
 
@@ -375,6 +386,11 @@ class Ui_MainWindow(object):
         self.pushButton_safe.setObjectName(u"pushButton_safe")
         sizePolicy2.setHeightForWidth(self.pushButton_safe.sizePolicy().hasHeightForWidth())
         self.pushButton_safe.setSizePolicy(sizePolicy2)
+        icon2 = QIcon()
+        icon2.addFile(u":/logos/save_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_safe.setIcon(icon2)
+        self.pushButton_safe.setIconSize(QSize(34, 34))
+        self.pushButton_safe.setFlat(True)
 
         self.horizontalLayout_5.addWidget(self.pushButton_safe)
 
@@ -382,6 +398,11 @@ class Ui_MainWindow(object):
         self.pushButton_next.setObjectName(u"pushButton_next")
         sizePolicy2.setHeightForWidth(self.pushButton_next.sizePolicy().hasHeightForWidth())
         self.pushButton_next.setSizePolicy(sizePolicy2)
+        icon3 = QIcon()
+        icon3.addFile(u":/logos/arrow_forward_ios_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_next.setIcon(icon3)
+        self.pushButton_next.setIconSize(QSize(34, 34))
+        self.pushButton_next.setFlat(True)
 
         self.horizontalLayout_5.addWidget(self.pushButton_next)
 
@@ -404,7 +425,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 561, 21))
+        self.menubar.setGeometry(QRect(0, 0, 561, 33))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -430,9 +451,9 @@ class Ui_MainWindow(object):
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Package", None))
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"Stock", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"Storage", None))
-        self.pushButton_previous.setText(QCoreApplication.translate("MainWindow", u"Previous", None))
-        self.pushButton_Nou.setText(QCoreApplication.translate("MainWindow", u"Nou", None))
-        self.pushButton_safe.setText(QCoreApplication.translate("MainWindow", u"Safe", None))
-        self.pushButton_next.setText(QCoreApplication.translate("MainWindow", u"Next", None))
+        self.pushButton_previous.setText("")
+        self.pushButton_Nou.setText("")
+        self.pushButton_safe.setText("")
+        self.pushButton_next.setText("")
     # retranslateUi
 

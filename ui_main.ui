@@ -20,7 +20,7 @@
    </size>
   </property>
   <property name="toolButtonStyle">
-   <enum>Qt::ToolButtonIconOnly</enum>
+   <enum>Qt::ToolButtonStyle::ToolButtonIconOnly</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QListWidget" name="listWidget_4">
@@ -91,6 +91,9 @@
            <property name="text">
             <string> reset</string>
            </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -117,6 +120,9 @@
           <widget class="QPushButton" name="filter2_pushButton">
            <property name="text">
             <string>reset</string>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -145,6 +151,9 @@
            <property name="text">
             <string>reset</string>
            </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -171,6 +180,9 @@
           <widget class="QPushButton" name="filter4_pushButton">
            <property name="text">
             <string>reset</string>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -199,6 +211,9 @@
            <property name="text">
             <string>reset</string>
            </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -209,42 +224,11 @@
           <number>6</number>
          </property>
          <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
+          <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
          </property>
-         <item>
-          <widget class="QPushButton" name="datasheetButton">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>41</width>
-             <height>41</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>18</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="img/recursos_grafics.qrc">
-             <normaloff>:/logos/link_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/link_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>34</width>
-             <height>34</height>
-            </size>
-           </property>
-          </widget>
-         </item>
+         <property name="topMargin">
+          <number>15</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButton_5">
            <property name="sizePolicy">
@@ -255,8 +239,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>41</width>
-             <height>41</height>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
             </size>
            </property>
            <property name="font">
@@ -277,6 +267,9 @@
              <height>34</height>
             </size>
            </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -289,8 +282,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>41</width>
-             <height>41</height>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
             </size>
            </property>
            <property name="font">
@@ -311,39 +310,8 @@
              <height>34</height>
             </size>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_6">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>41</width>
-             <height>41</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>20</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="img/recursos_grafics.qrc">
-             <normaloff>:/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>34</width>
-             <height>34</height>
-            </size>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -357,8 +325,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>41</width>
-             <height>41</height>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
             </size>
            </property>
            <property name="font">
@@ -371,13 +345,16 @@
            </property>
            <property name="icon">
             <iconset resource="img/recursos_grafics.qrc">
-             <normaloff>:/logos/note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+             <normaloff>:/logos/upload_file_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/upload_file_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
              <width>34</width>
              <height>34</height>
             </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -391,8 +368,14 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>41</width>
-             <height>41</height>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
             </size>
            </property>
            <property name="font">
@@ -405,13 +388,16 @@
            </property>
            <property name="icon">
             <iconset resource="img/recursos_grafics.qrc">
-             <normaloff>:/logos/note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+             <normaloff>:/logos/edit_document_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/edit_document_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
              <width>34</width>
              <height>34</height>
             </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -507,14 +493,23 @@
          <property name="text">
           <string>Reset all filters</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_7">
          <property name="minimumSize">
           <size>
-           <width>41</width>
-           <height>41</height>
+           <width>34</width>
+           <height>34</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>34</width>
+           <height>34</height>
           </size>
          </property>
          <property name="font">
@@ -527,6 +522,9 @@
          </property>
          <property name="pixmap">
           <pixmap resource="img/recursos_grafics.qrc">:/logos/content_paste_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -544,6 +542,9 @@
            <height>0</height>
           </size>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -553,8 +554,14 @@
         <widget class="QLabel" name="label_8">
          <property name="minimumSize">
           <size>
-           <width>41</width>
-           <height>41</height>
+           <width>34</width>
+           <height>34</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>34</width>
+           <height>34</height>
           </size>
          </property>
          <property name="font">
@@ -567,6 +574,9 @@
          </property>
          <property name="pixmap">
           <pixmap resource="img/recursos_grafics.qrc">:/logos/inventory_2_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -584,6 +594,9 @@
            <height>0</height>
           </size>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::StyledPanel</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -599,8 +612,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>41</width>
-           <height>41</height>
+           <width>34</width>
+           <height>34</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>34</width>
+           <height>34</height>
           </size>
          </property>
          <property name="font">
@@ -613,6 +632,9 @@
          </property>
          <property name="pixmap">
           <pixmap resource="img/recursos_grafics.qrc">:/logos/archive_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -635,9 +657,118 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="10,0">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <item>
         <widget class="QTableWidget" name="tableWidget"/>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_10">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+             <kerning>true</kerning>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="img/recursos_grafics.qrc">
+             <normaloff>:/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>34</width>
+             <height>34</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="datasheetButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>18</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="img/recursos_grafics.qrc">
+             <normaloff>:/logos/open_in_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/open_in_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>34</width>
+             <height>34</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -653,7 +784,7 @@
      <x>0</x>
      <y>0</y>
      <width>820</width>
-     <height>21</height>
+     <height>33</height>
     </rect>
    </property>
   </widget>

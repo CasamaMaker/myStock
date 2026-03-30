@@ -1,4 +1,3 @@
-# document name: ui_component_lookup.py
 # -*- coding: utf-8 -*-
 
 ################################################################################
@@ -19,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
     QSpacerItem, QStatusBar, QVBoxLayout, QWidget)
+import recursos_grafics_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -37,11 +37,17 @@ class Ui_MainWindow(object):
         self.horizontalLayout_search_row.setObjectName(u"horizontalLayout_search_row")
         self.lineEdit_search_box = QLineEdit(self.verticalLayoutWidget)
         self.lineEdit_search_box.setObjectName(u"lineEdit_search_box")
+        self.lineEdit_search_box.setMinimumSize(QSize(0, 41))
 
         self.horizontalLayout_search_row.addWidget(self.lineEdit_search_box)
 
         self.pushButton_search_button = QPushButton(self.verticalLayoutWidget)
         self.pushButton_search_button.setObjectName(u"pushButton_search_button")
+        self.pushButton_search_button.setMinimumSize(QSize(45, 45))
+        icon = QIcon()
+        icon.addFile(u":/logos/search_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_search_button.setIcon(icon)
+        self.pushButton_search_button.setIconSize(QSize(34, 34))
 
         self.horizontalLayout_search_row.addWidget(self.pushButton_search_button)
 
@@ -241,17 +247,32 @@ class Ui_MainWindow(object):
 
         self.horizontalLayoutWidget = QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(10, 350, 521, 28))
+        self.horizontalLayoutWidget.setGeometry(QRect(10, 350, 521, 46))
         self.horizontalLayout_10 = QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.pushButton = QPushButton(self.horizontalLayoutWidget)
         self.pushButton.setObjectName(u"pushButton")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy3)
+        icon1 = QIcon()
+        icon1.addFile(u":/logos/arrow_back_ios_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton.setIcon(icon1)
+        self.pushButton.setIconSize(QSize(34, 34))
 
         self.horizontalLayout_10.addWidget(self.pushButton)
 
         self.pushButton_2 = QPushButton(self.horizontalLayoutWidget)
         self.pushButton_2.setObjectName(u"pushButton_2")
+        sizePolicy3.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
+        self.pushButton_2.setSizePolicy(sizePolicy3)
+        icon2 = QIcon()
+        icon2.addFile(u":/logos/arrow_forward_ios_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_2.setIcon(icon2)
+        self.pushButton_2.setIconSize(QSize(34, 34))
 
         self.horizontalLayout_10.addWidget(self.pushButton_2)
 
@@ -271,7 +292,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.pushButton_search_button.setText(QCoreApplication.translate("MainWindow", u"Cerca", None))
+        self.pushButton_search_button.setText("")
         self.label_nomcompoennt.setText(QCoreApplication.translate("MainWindow", u"nom component", None))
         self.label_tagSupplier.setText(QCoreApplication.translate("MainWindow", u"tag supplier", None))
         self.label_tagAvailability.setText(QCoreApplication.translate("MainWindow", u"tag availability", None))
@@ -291,7 +312,7 @@ class Ui_MainWindow(object):
         self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"stock-variable", None))
         self.label_storagetext.setText(QCoreApplication.translate("MainWindow", u"storage-variable", None))
         self.lineEdit_storagevariable.setText(QCoreApplication.translate("MainWindow", u"stock-variable", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
+        self.pushButton.setText("")
+        self.pushButton_2.setText("")
     # retranslateUi
 

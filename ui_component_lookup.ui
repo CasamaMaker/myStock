@@ -27,12 +27,35 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_search_row">
        <item>
-        <widget class="QLineEdit" name="lineEdit_search_box"/>
+        <widget class="QLineEdit" name="lineEdit_search_box">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>41</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_search_button">
+         <property name="minimumSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
          <property name="text">
-          <string>Cerca</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="img/recursos_grafics.qrc">
+           <normaloff>:/logos/search_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/search_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>34</width>
+           <height>34</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -340,21 +363,53 @@
       <x>10</x>
       <y>350</y>
       <width>521</width>
-      <height>28</height>
+      <height>46</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_10">
      <item>
       <widget class="QPushButton" name="pushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="img/recursos_grafics.qrc">
+         <normaloff>:/logos/arrow_back_ios_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/arrow_back_ios_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>34</width>
+         <height>34</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="img/recursos_grafics.qrc">
+         <normaloff>:/logos/arrow_forward_ios_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/arrow_forward_ios_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>34</width>
+         <height>34</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -373,6 +428,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="img/recursos_grafics.qrc"/>
+ </resources>
  <connections/>
 </ui>

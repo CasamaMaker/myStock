@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>394</height>
+    <height>431</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -75,7 +75,7 @@
              <string>ID</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -111,7 +111,7 @@
              <string>Manufacturer P/N</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -153,7 +153,7 @@
              <string>Manufacturer</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -189,7 +189,7 @@
              <string>Category</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -220,7 +220,7 @@
            <string>Description</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+           <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
           </property>
          </widget>
         </item>
@@ -263,7 +263,7 @@
              <string>Supplier</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -292,7 +292,7 @@
              <string>Supplier P/N</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -328,7 +328,7 @@
              <string>Supplier Category</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -380,7 +380,7 @@
              <string>Datasheet</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -416,7 +416,7 @@
              <string>Supplier link</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -474,7 +474,7 @@
              <string>Package</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -516,7 +516,7 @@
              <string>Stock</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -558,7 +558,7 @@
              <string>Storage</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
             </property>
            </widget>
           </item>
@@ -593,52 +593,104 @@
         <item>
          <widget class="QPushButton" name="pushButton_previous">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Previous</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="img/recursos_grafics.qrc">
+            <normaloff>:/logos/arrow_back_ios_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/arrow_back_ios_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>34</width>
+            <height>34</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_Nou">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Nou</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="img/recursos_grafics.qrc">
+            <normaloff>:/logos/add_circle_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/add_circle_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>34</width>
+            <height>34</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_safe">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Safe</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="img/recursos_grafics.qrc">
+            <normaloff>:/logos/save_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/save_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>34</width>
+            <height>34</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_next">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Next</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="img/recursos_grafics.qrc">
+            <normaloff>:/logos/arrow_forward_ios_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/logos/arrow_forward_ios_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>34</width>
+            <height>34</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -654,12 +706,14 @@
      <x>0</x>
      <y>0</y>
      <width>561</width>
-     <height>21</height>
+     <height>33</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="img/recursos_grafics.qrc"/>
+ </resources>
  <connections/>
 </ui>

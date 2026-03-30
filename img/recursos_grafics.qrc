@@ -1,5 +1,15 @@
 <RCC>
   <qresource prefix="logos">
+    <file>arrow_forward_ios_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>arrow_back_ios_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>search_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>open_in_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>save_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>cloud_upload_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>cloud_done_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>upload_file_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>add_circle_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
+    <file>edit_document_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
     <file>note_add_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
     <file>frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
     <file>file_open_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg</file>
