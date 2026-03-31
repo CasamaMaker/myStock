@@ -254,6 +254,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_9.addWidget(self.pushButton_8)
 
+        self.pushButton_9 = QPushButton(self.verticalLayoutWidget_6)
+        self.pushButton_9.setObjectName(u"pushButton_9")
+        sizePolicy.setHeightForWidth(self.pushButton_9.sizePolicy().hasHeightForWidth())
+        self.pushButton_9.setSizePolicy(sizePolicy)
+        self.pushButton_9.setMinimumSize(QSize(50, 50))
+        self.pushButton_9.setMaximumSize(QSize(50, 50))
+        self.pushButton_9.setFont(font1)
+        icon4 = QIcon()
+        icon4.addFile(u":/logos/memory_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_9.setIcon(icon4)
+        self.pushButton_9.setIconSize(QSize(34, 34))
+        self.pushButton_9.setFlat(True)
+
+        self.verticalLayout_9.addWidget(self.pushButton_9)
+
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_9)
 
@@ -396,6 +411,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.tableWidget)
 
         self.verticalLayout_10 = QVBoxLayout()
+        self.verticalLayout_10.setSpacing(6)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
         self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.pushButton_6 = QPushButton(self.verticalLayoutWidget_6)
@@ -408,9 +424,9 @@ class Ui_MainWindow(object):
         font3.setPointSize(20)
         font3.setKerning(True)
         self.pushButton_6.setFont(font3)
-        icon4 = QIcon()
-        icon4.addFile(u":/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.pushButton_6.setIcon(icon4)
+        icon5 = QIcon()
+        icon5.addFile(u":/logos/frame_inspect_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.pushButton_6.setIcon(icon5)
         self.pushButton_6.setIconSize(QSize(34, 34))
         self.pushButton_6.setCheckable(False)
         self.pushButton_6.setFlat(True)
@@ -424,14 +440,16 @@ class Ui_MainWindow(object):
         self.datasheetButton.setMinimumSize(QSize(50, 50))
         self.datasheetButton.setMaximumSize(QSize(50, 50))
         self.datasheetButton.setFont(font2)
-        icon5 = QIcon()
-        icon5.addFile(u":/logos/open_in_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.datasheetButton.setIcon(icon5)
+        icon6 = QIcon()
+        icon6.addFile(u":/logos/open_in_new_34dp_1F1F1F_FILL0_wght400_GRAD0_opsz40.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.datasheetButton.setIcon(icon6)
         self.datasheetButton.setIconSize(QSize(34, 34))
         self.datasheetButton.setFlat(True)
 
         self.verticalLayout_10.addWidget(self.datasheetButton)
 
+        self.verticalLayout_10.setStretch(0, 1)
+        self.verticalLayout_10.setStretch(1, 1)
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_10)
 
@@ -470,6 +488,7 @@ class Ui_MainWindow(object):
         self.pushButton_4.setText("")
         self.pushButton_7.setText("")
         self.pushButton_8.setText("")
+        self.pushButton_9.setText("")
         self.filterG_label.setText(QCoreApplication.translate("MainWindow", u"Filtre general", None))
         self.FilterPN_label.setText(QCoreApplication.translate("MainWindow", u"Filtre Manufacture PN", None))
         self.clear_all_pushButton.setText(QCoreApplication.translate("MainWindow", u"Reset all filters", None))

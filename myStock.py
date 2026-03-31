@@ -1020,6 +1020,7 @@ from ui_main import Ui_MainWindow
 from configuration import Config, FilterConfig
 from nowStock import MainWindow as NowStockWindow
 from addStock import AddStockWindow
+from bom import BomWindow
 
 logger = logging.getLogger(__name__)
 
@@ -1133,6 +1134,7 @@ class MainWindow(QMainWindow):
         self._lookup_window = None
         self._nowstock_window = None
         self._addstock_window = None
+        self._bom_window = None
         
         self._setup_filters()
         self._setup_ui()
@@ -1200,6 +1202,8 @@ class MainWindow(QMainWindow):
         
         self.ui.pushButton_7.clicked.connect(self._open_nowstock)
         self.ui.pushButton_8.clicked.connect(self._open_addstock)
+        self.ui.pushButton_9.clicked.connect(self._open_bom)
+
         
         self.ui.clear_all_pushButton.clicked.connect(self._clear_all_filters)
         
@@ -1252,6 +1256,15 @@ class MainWindow(QMainWindow):
         else:
             self._addstock_window.raise_()
             self._addstock_window.activateWindow()
+
+    def _open_bom(self):
+        """Obre la finestra per afegir stock manualment"""
+        if self._bom_window is None or not self._bom_window.isVisible():
+            self._bom_window = BomWindow()
+            self._bom_window.show()
+        else:
+            self._bom_window.raise_()
+            self._bom_window.activateWindow()
 
     def _setup_tooltips(self):
         """Configura els tooltips"""
