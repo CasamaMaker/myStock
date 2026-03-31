@@ -1,2 +1,28 @@
+# ─── Credencials i claus privades ────────────────────────────────────────────
+# secrets.py
+credentials/
 /dist
-/credentials
+
+# # ─── Entorns virtuals ─────────────────────────────────────────────────────────
+# .venv/
+# venv/
+# env/
+
+# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ─── Backups generats per l'app ───────────────────────────────────────────────
+backups/
+
+# # ─── Caché local (funcionalitat futura) ──────────────────────────────────────
+# lookup_cache.json
+
+# ─── Editors i OS ─────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+.DS_Store
